@@ -114,24 +114,24 @@ export default function HomePage() {
 
         {/* SECTION 2: TRUST BAR */}
         <div className="bg-primary py-8 text-white border-b border-primary-container">
-          <div className="max-w-7xl mx-auto px-4 md:px-10 flex flex-wrap xl:flex-nowrap justify-center xl:justify-between items-center gap-4 xl:gap-6">
-            <div className="flex items-center gap-2 whitespace-nowrap">
+          <div className="max-w-7xl mx-auto px-4 md:px-10 flex flex-wrap justify-between items-center gap-6">
+            <div className="flex items-center gap-2.5">
               <span className="material-symbols-outlined text-secondary">gpp_good</span>
               <span className="text-sm font-semibold">DSGVO-Konform (Server in DE)</span>
             </div>
-            <div className="flex items-center gap-2 whitespace-nowrap">
+            <div className="flex items-center gap-2.5">
               <span className="material-symbols-outlined text-secondary">lock</span>
               <span className="text-sm font-semibold">Sichere Dateneingabe</span>
             </div>
-            <div className="flex items-center gap-2 whitespace-nowrap">
+            <div className="flex items-center gap-2.5">
               <span className="material-symbols-outlined text-secondary">description</span>
               <span className="text-sm font-semibold">Detaillierter PDF-Bericht</span>
             </div>
-            <div className="flex items-center gap-2 whitespace-nowrap">
+            <div className="flex items-center gap-2.5">
               <span className="material-symbols-outlined text-secondary">support_agent</span>
               <span className="text-sm font-semibold">Persönliche Beratung (ab Potenzial)</span>
             </div>
-            <div className="flex items-center gap-2 whitespace-nowrap">
+            <div className="flex items-center gap-2.5">
               <span className="material-symbols-outlined text-secondary">payments</span>
               <span className="text-sm font-semibold">Sicher mit PayPal &amp; Bank</span>
             </div>
