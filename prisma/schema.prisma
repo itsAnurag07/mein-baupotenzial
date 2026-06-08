@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Lead {
+  id                        String     @id @default(uuid())
+  currentStep               Int        @default(1)
+  status                    String     @default("DRAFT") // DRAFT, COMPLETED, PAID, IN_REVIEW, DELIVERED
+  packageSelected           String?    // QUICK_CHECK, POTENTIAL_ANALYSIS, FEASIBILITY_STUDY
+  referralCodeUsed          String?
+  pricePaid                 Float?
+  paymentMethod             String?    // PAYPAL, BANK_TRANSFER
+  paymentStatus             String?    // PENDING, SUCCESS, FAILED
+  createdAt                 DateTime   @default(now())
+  updatedAt                 DateTime   @updatedAt
+  
+  // Step 1: Ziel der Prüfung
+  analysisGoal              String?    // NEUBAU, NACHVERDICHTUNG, AUFSTOCKUNG, TEILUNG, ERSATZNEUBAU, SONSTIGES
+  importantQuestion         String?    // Freitext wichtige Frage
+  
+  // Step 2: Kontaktdaten
+  contactFirstName          String?
+  contactLastName           String?
+  contactEmail              String?
+  contactPhone              String?
+  contactRole               String?    // Eigentümer, Kind/Erbe, Bevollmächtigt, Sonstiges
+  
+  // Step 3: Grundstück finden
+  addressStreet             String?
+  addressNumber             String?
+  addressZip                String?
+  addressCity               String?
+  addressState              String?
+  cadastralDistrict         String?    // Flurstück / Gemarkung
+  geoportalLink             String?
+  
+  // Step 4: Grundstücksdaten
+  plotArea                  Float?
+  plotShape                 String?    // normal, schmal, sehr tief, Eckgrundstück
+  slope                     String?    // ja, nein, unbekannt
+  developmentStatus         String?    // erschlossen, teilweise, unklar
+  accessRoad                String?    // direkt, über Wegerecht, unklar
+  
+  // Step 5: Bestand
+  plotIsBuilt               Boolean?
+  buildingType              String?    // EFH, MFH, Gewerbe, gemischt, sonstiges
+  constructionYear          String?
+  floorsCount               String?
+  buildingUsage             String?    // selbst genutzt, vermietet, leerstehend
+  demolitionPossible        String?    // ja, nein, unbekannt
+  
+  // Step 6: Planungsrecht
+  zoningPlanExists          String?    // YES, NO, DONT_KNOW
+  hasPlanningDocuments      Boolean?
+  neighborhoodZoning        String?    // überwiegend EFH, gemischt, überwiegend MFH, Gewerbe, unklar
+  planningSpecialNotes      String?    // Comma-separated specialties: Denkmalschutz, Milieuschutz, Erhaltungssatzung
+  planningInfoDetails       String?    // Freitext
+  
+  // Step 7: Vorhaben konkretisieren (path specific)
+  targetType                String?    // EFH, DH/REH, MFH, gemischt
+  targetArea                String?    // ca. Wohnfläche
+  targetUnits               String?
+  targetDensityType         String?    // Anbau, Neubau im Garten, zusätzliche Einheit, sonstiges
+  targetDensityUnits        String?    // 1 Einheit, 2–4 Einheiten, >4
+  targetFloors              String?    // 1 Geschoss, 2 Geschosse, unklar
+  knowsStructure            Boolean?
+  targetDivisions           String?    // 2, 3, >3
+  isSalePlanned             Boolean?
+  projectDetails            String?    // Freitext
+  
+  // Step 8: Rahmenbedingungen
+  timelineUrgency           String?    // so schnell wie möglich, 3–6 Monate, >6 Monate, unklar
+  projectGoal               String?    // Eigennutzung, Verkauf, Vermietung, Familienlösung, Investor suchen
+  budgetRange               String?    // <300k, 300–600k, 600k–1,2M, >1,2M, unklar
+  budget                    String?
+  
+  // Step 9: Document Uploads
+  documents                 Document[]
+}
+
+model Document {
+  id          String   @id @default(uuid())
+  leadId      String
+  lead        Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  category    String   // SITE_PLAN, ZONING_PLAN, LAND_REGISTRY_EXTRACT, BUILDING_PLAN, PROPERTY_PHOTO, AREA_PHOTO, ADDITIONAL
+  fileName    String
+  fileUrl     String
+  fileSize    Int
+  createdAt   DateTime @default(now())
+}
+
+model ReferralCode {
+  code        String   @id
+  isValid     Boolean  @default(true)
+  currentUses Int      @default(0)
+  maxUses     Int?
+  createdAt   DateTime @default(now())
+}
