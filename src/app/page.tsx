@@ -14,31 +14,31 @@ const faqs = [
   { q: "Bekomme ich Zeichnungen/Skizzen?", a: "Je nach Paket: in höheren Paketen schematische Skizzen/Lageplan-Varianten, keine Genehmigungsplanung." },
   { q: "Bekommt ihr auch eine Einschätzung zu Stellplätzen?", a: "Plausibilisierung/Vorschlag – die konkrete Stellplatzsatzung/Abstimmung erfolgt im Planungsprozess." },
   { q: "Erstellt ihr auch Bauanträge?", a: "Nicht im Rahmen des Onepager-Produkts. Optional kann nach der Analyse ein separates Angebot für Planung/Antrag erfolgen." },
-  
+
   // B) Dauer & Ablauf
   { q: "Wie läuft der Prozess ab?", a: "Schritt-für-Schritt Formular → Zusammenfassung → Paketauswahl → Zahlung → Bearbeitung → PDF + (ab Potenzialanalyse) Call." },
   { q: "Wie schnell bekomme ich das Ergebnis?", a: "Abhängig vom Paket und Datenlage; die konkrete Bearbeitungszeit wird im Checkout angezeigt." },
   { q: "Kann ich nachträglich Unterlagen nachreichen?", a: "Ja. Sie erhalten nach Bestellung einen Link/Anleitung zum Nachreichen." },
   { q: "Was passiert, wenn ich den Prozess abbreche?", a: "Ihre Eingaben werden (sofern zugestimmt) zwischengespeichert, damit wir den Fall intern sehen und Sie optional fortsetzen können." },
-  
+
   // C) Daten & Unterlagen
   { q: "Welche Unterlagen sind ideal?", a: "Flurkarte/Lageplan, Bebauungsplan (falls vorhanden), Fotos, ggf. Bestandspläne." },
   { q: "Ich kenne mein Flurstück nicht – geht’s trotzdem?", a: "Ja. Adresse und Fotos reichen häufig für eine erste Einordnung." },
   { q: "Sind meine Daten sicher?", a: "Wir verarbeiten Daten DSGVO-konform. Details finden Sie in der Datenschutzerklärung." },
   { q: "Kann ich sensible Dokumente (Grundbuch) auch weglassen?", a: "Ja. Reichen Sie nur ein, was Sie möchten. Wir sagen Ihnen, wenn etwas Entscheidendes fehlt." },
-  
+
   // D) Zahlung, Preise, Promocode
   { q: "Welche Zahlungsmethoden gibt es?", a: "PayPal oder Überweisung." },
   { q: "Wann startet ihr mit der Analyse?", a: "Erst nach Zahlungseingang." },
   { q: "Wie funktioniert der Promocode?", a: "Der Promocode gilt ausschließlich für den Quick-Check und reduziert den Preis auf 0 €." },
   { q: "Kann ich den Promocode für Potenzialanalyse/Machbarkeitsstudie nutzen?", a: "Nein." },
   { q: "Erhalte ich eine Rechnung?", a: "Ja, automatisch nach Bestellung/Zahlung (je nach Zahlungsart)." },
-  
+
   // E) Rechtliche Einordnung (behördensicher)
   { q: "Was ist der Unterschied zwischen B-Plan, §34 und §35?", a: "Kurz erklärt: B-Plan = festgesetzte Regeln; §34 = Einfügungsgebot im Innenbereich; §35 = Außenbereich mit stark eingeschränkter Bebaubarkeit. Wir ordnen Ihren Fall ein." },
   { q: "Was, wenn es eine Baulast oder Dienstbarkeit gibt?", a: "Wenn bekannt/unterlagenbasiert, weisen wir darauf hin und erklären die Relevanz." },
   { q: "Übernehmt ihr eine Gewähr für Genehmigungsfähigkeit?", a: "Nein. Genehmigungen erteilt ausschließlich die zuständige Behörde." },
-  
+
   // F) Nächste Schritte nach der Analyse
   { q: "Was ist typischerweise der nächste Schritt?", a: "Häufig: Bauvoranfrage/Bauvorbescheid, Vermessung, Architektenvorentwurf, Gespräche mit Bauamt." },
   { q: "Könnt ihr mich danach weiter begleiten?", a: "Ja, optional – je nach Projekt kann ein individuelles Angebot folgen." }
@@ -53,8 +53,8 @@ export default function HomePage() {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
 
-  const filteredFaqs = faqs.filter(f => 
-    f.q.toLowerCase().includes(faqSearch.toLowerCase()) || 
+  const filteredFaqs = faqs.filter(f =>
+    f.q.toLowerCase().includes(faqSearch.toLowerCase()) ||
     f.a.toLowerCase().includes(faqSearch.toLowerCase())
   );
 
@@ -63,7 +63,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#F5F7FA]">
       <Header />
-      
+
       <main className="flex-grow">
         {/* SECTION 1: HERO */}
         <section className="relative pt-20 pb-20 overflow-hidden bg-surface-bright border-b border-surface-dim">
@@ -98,9 +98,9 @@ export default function HomePage() {
             </div>
             <div className="relative hidden md:block">
               <div className="bg-surface-white p-6 rounded-2xl shadow-xl border border-surface-dim">
-                <img 
-                  alt="Property Analysis Visual" 
-                  className="rounded-lg w-full h-[450px] object-cover" 
+                <img
+                  alt="Property Analysis Visual"
+                  className="rounded-lg w-full h-[450px] object-cover"
                   src="/hero.jpg"
                 />
                 <div className="absolute -bottom-4 -left-4 bg-secondary text-white p-4 rounded-xl shadow-lg max-w-[220px]">
@@ -129,7 +129,7 @@ export default function HomePage() {
             </div>
             <div className="flex items-center gap-2.5">
               <span className="material-symbols-outlined text-secondary">support_agent</span>
-              <span className="text-sm font-semibold">Persönliche Beratung (ab Potenzial)</span>
+              <span className="text-sm font-semibold">Persönliche Beratung</span>
             </div>
             <div className="flex items-center gap-2.5">
               <span className="material-symbols-outlined text-secondary">payments</span>
@@ -227,7 +227,7 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-surface-white rounded-2xl shadow-xl border border-surface-dim overflow-hidden">
                 <div className="bg-primary p-4 flex items-center gap-4">
                   <div className="flex gap-1.5">
@@ -274,28 +274,28 @@ export default function HomePage() {
             <h2 className="text-3xl font-extrabold text-primary mb-16 text-center">In 4 Schritten zum Ergebnis</h2>
             <div className="relative flex flex-col md:flex-row gap-8 justify-between items-start">
               <div className="absolute top-10 left-8 right-8 h-0.5 bg-surface-dim hidden md:block z-0"></div>
-              
+
               {/* Step 1 */}
               <div className="relative z-10 flex flex-col items-center text-center md:w-1/4">
                 <div className="w-16 h-16 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-lg mb-6 border-4 border-surface-white shadow-md">1</div>
                 <h4 className="text-sm font-bold text-primary mb-2 uppercase tracking-wide">Daten eingeben</h4>
                 <p className="text-xs text-on-surface-variant px-4">Geben Sie die wichtigsten Informationen zu Ihrem Grundstück ein.</p>
               </div>
-              
+
               {/* Step 2 */}
               <div className="relative z-10 flex flex-col items-center text-center md:w-1/4">
                 <div className="w-16 h-16 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-lg mb-6 border-4 border-surface-white shadow-md">2</div>
                 <h4 className="text-sm font-bold text-primary mb-2 uppercase tracking-wide">Dokumente hochladen</h4>
                 <p className="text-xs text-on-surface-variant px-4">Laden Sie Pläne, Fotos und relevante Unterlagen verschlüsselt hoch.</p>
               </div>
-              
+
               {/* Step 3 */}
               <div className="relative z-10 flex flex-col items-center text-center md:w-1/4">
                 <div className="w-16 h-16 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-lg mb-6 border-4 border-surface-white shadow-md">3</div>
                 <h4 className="text-sm font-bold text-primary mb-2 uppercase tracking-wide">Paket wählen</h4>
                 <p className="text-xs text-on-surface-variant px-4">Wählen Sie das passende Paket und schließen Sie die Bestellung ab.</p>
               </div>
-              
+
               {/* Step 4 */}
               <div className="relative z-10 flex flex-col items-center text-center md:w-1/4">
                 <div className="w-16 h-16 rounded-full bg-secondary text-white flex items-center justify-center font-bold text-lg mb-6 border-4 border-surface-white shadow-md">
@@ -355,9 +355,9 @@ export default function HomePage() {
             <div className="flex flex-col md:flex-row items-center gap-16">
               <div className="w-full md:w-1/2">
                 <div className="relative bg-[#F5F7FA] p-4 rounded-3xl border border-surface-dim shadow-xl">
-                  <img 
-                    alt="Beispiel Bericht Preview" 
-                    className="rounded-2xl w-full h-auto shadow-inner" 
+                  <img
+                    alt="Beispiel Bericht Preview"
+                    className="rounded-2xl w-full h-auto shadow-inner"
                     src="/image2.png"
                   />
                   <div className="absolute inset-0 bg-primary/5 rounded-2xl pointer-events-none"></div>
@@ -379,8 +379,8 @@ export default function HomePage() {
                     <span className="text-secondary font-bold">✓</span> Konkrete städtebauliche Handlungsempfehlungen
                   </li>
                 </ul>
-                <a 
-                  href="/sample-report.pdf" 
+                <a
+                  href="/sample-report.pdf"
                   target="_blank"
                   className="inline-block bg-surface-white border-2 border-secondary text-secondary px-8 py-3 rounded-xl font-bold hover:bg-secondary-container transition-colors text-sm"
                 >
@@ -400,7 +400,7 @@ export default function HomePage() {
                 Wählen Sie das passende Leistungspaket für Ihre Grundstücksanalyse. Alle Preise verstehen sich zuzüglich der gesetzlichen Mehrwertsteuer.
               </p>
             </div>
-            
+
             <div className="grid md:grid-cols-3 gap-8">
               {/* Package 1 */}
               <div className="bg-surface-white rounded-2xl border border-surface-dim p-8 flex flex-col justify-between hover:shadow-lg transition-shadow">
@@ -419,8 +419,8 @@ export default function HomePage() {
                     <li className="flex items-center gap-2 text-surface-dim">✗ Detailliertes Gutachten</li>
                   </ul>
                 </div>
-                <Link 
-                  href="/analyse?package=QUICK_CHECK" 
+                <Link
+                  href="/analyse?package=QUICK_CHECK"
                   className="w-full py-3 rounded-xl border border-primary text-primary font-bold text-center text-sm hover:bg-surface-bright transition-colors"
                 >
                   Quick Check wählen
@@ -447,8 +447,8 @@ export default function HomePage() {
                     <li className="flex items-center gap-2">✓ Handlungsempfehlung für Bauvorbescheid</li>
                   </ul>
                 </div>
-                <Link 
-                  href="/analyse?package=POTENTIAL_ANALYSIS" 
+                <Link
+                  href="/analyse?package=POTENTIAL_ANALYSIS"
                   className="w-full py-3 rounded-xl bg-primary text-on-primary font-bold text-center text-sm hover:opacity-90 transition-opacity shadow"
                 >
                   Potenzialanalyse wählen
@@ -472,8 +472,8 @@ export default function HomePage() {
                     <li className="flex items-center gap-2">✓ Behördenabstimmung &amp; Vorbescheidbegleitung</li>
                   </ul>
                 </div>
-                <Link 
-                  href="/analyse?package=FEASIBILITY_STUDY" 
+                <Link
+                  href="/analyse?package=FEASIBILITY_STUDY"
                   className="w-full py-3 rounded-xl border border-primary text-primary font-bold text-center text-sm hover:bg-surface-bright transition-colors"
                 >
                   Machbarkeitsstudie wählen
@@ -489,8 +489,8 @@ export default function HomePage() {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-extrabold text-primary mb-6">Häufig gestellte Fragen</h2>
               <div className="relative">
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   className="w-full h-12 pl-12 pr-4 rounded-xl border border-surface-dim focus:border-primary focus:ring-1 focus:ring-primary transition-all bg-background text-sm text-primary font-medium"
                   placeholder="Fragen durchsuchen..."
                   value={faqSearch}
@@ -503,19 +503,19 @@ export default function HomePage() {
                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
               </div>
             </div>
-            
+
             <div className="space-y-1 border-t border-surface-dim">
               {displayedFaqs.length > 0 ? (
                 displayedFaqs.map((faq, index) => {
                   const isOpen = openFaqIndex === index;
                   return (
                     <div className="border-b border-surface-dim" key={index}>
-                      <button 
+                      <button
                         className="w-full py-5 flex justify-between items-center text-left focus:outline-none group"
                         onClick={() => toggleFaq(index)}
                       >
                         <span className="text-sm md:text-base font-bold text-primary group-hover:text-secondary transition-colors">{faq.q}</span>
-                        <span 
+                        <span
                           className={`material-symbols-outlined transition-transform duration-300 ${isOpen ? 'rotate-180 text-secondary' : 'text-on-surface-variant'}`}
                         >
                           expand_more
@@ -547,7 +547,7 @@ export default function HomePage() {
                 </button>
               </div>
             )}
-            
+
             <div className="mt-16 relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-primary-container p-10 md:p-14 text-center shadow-xl">
               <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
               <div className="absolute bottom-0 left-0 w-48 h-48 bg-secondary/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
