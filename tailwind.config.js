@@ -8,78 +8,76 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "surface-white": "#FFFFFF",
-        "surface-container-low": "#f2f4f7",
-        "surface-bright": "#f7f9fc",
-        "on-error": "#ffffff",
-        "on-secondary": "#ffffff",
-        "tertiary-fixed": "#d4e4fa",
-        "surface-dim": "#d8dadd",
-        "surface-tint": "#4d5f7d",
-        "primary-fixed-dim": "#b5c7ea",
-        "on-tertiary-container": "#79889c",
-        "surface-container-high": "#e6e8eb",
-        "on-surface": "#191c1e",
-        "secondary-fixed-dim": "#80d5cb",
-        "surface-container-lowest": "#ffffff",
-        "tertiary-container": "#112030",
+        // ── Style Guide Palette ─────────────────────────────
+        "primary":              "#1F2328",   // Primary Dark
+        "primary-container":    "#2A2F35",
+        "on-primary":           "#FFFFFF",
+        "on-primary-container": "#EBEBEB",
+
+        "secondary":            "#234436",   // CTA Green
+        "secondary-container":  "#EAF0EC",   // Light green tint (badge bg)
+        "on-secondary":         "#FFFFFF",
+        "on-secondary-container": "#234436",
+
+        "accent":               "#A67C52",   // Bronze — badges, dividers, small highlights only
+        "accent-container":     "#F5EDE3",   // Light bronze tint
+
+        "surface-white":        "#F8F7F4",   // Page / section background (warm off-white)
+        "surface-bright":       "#ECECEA",   // Elevated card surface
+        "surface-dim":          "#D0CFCB",   // Subtle dividers / borders
+        "surface-variant":      "#E5E4E0",
+
+        "background":           "#F8F7F4",
+        "surface":              "#F8F7F4",
+
+        "on-surface":           "#1F2328",
+        "on-surface-variant":   "#5E646B",   // Body text
+        "on-background":        "#1F2328",
+
+        "outline":              "#A09E9A",
+        "outline-variant":      "#D0CFCB",
+
+        // ── Error / Warning ──────────────────────────────────
+        "error":                "#ba1a1a",
+        "error-red":            "#B91C1C",
+        "error-container":      "#ffdad6",
+        "on-error":             "#ffffff",
+        "on-error-container":   "#93000a",
+        "warning-amber":        "#B45309",
+
+        // ── Legacy aliases (keep existing class names working) ─
+        "cta-hover":            "#2F5A49",
+        "primary-navy":         "#1F2328",
+        "accent-teal":          "#234436",
+        "ui-steel":             "#94A3B8",
+        "text-slate":           "#1F2328",
+        "surface-container":    "#ECECEA",
+        "surface-container-high": "#E5E4E0",
+        "surface-container-low": "#F2F1EE",
+        "surface-container-lowest": "#FFFFFF",
+        "surface-container-highest": "#E0DFD9",
+        "inverse-surface":      "#2A2F35",
+        "inverse-on-surface":   "#F0EFEB",
+        "inverse-primary":      "#C5CAD0",
+        "tertiary":             "#2A2F35",
+        "tertiary-container":   "#2A2F35",
+        "on-tertiary":          "#FFFFFF",
+        "on-tertiary-container": "#EBEBEB",
+        "tertiary-fixed":       "#D4D8DC",
+        "tertiary-fixed-dim":   "#B9BEC4",
+        "on-tertiary-fixed":    "#0d1c2d",
         "on-tertiary-fixed-variant": "#39485a",
-        "secondary": "#0F766E",
-        "on-primary-container": "#7587a7",
-        "secondary-fixed": "#9cf2e8",
-        "primary": "#0B1F3A",
-        "primary-container": "#112030",
-        "on-secondary-fixed-variant": "#00504a",
-        "inverse-on-surface": "#eff1f4",
-        "on-primary-fixed": "#071c36",
-        "on-tertiary-fixed": "#0d1c2d",
-        "surface-container": "#eceef1",
-        "secondary-container": "#ccfbf1",
-        "inverse-surface": "#2d3133",
-        "surface-container-highest": "#e0e3e6",
-        "text-slate": "#1F2937",
-        "on-secondary-fixed": "#00201d",
-        "error": "#ba1a1a",
-        "warning-amber": "#B45309",
-        "on-error-container": "#93000a",
+        "primary-fixed":        "#D6DADE",
+        "primary-fixed-dim":    "#B5BCC4",
+        "on-primary-fixed":     "#071c36",
         "on-primary-fixed-variant": "#364764",
-        "on-secondary-container": "#006f67",
-        "surface-variant": "#e0e3e6",
-        "on-primary": "#ffffff",
-        "on-background": "#191c1e",
-        "error-red": "#B91C1C",
-        "inverse-primary": "#b5c7ea",
-        "tertiary": "#000712",
-        "primary-fixed": "#d6e3ff",
-        "outline": "#75777e",
-        "tertiary-fixed-dim": "#b9c8de",
-        "surface": "#f7f9fc",
-        "outline-variant": "#c4c6ce",
-        "on-tertiary": "#ffffff",
-        "on-surface-variant": "#44474d",
-        "error-container": "#ffdad6",
-        "background": "#f7f9fc",
-        "ui-steel": "#94A3B8",
-        "accent-teal": "#0F766E",
-        "primary-navy": "#0B1F3A",
-        // preserve current fallback
-        primary_fallback: {
-          DEFAULT: '#0B1F3A',
-          container: '#112030',
-        },
-        secondary_fallback: {
-          DEFAULT: '#0F766E',
-          container: '#ccfbf1',
-        },
+        "secondary-fixed":      "#C5D9CB",
+        "secondary-fixed-dim":  "#9DBFAA",
+        "on-secondary-fixed":   "#00201d",
+        "on-secondary-fixed-variant": "#00504a",
+        "surface-tint":         "#5E6A78",
       },
-      spacing: {
-        "container-max": "1200px",
-        "gutter": "24px",
-        "margin-mobile": "16px",
-        "margin-desktop": "40px",
-        "base": "8px",
-        "section-gap": "80px"
-      },
+
       fontFamily: {
         sans: [
           'var(--font-inter)',
@@ -93,26 +91,56 @@ module.exports = {
           'Arial',
           'sans-serif',
         ],
-        "headline-lg": ["Inter"],
-        "body-lg": ["Inter"],
-        "caption": ["Inter"],
-        "headline-md": ["Inter"],
-        "headline-sm": ["Inter"],
-        "label-md": ["Inter"],
-        "body-md": ["Inter"],
-        "headline-xl": ["Inter"]
       },
+
       fontSize: {
-        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
-        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
-      }
+        // Style guide scale
+        "h1":         ["60px",  { lineHeight: "1.1",  letterSpacing: "-0.025em", fontWeight: "700" }],
+        "h2":         ["42px",  { lineHeight: "1.15", letterSpacing: "-0.015em", fontWeight: "700" }],
+        "h3":         ["28px",  { lineHeight: "1.3",  letterSpacing: "-0.01em",  fontWeight: "600" }],
+        "body":       ["18px",  { lineHeight: "1.55", fontWeight: "400" }],
+        "small":      ["15px",  { lineHeight: "1.55", fontWeight: "400" }],
+        "btn":        ["16px",  { lineHeight: "1",    fontWeight: "600" }],
+        // Legacy aliases
+        "headline-xl": ["48px", { lineHeight: "1.1",  letterSpacing: "-0.02em",  fontWeight: "700" }],
+        "headline-lg": ["36px", { lineHeight: "1.2",  letterSpacing: "-0.01em",  fontWeight: "600" }],
+        "headline-md": ["28px", { lineHeight: "1.3",  letterSpacing: "-0.01em",  fontWeight: "600" }],
+        "headline-sm": ["22px", { lineHeight: "1.4",  fontWeight: "600" }],
+        "body-lg":     ["18px", { lineHeight: "1.55", fontWeight: "400" }],
+        "body-md":     ["15px", { lineHeight: "1.55", fontWeight: "400" }],
+        "label-md":    ["15px", { lineHeight: "1.55", letterSpacing: "0.02em",   fontWeight: "500" }],
+        "caption":     ["13px", { lineHeight: "1.5",  fontWeight: "400" }],
+      },
+
+      spacing: {
+        "section":    "120px",
+        "card-gap":   "32px",
+        "content-max":"1280px",
+        "canvas-max": "1440px",
+        "container-max": "1280px",
+        "gutter":     "24px",
+        "margin-mobile": "16px",
+        "margin-desktop": "40px",
+        "base":       "8px",
+        "section-gap":"120px",
+      },
+
+      borderRadius: {
+        "card":   "18px",
+        "btn":    "14px",
+      },
+
+      boxShadow: {
+        "card": "0 2px 12px rgba(31,35,40,0.06)",
+        "card-hover": "0 4px 24px rgba(31,35,40,0.10)",
+        "soft": "0 1px 6px rgba(31,35,40,0.05)",
+      },
+
+      transitionDuration: {
+        "hover": "120ms",
+        "fade":  "250ms",
+      },
     },
   },
   plugins: [],
-}
+};

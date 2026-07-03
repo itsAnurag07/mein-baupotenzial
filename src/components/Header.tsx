@@ -1,135 +1,127 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useSession, signOut } from 'next-auth/react';
+import {
+  Building2,
+  Layers,
+  Route,
+  GraduationCap,
+  HelpCircle,
+  Menu,
+  X,
+} from 'lucide-react';
+
+const NAV = [
+  { href: '/analyse',           label: 'Analyse starten' },
+  { href: '/#leistungen',       label: 'Leistungen' },
+  { href: '/#so-funktionierts', label: "So funktioniert's" },
+  { href: '/#wissen',           label: 'Wissen' },
+  { href: '/#faq',              label: 'FAQ' },
+];
+
+const NAV_ICONS = [
+  <Building2 size={18} strokeWidth={2} />,
+  <Layers     size={18} strokeWidth={2} />,
+  <Route      size={18} strokeWidth={2} />,
+  <GraduationCap size={18} strokeWidth={2} />,
+  <HelpCircle size={18} strokeWidth={2} />,
+];
 
 export default function Header() {
-  const { data: session } = useSession();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 12);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className="bg-surface-white border-b border-surface-dim sticky top-0 z-50 transition-all duration-200 ease-in-out">
-      <div className="flex justify-between items-center w-full px-4 md:px-10 max-w-7xl mx-auto h-16">
+    <header
+      className={`bg-surface-white sticky top-0 z-50 transition-all duration-[250ms] ${
+        scrolled ? 'shadow-soft border-b border-surface-dim' : 'border-b border-surface-dim'
+      }`}
+    >
+      <div className="flex justify-between items-center w-full px-4 md:px-10 max-w-[1440px] mx-auto h-20">
+
+        {/* Logo */}
         <div className="flex items-center">
-          <Link href="/" className="hover:opacity-95 flex items-center">
-            <img src="/logo.png" alt="mein-baupotenzial.de Logo" className="h-11 w-auto object-contain" />
+          <Link href="/" className="hover:opacity-80 transition-opacity duration-[120ms] flex items-center">
+            <img
+              src="/logo.png"
+              alt="mein-baupotenzial.de Logo"
+              className="object-contain"
+              style={{ maxHeight: '44px', width: 'auto' }}
+            />
           </Link>
         </div>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
-          <Link href="/analyse" className="text-primary font-bold border-b-2 border-secondary text-sm py-1">
-            Analyse starten
-          </Link>
-          <Link href="/#preise" className="text-on-surface-variant hover:text-secondary transition-colors text-sm py-1 font-medium">
-            Preise
-          </Link>
-          <Link href="/#ueber-uns" className="text-on-surface-variant hover:text-secondary transition-colors text-sm py-1 font-medium">
-            Über uns
-          </Link>
-          <Link href="/#faq" className="text-on-surface-variant hover:text-secondary transition-colors text-sm py-1 font-medium">
-            FAQ
-          </Link>
+          {NAV.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className="text-on-surface-variant hover:text-primary transition-colors duration-[120ms] text-sm font-medium py-1"
+            >
+              {label}
+            </Link>
+          ))}
         </nav>
 
-        <div className="flex items-center gap-3">
-          {/* Desktop Auth */}
-          <div className="hidden md:flex items-center gap-3">
-            {session ? (
-              <>
-                <Link href="/admin/dashboard" className="text-sm font-semibold text-secondary hover:underline">
-                  Dashboard
-                </Link>
-                <button
-                  onClick={() => signOut({ callbackUrl: '/' })}
-                  className="bg-surface-bright border border-surface-dim text-primary px-4 py-2 rounded-lg text-sm font-semibold hover:bg-surface-container transition-colors"
-                >
-                  Abmelden
-                </button>
-              </>
-            ) : (
-              <Link
-                href="/admin/dashboard"
-                className="bg-primary text-on-primary px-6 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
-              >
-                Login
-              </Link>
-            )}
-          </div>
-
-          {/* Mobile Hamburger Button */}
-          <button
-            className="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-lg hover:bg-surface-bright transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Menü öffnen"
+        {/* Desktop CTA */}
+        <div className="hidden md:flex items-center">
+          <Link
+            href="/analyse"
+            className="inline-flex items-center gap-2 bg-secondary text-on-secondary font-semibold text-[15px] hover:bg-cta-hover transition-colors duration-[120ms]"
+            style={{ height: '48px', paddingLeft: '24px', paddingRight: '24px', borderRadius: '14px' }}
           >
-            <span className={`block w-5 h-0.5 bg-primary rounded-full transition-all duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-[3px]' : ''}`}></span>
-            <span className={`block w-5 h-0.5 bg-primary rounded-full transition-all duration-300 mt-1 ${mobileMenuOpen ? 'opacity-0' : ''}`}></span>
-            <span className={`block w-5 h-0.5 bg-primary rounded-full transition-all duration-300 mt-1 ${mobileMenuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`}></span>
-          </button>
+            <Building2 size={17} strokeWidth={2} />
+            Grundstück analysieren
+          </Link>
         </div>
+
+        {/* Mobile Hamburger */}
+        <button
+          className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-surface-bright transition-colors duration-[120ms] text-primary"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Menü öffnen"
+        >
+          {mobileMenuOpen ? <X size={20} strokeWidth={2} /> : <Menu size={20} strokeWidth={2} />}
+        </button>
       </div>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'max-h-96 border-t border-surface-dim' : 'max-h-0'}`}>
+      <div
+        className={`md:hidden overflow-hidden transition-all duration-[250ms] ease-in-out ${
+          mobileMenuOpen ? 'max-h-[500px] border-t border-surface-dim' : 'max-h-0'
+        }`}
+      >
         <nav className="flex flex-col px-4 py-4 bg-surface-white gap-1">
           <Link
             href="/analyse"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-on-primary bg-primary hover:opacity-90 transition-opacity"
+            className="flex items-center gap-3 px-4 py-3.5 text-[15px] font-semibold text-on-secondary bg-secondary hover:bg-cta-hover transition-colors duration-[120ms]"
+            style={{ borderRadius: '14px' }}
           >
-            <span className="material-symbols-outlined text-[20px]">play_arrow</span>
-            Analyse starten
-          </Link>
-          <Link
-            href="/#preise"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-primary hover:bg-surface-bright transition-colors"
-          >
-            <span className="material-symbols-outlined text-[20px] text-on-surface-variant">payments</span>
-            Preise
-          </Link>
-          <Link
-            href="/#ueber-uns"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-primary hover:bg-surface-bright transition-colors"
-          >
-            <span className="material-symbols-outlined text-[20px] text-on-surface-variant">info</span>
-            Über uns
-          </Link>
-          <Link
-            href="/#faq"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-primary hover:bg-surface-bright transition-colors"
-          >
-            <span className="material-symbols-outlined text-[20px] text-on-surface-variant">help</span>
-            FAQ
+            <Building2 size={18} strokeWidth={2} />
+            Grundstück analysieren
           </Link>
 
-          <div className="border-t border-surface-dim mt-2 pt-3 px-4">
-            {session ? (
-              <div className="flex items-center justify-between">
-                <Link href="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} className="text-sm font-semibold text-secondary hover:underline">
-                  Dashboard
-                </Link>
-                <button
-                  onClick={() => { signOut({ callbackUrl: '/' }); setMobileMenuOpen(false); }}
-                  className="bg-surface-bright border border-surface-dim text-primary px-4 py-2 rounded-lg text-sm font-semibold hover:bg-surface-container transition-colors"
-                >
-                  Abmelden
-                </button>
-              </div>
-            ) : (
-              <Link
-                href="/admin/dashboard"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-center bg-surface-bright border border-surface-dim text-primary px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-surface-container transition-colors"
-              >
-                Login
-              </Link>
-            )}
-          </div>
+          {NAV.slice(1).map(({ href, label }, i) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 text-[15px] font-medium text-primary hover:bg-surface-bright transition-colors duration-[120ms]"
+              style={{ borderRadius: '12px' }}
+            >
+              <span className="text-on-surface-variant">{NAV_ICONS[i + 1]}</span>
+              {label}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>

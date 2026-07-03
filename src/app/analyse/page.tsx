@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -8,16 +8,16 @@ import { PayPalButtons } from '@paypal/react-paypal-js';
 import Header from '@/components/Header';
 
 const STAGES = [
-  'Ziel der Prüfung',
+  'Ziel der PrÃ¼fung',
   'Kontaktdaten',
-  'Grundstück finden',
-  'Grundstücksdaten',
+  'GrundstÃ¼ck finden',
+  'GrundstÃ¼cksdaten',
   'Bestand',
   'Planungsrecht',
   'Vorhaben konkretisieren',
   'Rahmenbedingungen',
   'Dateiupload',
-  'Prüfen & Bezahlen'
+  'PrÃ¼fen & Bezahlen'
 ];
 
 interface UploadedDocument {
@@ -34,7 +34,7 @@ export default function Page() {
       <div className="min-h-screen flex flex-col bg-[#f7f9fc]">
         <div className="flex-grow flex items-center justify-center py-20">
           <div className="text-center">
-            <span className="material-symbols-outlined text-4xl animate-spin text-accent-teal mb-4">sync</span>
+            <span translate="no" className="material-symbols-outlined text-4xl animate-spin text-accent-teal mb-4">sync</span>
             <p className="text-sm font-semibold text-primary-navy">Ladeprozess wird gestartet...</p>
           </div>
         </div>
@@ -58,33 +58,33 @@ function AnalyseWizardPage() {
   
   // Form Fields matching German spec exactly
   const [formData, setFormData] = useState({
-    // Step 1: Ziel der Prüfung
+    // Step 1: Ziel der PrÃ¼fung
     analysisGoal: '', // NEUBAU, NACHVERDICHTUNG, AUFSTOCKUNG, TEILUNG, ERSATZNEUBAU, SONSTIGES
-    importantQuestion: '', // Freitext, 1-2 Sätze
+    importantQuestion: '', // Freitext, 1-2 SÃ¤tze
     
     // Step 2: Kontaktdaten
     contactFirstName: '',
     contactLastName: '',
     contactEmail: '',
     contactPhone: '',
-    contactRole: '', // OWNER, CHILD_HEIR, AUTHORIZED, OTHER (Eigentümer / Kind/Erbe / Bevollmächtigt / Sonstiges)
+    contactRole: '', // OWNER, CHILD_HEIR, AUTHORIZED, OTHER (EigentÃ¼mer / Kind/Erbe / BevollmÃ¤chtigt / Sonstiges)
     agbAcceptedStep2: false, // Pflicht in Schritt 2
     
-    // Step 3: Grundstück finden
+    // Step 3: GrundstÃ¼ck finden
     addressStreet: '',
     addressNumber: '',
     addressZip: '',
     addressCity: '',
     addressState: 'Nordrhein-Westfalen',
-    cadastralDistrict: '', // Flurstück / Gemarkung
+    cadastralDistrict: '', // FlurstÃ¼ck / Gemarkung
     geoportalLink: '',
     
-    // Step 4: Grundstücksdaten
+    // Step 4: GrundstÃ¼cksdaten
     plotArea: '',
-    plotShape: '', // NORMAL, NARROW, DEEP, CORNER (normal / schmal / sehr tief / Eckgrundstück)
+    plotShape: '', // NORMAL, NARROW, DEEP, CORNER (normal / schmal / sehr tief / EckgrundstÃ¼ck)
     slope: '', // YES, NO, DONT_KNOW (Hanglage)
     developmentStatus: '', // DEVELOPED, PARTIAL, UNRESOLVED (erschlossen / teilweise / unklar)
-    accessRoad: '', // DIRECT, EASEMENT, UNRESOLVED (direkt / über Wegerecht / unklar)
+    accessRoad: '', // DIRECT, EASEMENT, UNRESOLVED (direkt / Ã¼ber Wegerecht / unklar)
     
     // Step 5: Bestand
     plotIsBuilt: false, // Unbebaut (false) / Bebaut (true)
@@ -97,16 +97,16 @@ function AnalyseWizardPage() {
     // Step 6: Planungsrecht
     zoningPlanExists: 'DONT_KNOW', // YES, NO, DONT_KNOW
     hasPlanningDocuments: false, // ja/nein
-    neighborhoodZoning: '', // EFH, MIXED, MFH, COMMERCIAL, DONT_KNOW (überwiegend EFH / gemischt / überwiegend MFH / Gewerbe / unklar)
+    neighborhoodZoning: '', // EFH, MIXED, MFH, COMMERCIAL, DONT_KNOW (Ã¼berwiegend EFH / gemischt / Ã¼berwiegend MFH / Gewerbe / unklar)
     planningSpecialNotes: '', // Comma separated selected values: Denkmalschutz, Milieuschutz, Erhaltungssatzung
     planningInfoDetails: '',
     
     // Step 7: Vorhaben konkretisieren (path specific)
     targetType: '', // EFH, DH_REH, MFH, MIXED
-    targetArea: '', // ca. Wohnfläche
+    targetArea: '', // ca. WohnflÃ¤che
     targetUnits: '', // Anzahl Einheiten
-    targetDensityType: '', // Anbau, Neubau im Garten, zusätzliche Einheit, sonstiges
-    targetDensityUnits: '', // 1 Einheit, 2–4 Einheiten, >4
+    targetDensityType: '', // Anbau, Neubau im Garten, zusÃ¤tzliche Einheit, sonstiges
+    targetDensityUnits: '', // 1 Einheit, 2â€“4 Einheiten, >4
     targetFloors: '', // 1 Geschoss, 2 Geschosse, unklar
     knowsStructure: false, // ja/nein
     targetDivisions: '', // 2, 3, >3
@@ -404,10 +404,10 @@ function AnalyseWizardPage() {
         saveLeadData({ ...formData, referralCodeUsed: data.code });
       } else {
         setReferralIsValid(false);
-        setReferralMessage(data.message || 'Ungültiger Code.');
+        setReferralMessage(data.message || 'UngÃ¼ltiger Code.');
       }
     } catch (err) {
-      setReferralMessage('Fehler bei der Überprüfung des Gutscheincodes.');
+      setReferralMessage('Fehler bei der ÃœberprÃ¼fung des Gutscheincodes.');
     } finally {
       setCheckingReferral(false);
     }
@@ -436,7 +436,7 @@ function AnalyseWizardPage() {
       if (res.ok) {
         setCheckoutCompleted(true);
       } else {
-        setCheckoutError('Fehler beim Abschließen Ihrer Bestellung.');
+        setCheckoutError('Fehler beim AbschlieÃŸen Ihrer Bestellung.');
       }
     } catch (err) {
       setCheckoutError('Fehler bei der Verbindung zum Server.');
@@ -462,7 +462,7 @@ function AnalyseWizardPage() {
       if (res.ok) {
         setCheckoutCompleted(true);
       } else {
-        setCheckoutError('Fehler beim Abschließen Ihrer Bestellung.');
+        setCheckoutError('Fehler beim AbschlieÃŸen Ihrer Bestellung.');
       }
     } catch (err) {
       setCheckoutError('Fehler bei der Verbindung zum Server.');
@@ -510,12 +510,12 @@ function AnalyseWizardPage() {
 
   const getWishesText = () => {
     const parts = [getGoalLabel(formData.analysisGoal)];
-    if (formData.targetType) parts.push(`Gebäudetyp: ${formData.targetType === 'EFH' ? 'Einfamilienhaus' : formData.targetType === 'MFH' ? 'Mehrfamilienhaus' : formData.targetType === 'DH_REH' ? 'Doppel-/Reihenhaus' : 'Gemischt'}`);
-    if (formData.targetArea) parts.push(`Wohnfläche: ca. ${formData.targetArea}`);
+    if (formData.targetType) parts.push(`GebÃ¤udetyp: ${formData.targetType === 'EFH' ? 'Einfamilienhaus' : formData.targetType === 'MFH' ? 'Mehrfamilienhaus' : formData.targetType === 'DH_REH' ? 'Doppel-/Reihenhaus' : 'Gemischt'}`);
+    if (formData.targetArea) parts.push(`WohnflÃ¤che: ca. ${formData.targetArea}`);
     if (formData.targetUnits) parts.push(`Wohneinheiten: ${formData.targetUnits}`);
-    if (formData.targetDensityType) parts.push(`Nachverdichtung: ${formData.targetDensityType === 'EXTENSION' ? 'Anbau' : formData.targetDensityType === 'GARDEN_BUILDING' ? 'Hinterlandbebauung' : 'Zusätzliche Wohneinheit'}`);
+    if (formData.targetDensityType) parts.push(`Nachverdichtung: ${formData.targetDensityType === 'EXTENSION' ? 'Anbau' : formData.targetDensityType === 'GARDEN_BUILDING' ? 'Hinterlandbebauung' : 'ZusÃ¤tzliche Wohneinheit'}`);
     if (formData.projectDetails) parts.push(`Details: ${formData.projectDetails}`);
-    return parts.join(' • ');
+    return parts.join(' â€¢ ');
   };
 
   if (!isLoaded) {
@@ -523,7 +523,7 @@ function AnalyseWizardPage() {
       <div className="min-h-screen flex flex-col bg-[#f7f9fc]">
         <div className="flex-grow flex items-center justify-center py-20">
           <div className="text-center">
-            <span className="material-symbols-outlined text-4xl animate-spin text-accent-teal mb-4">sync</span>
+            <span translate="no" className="material-symbols-outlined text-4xl animate-spin text-accent-teal mb-4">sync</span>
             <p className="text-sm font-semibold text-primary-navy">Lade Daten...</p>
           </div>
         </div>
@@ -552,10 +552,10 @@ function AnalyseWizardPage() {
             </div>
             <div className="flex items-center sm:flex-col sm:items-end gap-1">
               <div className="flex items-center gap-1.5 text-accent-teal font-medium">
-                <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: '"FILL" 1' }}>
+                <span translate="no" className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: '"FILL" 1' }}>
                   {isSaving ? 'sync' : 'check_circle'}
                 </span>
-                <span className="text-[11px] sm:text-xs">{isSaving ? 'Speichert...' : '✓ Gespeichert'}</span>
+                <span className="text-[11px] sm:text-xs">{isSaving ? 'Speichert...' : 'âœ“ Gespeichert'}</span>
               </div>
             </div>
           </div>
@@ -585,10 +585,10 @@ function AnalyseWizardPage() {
           {STAGES.map((label, idx) => {
             const stepNum = idx + 1;
             const isCompleted = checkoutCompleted || stepNum < currentStep;
-            const prefix = isCompleted ? '✓' : `${String(stepNum).padStart(2, '0')}`;
+            const prefix = isCompleted ? 'âœ“' : `${String(stepNum).padStart(2, '0')}`;
             return (
               <option key={idx} value={stepNum} disabled={!canNavigateToStep(stepNum)}>
-                {prefix} – {label}
+                {prefix} â€“ {label}
               </option>
             );
           })}
@@ -600,7 +600,7 @@ function AnalyseWizardPage() {
         <aside className="hidden md:flex w-64 bg-surface-container-low border-r border-surface-dim p-4 flex-col gap-2 shrink-0">
           <div className="mb-4 px-3">
             <h3 className="font-headline-sm text-headline-sm text-primary mb-1">Analyse-Fortschritt</h3>
-            <p className="text-caption text-on-surface-variant">Schritt für Schritt zum Baupotenzial</p>
+            <p className="text-caption text-on-surface-variant">Schritt fÃ¼r Schritt zum Baupotenzial</p>
           </div>
           <nav className="flex flex-col gap-1">
             {STAGES.map((label, idx) => {
@@ -616,7 +616,7 @@ function AnalyseWizardPage() {
               if (isCompleted) {
                 itemClass += "text-on-surface-variant hover:bg-surface-container-high " + (isClickable ? "cursor-pointer" : "cursor-not-allowed opacity-80");
                 circleClass += "bg-accent-teal text-white";
-                iconContent = <span className="material-symbols-outlined text-sm">check</span>;
+                iconContent = <span translate="no" className="material-symbols-outlined text-sm">check</span>;
               } else if (isActive) {
                 itemClass += "text-on-secondary-container bg-secondary-container font-bold";
                 circleClass += "bg-primary-navy text-white";
@@ -654,7 +654,7 @@ function AnalyseWizardPage() {
               target="_blank"
               className="w-full flex items-center justify-center gap-2 border border-outline text-on-surface p-3 rounded-lg hover:bg-surface-container-high transition-all text-xs font-semibold"
             >
-              <span className="material-symbols-outlined">help_outline</span>
+              <span translate="no" className="material-symbols-outlined">help_outline</span>
               <span className="text-label-md">Hilfe anfordern</span>
             </a>
           </div>
@@ -665,8 +665,8 @@ function AnalyseWizardPage() {
           <div className="max-w-3xl mx-auto space-y-12">
           {checkoutCompleted ? (
             <div className="text-center py-12">
-              <span className="material-symbols-outlined text-5xl text-accent-teal mb-6 font-bold">check_circle</span>
-              <h2 className="text-2xl font-bold text-primary mb-4 font-sans">Vielen Dank für Ihre Bestellung!</h2>
+              <span translate="no" className="material-symbols-outlined text-5xl text-accent-teal mb-6 font-bold">check_circle</span>
+              <h2 className="text-2xl font-bold text-primary mb-4 font-sans">Vielen Dank fÃ¼r Ihre Bestellung!</h2>
               
               <div className="max-w-md mx-auto bg-surface-white border border-surface-dim p-6 rounded-xl text-left text-sm leading-relaxed mb-8 shadow-sm">
                 <p className="mb-4 font-medium text-on-surface-variant">Wir haben Ihre Angaben erfolgreich erfasst. Ihr Projekt-Code lautet:</p>
@@ -674,15 +674,15 @@ function AnalyseWizardPage() {
                 
                 {paymentMethod === 'BANK_TRANSFER' ? (
                   <>
-                    <h3 className="font-bold text-primary mb-2 text-sm border-b border-surface-dim pb-1 font-sans">Zahlungsdetails (Banküberweisung)</h3>
-                    <p className="mb-4 text-xs text-on-surface-variant leading-snug">Bitte überweisen Sie den ausstehenden Bruttobetrag auf folgendes Konto:</p>
+                    <h3 className="font-bold text-primary mb-2 text-sm border-b border-surface-dim pb-1 font-sans">Zahlungsdetails (BankÃ¼berweisung)</h3>
+                    <p className="mb-4 text-xs text-on-surface-variant leading-snug">Bitte Ã¼berweisen Sie den ausstehenden Bruttobetrag auf folgendes Konto:</p>
                     <table className="w-full text-xs">
                       <tbody>
-                        <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">Empfänger:</td><td className="py-2 text-right">van Valkenburg GmbH</td></tr>
+                        <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">EmpfÃ¤nger:</td><td className="py-2 text-right">van Valkenburg GmbH</td></tr>
                         <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">IBAN:</td><td className="py-2 text-right">DE89 3704 0044 0532 0130 00</td></tr>
                         <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">BIC:</td><td className="py-2 text-right font-medium">WELADED1XXX</td></tr>
                         <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">Verwendungszweck:</td><td className="py-2 text-right font-mono font-bold text-primary-navy">Analyse {leadId?.substring(0, 8)}</td></tr>
-                        <tr><td className="py-2 font-bold">Betrag (Brutto):</td><td className="py-2 text-right font-black text-accent-teal">{totalPrice.toFixed(2)} €</td></tr>
+                        <tr><td className="py-2 font-bold">Betrag (Brutto):</td><td className="py-2 text-right font-black text-accent-teal">{totalPrice.toFixed(2)} â‚¬</td></tr>
                       </tbody>
                     </table>
                     <p className="mt-4 text-[10px] text-on-surface-variant leading-snug">
@@ -690,7 +690,7 @@ function AnalyseWizardPage() {
                     </p>
                   </>
                 ) : (
-                  <p className="text-xs text-on-surface-variant">Wir haben Ihre PayPal-Zahlung erhalten. Sie erhalten in Kürze eine E-Mail mit der Auftragsbestätigung und den nächsten Schritten.</p>
+                  <p className="text-xs text-on-surface-variant">Wir haben Ihre PayPal-Zahlung erhalten. Sie erhalten in KÃ¼rze eine E-Mail mit der AuftragsbestÃ¤tigung und den nÃ¤chsten Schritten.</p>
                 )}
               </div>
 
@@ -698,15 +698,15 @@ function AnalyseWizardPage() {
                 onClick={handleFinishWizard}
                 className="bg-primary-navy text-white px-8 py-3.5 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity shadow"
               >
-                Zurück zur Startseite
+                ZurÃ¼ck zur Startseite
               </button>
             </div>
             ) : showCheckout ? (
               /* WIZARD CHECKOUT (AFTER STEP 10 SUMMARY CONFIRMATION) */
               <div className="space-y-8" id="step-packages">
                 <div className="text-center">
-                  <h2 className="text-headline-md font-headline-md text-primary-navy">Wählen Sie Ihr Analyse-Paket</h2>
-                  <p className="text-body-md text-on-surface-variant mt-2 text-xs">Detaillierte Einblicke für fundierte Entscheidungen.</p>
+                  <h2 className="text-headline-md font-headline-md text-primary-navy">WÃ¤hlen Sie Ihr Analyse-Paket</h2>
+                  <p className="text-body-md text-on-surface-variant mt-2 text-xs">Detaillierte Einblicke fÃ¼r fundierte Entscheidungen.</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -722,16 +722,16 @@ function AnalyseWizardPage() {
                   >
                     <div className="p-6 border-b border-surface-dim bg-surface-bright">
                       <h4 className="font-headline-sm text-headline-sm text-primary mb-2">Quick Check</h4>
-                      <p className="text-headline-md font-bold text-primary">189 € <span className="text-caption font-normal text-on-surface-variant">netto</span></p>
+                      <p className="text-headline-md font-bold text-primary">189 â‚¬ <span className="text-caption font-normal text-on-surface-variant">netto</span></p>
                     </div>
                     <div className="p-6 flex-1 space-y-4">
                       <ul className="text-label-md space-y-3">
                         <li className="flex gap-2">
-                          <span className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
-                          <span>Erste Einschätzung</span>
+                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <span>Erste EinschÃ¤tzung</span>
                         </li>
                         <li className="flex gap-2">
-                          <span className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
                           <span>Baurecht-Grobcheck</span>
                         </li>
                       </ul>
@@ -740,7 +740,7 @@ function AnalyseWizardPage() {
                       <button className={`w-full py-3 font-bold rounded-lg transition-all text-xs ${
                         formData.packageSelected === 'QUICK_CHECK' ? 'bg-primary-navy text-white' : 'border border-primary-navy text-primary-navy hover:bg-surface-container-low'
                       }`}>
-                        {formData.packageSelected === 'QUICK_CHECK' ? 'Ausgewählt' : 'Auswählen'}
+                        {formData.packageSelected === 'QUICK_CHECK' ? 'AusgewÃ¤hlt' : 'AuswÃ¤hlen'}
                       </button>
                     </div>
                   </div>
@@ -760,20 +760,20 @@ function AnalyseWizardPage() {
                     <div className="bg-primary-navy/5 text-center py-1 text-[10px] font-bold tracking-widest uppercase text-primary-navy">Empfohlen</div>
                     <div className="p-6 border-b border-surface-dim bg-surface-bright">
                       <h4 className="font-headline-sm text-headline-sm text-primary-navy mb-2">Potenzialanalyse</h4>
-                      <p className="text-headline-md font-bold text-primary">490 € <span className="text-caption font-normal text-on-surface-variant">netto</span></p>
+                      <p className="text-headline-md font-bold text-primary">490 â‚¬ <span className="text-caption font-normal text-on-surface-variant">netto</span></p>
                     </div>
                     <div className="p-6 flex-1 space-y-4">
                       <ul className="text-label-md space-y-3">
                         <li className="flex gap-2">
-                          <span className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
                           <span>Detaillierter Report</span>
                         </li>
                         <li className="flex gap-2">
-                          <span className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
-                          <span>Flächenberechnung</span>
+                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <span>FlÃ¤chenberechnung</span>
                         </li>
                         <li className="flex gap-2">
-                          <span className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
                           <span>Marktwert-Indikation</span>
                         </li>
                       </ul>
@@ -782,7 +782,7 @@ function AnalyseWizardPage() {
                       <button className={`w-full py-3 font-bold rounded-lg transition-all text-xs ${
                         formData.packageSelected === 'POTENTIAL_ANALYSIS' ? 'bg-primary-navy text-white' : 'border border-primary-navy text-primary-navy hover:bg-surface-container-low'
                       }`}>
-                        {formData.packageSelected === 'POTENTIAL_ANALYSIS' ? 'Ausgewählt' : 'Auswählen'}
+                        {formData.packageSelected === 'POTENTIAL_ANALYSIS' ? 'AusgewÃ¤hlt' : 'AuswÃ¤hlen'}
                       </button>
                     </div>
                   </div>
@@ -801,20 +801,20 @@ function AnalyseWizardPage() {
                   >
                     <div className="p-6 border-b border-surface-dim bg-surface-bright">
                       <h4 className="font-headline-sm text-headline-sm text-primary mb-2">Machbarkeit</h4>
-                      <p className="text-headline-md font-bold text-primary">2.490 € <span className="text-caption font-normal text-on-surface-variant">netto</span></p>
+                      <p className="text-headline-md font-bold text-primary">2.490 â‚¬ <span className="text-caption font-normal text-on-surface-variant">netto</span></p>
                     </div>
                     <div className="p-6 flex-1 space-y-4">
                       <ul className="text-label-md space-y-3">
                         <li className="flex gap-2">
-                          <span className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
                           <span>Architekten-Entwurf</span>
                         </li>
                         <li className="flex gap-2">
-                          <span className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
-                          <span>Behörden-Abstimmung</span>
+                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <span>BehÃ¶rden-Abstimmung</span>
                         </li>
                         <li className="flex gap-2">
-                          <span className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
                           <span>Investitionsplanung</span>
                         </li>
                       </ul>
@@ -823,7 +823,7 @@ function AnalyseWizardPage() {
                       <button className={`w-full py-3 font-bold rounded-lg transition-all text-xs ${
                         formData.packageSelected === 'FEASIBILITY_STUDY' ? 'bg-primary-navy text-white' : 'border border-primary-navy text-primary-navy hover:bg-surface-container-low'
                       }`}>
-                        {formData.packageSelected === 'FEASIBILITY_STUDY' ? 'Ausgewählt' : 'Auswählen'}
+                        {formData.packageSelected === 'FEASIBILITY_STUDY' ? 'AusgewÃ¤hlt' : 'AuswÃ¤hlen'}
                       </button>
                     </div>
                   </div>
@@ -835,7 +835,7 @@ function AnalyseWizardPage() {
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                       <div>
                         <h4 className="font-bold text-label-md text-primary-navy font-sans text-sm">Empfehlungscode</h4>
-                        <p className="text-caption text-on-surface-variant text-xs">Mit gültigem Empfehlungscode kann der Quick-Check kostenlos freigeschaltet werden.</p>
+                        <p className="text-caption text-on-surface-variant text-xs">Mit gÃ¼ltigem Empfehlungscode kann der Quick-Check kostenlos freigeschaltet werden.</p>
                       </div>
                       <div className="flex flex-col gap-1">
                         <div className="flex gap-2">
@@ -853,7 +853,7 @@ function AnalyseWizardPage() {
                             disabled={checkingReferral || !formData.referralCodeUsed}
                             className="bg-primary-navy text-white px-6 py-2 rounded-lg font-bold text-xs hover:bg-primary-container transition-all disabled:opacity-50"
                           >
-                            {checkingReferral ? 'Prüfen...' : 'Einlösen'}
+                            {checkingReferral ? 'PrÃ¼fen...' : 'EinlÃ¶sen'}
                           </button>
                         </div>
                         {referralMessage && (
@@ -876,12 +876,12 @@ function AnalyseWizardPage() {
                       className="mt-1 w-5 h-5 rounded border-surface-dim text-primary-navy focus:ring-primary-navy bg-white"
                     />
                     <span className="text-label-md text-on-surface-variant group-hover:text-on-surface transition-colors leading-relaxed">
-                      Ich bestätige, dass die Angaben nach bestem Wissen korrekt sind und es sich hierbei um eine <strong>städtebauliche Machbarkeits-Vorprüfung</strong> der van Valkenburg GmbH handelt und ausdrücklich nicht um einen offiziellen, rechtsverbindlichen Bauvorbescheid.
+                      Ich bestÃ¤tige, dass die Angaben nach bestem Wissen korrekt sind und es sich hierbei um eine <strong>stÃ¤dtebauliche Machbarkeits-VorprÃ¼fung</strong> der van Valkenburg GmbH handelt und ausdrÃ¼cklich nicht um einen offiziellen, rechtsverbindlichen Bauvorbescheid.
                     </span>
                   </label>
                   <div className="bg-surface-container-low p-4 rounded-lg flex items-start gap-3 border border-surface-dim">
-                    <span className="material-symbols-outlined text-warning-amber">info</span>
-                    <p className="text-caption text-on-surface-variant text-[11px] leading-relaxed">Dies ist eine städtebauliche Vorprüfung auf Basis Ihrer Angaben und stellt keine rechtlich verbindliche Baugenehmigung dar.</p>
+                    <span translate="no" className="material-symbols-outlined text-warning-amber">info</span>
+                    <p className="text-caption text-on-surface-variant text-[11px] leading-relaxed">Dies ist eine stÃ¤dtebauliche VorprÃ¼fung auf Basis Ihrer Angaben und stellt keine rechtlich verbindliche Baugenehmigung dar.</p>
                   </div>
                 </div>
 
@@ -889,26 +889,26 @@ function AnalyseWizardPage() {
                 <div className="space-y-6 pt-12 border-t border-surface-dim">
                   <div className="bg-surface-container-low rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                     <div className="flex items-center gap-3">
-                      <span className="material-symbols-outlined text-accent-teal">verified</span>
+                      <span translate="no" className="material-symbols-outlined text-accent-teal">verified</span>
                       <span className="text-label-md font-medium text-primary">Sichere Zahlungsabwicklung</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="material-symbols-outlined text-accent-teal">schedule</span>
+                      <span translate="no" className="material-symbols-outlined text-accent-teal">schedule</span>
                       <span className="text-label-md font-medium text-primary">Analyse startet nach Zahlungseingang</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="material-symbols-outlined text-accent-teal">description</span>
+                      <span translate="no" className="material-symbols-outlined text-accent-teal">description</span>
                       <span className="text-label-md font-medium text-primary">PDF-Report inklusive</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="material-symbols-outlined text-accent-teal">support_agent</span>
-                      <span className="text-label-md font-medium text-primary">Persönliche Beratung je nach Paket</span>
+                      <span translate="no" className="material-symbols-outlined text-accent-teal">support_agent</span>
+                      <span className="text-label-md font-medium text-primary">PersÃ¶nliche Beratung je nach Paket</span>
                     </div>
                   </div>
 
                   <div className="bg-primary-navy/5 border-l-4 border-primary-navy p-6 rounded-r-xl text-xs">
                     <h4 className="font-bold text-label-md text-primary-navy mb-1 text-sm">Wichtiger Hinweis:</h4>
-                    <p className="text-body-md text-on-surface-variant">Die Bearbeitung Ihrer Analyse beginnt erst nach Zahlungseingang. Bei <strong>PayPal</strong> erfolgt die Freigabe sofort. Bei <strong>Überweisung</strong> erfolgt die Bearbeitung nach Wertstellung auf unserem Konto (ca. 1-3 Werktage).</p>
+                    <p className="text-body-md text-on-surface-variant">Die Bearbeitung Ihrer Analyse beginnt erst nach Zahlungseingang. Bei <strong>PayPal</strong> erfolgt die Freigabe sofort. Bei <strong>Ãœberweisung</strong> erfolgt die Bearbeitung nach Wertstellung auf unserem Konto (ca. 1-3 Werktage).</p>
                   </div>
 
                   {checkoutError && (
@@ -933,10 +933,10 @@ function AnalyseWizardPage() {
                   ) : (
                     <div className="bg-surface-white border border-surface-dim rounded-2xl p-8 space-y-6 shadow-sm">
                       <div className="flex items-center justify-between">
-                        <h3 className="text-headline-sm font-headline-sm font-bold text-primary">Zahlungsmethode wählen</h3>
+                        <h3 className="text-headline-sm font-headline-sm font-bold text-primary">Zahlungsmethode wÃ¤hlen</h3>
                         <div className="flex gap-3 items-center">
                           <img alt="PayPal" className="h-5 opacity-70" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1aWjxYL_5qnAPT2_gYFuLuvu_5-IxqXnKoN0GzatSONc-MQ45NYYfKaUdif8MsPdKA-WM1JGgzzT98CE_Z-7ftt-4VE40tb9UF8YB2mng_ulNu0WwMYHbS-RPQGL361eCBNup9gFB9pLkPNcwcrE3QTOoK7OgCHANe4gdUH1Zcbj8mVvKhlZuc3BMRnA4HUaw9ISTtsjcU4uktS4PAguo9NFZNWsIf8muJqwigpqczZbkrGdZU6KF1ECiZ-amkeg0NMSccztuusfi"/>
-                          <span className="material-symbols-outlined text-on-surface-variant">account_balance</span>
+                          <span translate="no" className="material-symbols-outlined text-on-surface-variant">account_balance</span>
                         </div>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -975,7 +975,7 @@ function AnalyseWizardPage() {
                               className="text-primary-navy focus:ring-primary-navy"
                             />
                             <div>
-                              <p className="font-bold text-label-md text-primary">Überweisung</p>
+                              <p className="font-bold text-label-md text-primary">Ãœberweisung</p>
                               <p className="text-[10px] text-on-surface-variant uppercase tracking-wider">Vorkasse</p>
                             </div>
                           </div>
@@ -1029,8 +1029,8 @@ function AnalyseWizardPage() {
                       )}
 
                       <div className="flex items-center gap-3 text-caption text-on-surface-variant bg-surface-container-low/50 p-4 rounded-lg text-[10px] leading-relaxed">
-                        <span className="material-symbols-outlined text-accent-teal text-sm">verified_user</span>
-                        <span>Verschlüsselte SSL-Übertragung. Alle Preise zzgl. 19% MwSt. (Zwischensumme: {price.toFixed(2)} €, MwSt: {vat.toFixed(2)} €, <strong>Gesamt: {totalPrice.toFixed(2)} €</strong>)</span>
+                        <span translate="no" className="material-symbols-outlined text-accent-teal text-sm">verified_user</span>
+                        <span>VerschlÃ¼sselte SSL-Ãœbertragung. Alle Preise zzgl. 19% MwSt. (Zwischensumme: {price.toFixed(2)} â‚¬, MwSt: {vat.toFixed(2)} â‚¬, <strong>Gesamt: {totalPrice.toFixed(2)} â‚¬</strong>)</span>
                       </div>
                     </div>
                   )}
@@ -1042,8 +1042,8 @@ function AnalyseWizardPage() {
                     onClick={() => setShowCheckout(false)}
                     className="flex items-center gap-2 text-primary-navy font-bold hover:translate-x-[-4px] transition-transform text-xs"
                   >
-                    <span className="material-symbols-outlined text-sm">arrow_back</span>
-                    <span>Zurück</span>
+                    <span translate="no" className="material-symbols-outlined text-sm">arrow_back</span>
+                    <span>ZurÃ¼ck</span>
                   </button>
 
                   {paymentMethod === 'BANK_TRANSFER' && !isFree && (
@@ -1053,7 +1053,7 @@ function AnalyseWizardPage() {
                       className="px-12 py-4 bg-primary-navy text-white font-bold rounded-lg hover:shadow-xl hover:scale-[1.02] transition-all flex items-center gap-2 disabled:opacity-50 text-xs"
                     >
                       Jetzt kostenpflichtig beauftragen
-                      <span className="material-symbols-outlined text-sm">chevron_right</span>
+                      <span translate="no" className="material-symbols-outlined text-sm">chevron_right</span>
                     </button>
                   )}
                 </div>
@@ -1064,16 +1064,16 @@ function AnalyseWizardPage() {
               {/* STEP 1: ANALYSIS GOAL */}
               {currentStep === 1 && (
                 <div>
-                  <h2 className="text-headline-md font-headline-md text-primary-navy">Was möchten Sie klären?</h2>
-                  <p className="text-body-md text-on-surface-variant mt-2 text-xs">Wählen Sie das primäre städtebauliche Ziel Ihrer Grundstücksprüfung.</p>
+                  <h2 className="text-headline-md font-headline-md text-primary-navy">Was mÃ¶chten Sie klÃ¤ren?</h2>
+                  <p className="text-body-md text-on-surface-variant mt-2 text-xs">WÃ¤hlen Sie das primÃ¤re stÃ¤dtebauliche Ziel Ihrer GrundstÃ¼cksprÃ¼fung.</p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 mb-6">
                     {[
-                      { val: 'NEUBAU', label: 'Neubau', desc: 'Neues Hauptgebäude errichten.' },
-                      { val: 'NACHVERDICHTUNG', label: 'Nachverdichtung', desc: 'Zusätzliche Wohneinheit/en auf bereits bebautem Land.' },
-                      { val: 'AUFSTOCKUNG', label: 'Aufstockung', desc: 'Erweiterung bestehender Gebäude nach oben.' },
-                      { val: 'TEILUNG', label: 'Teilung / mehrere Einheiten', desc: 'Grundstücksteilung und Parzellierung.' },
-                      { val: 'ERSATZNEUBAU', label: 'Ersatzneubau', desc: 'Abbruch und anschließender Wiederaufbau.' },
+                      { val: 'NEUBAU', label: 'Neubau', desc: 'Neues HauptgebÃ¤ude errichten.' },
+                      { val: 'NACHVERDICHTUNG', label: 'Nachverdichtung', desc: 'ZusÃ¤tzliche Wohneinheit/en auf bereits bebautem Land.' },
+                      { val: 'AUFSTOCKUNG', label: 'Aufstockung', desc: 'Erweiterung bestehender GebÃ¤ude nach oben.' },
+                      { val: 'TEILUNG', label: 'Teilung / mehrere Einheiten', desc: 'GrundstÃ¼cksteilung und Parzellierung.' },
+                      { val: 'ERSATZNEUBAU', label: 'Ersatzneubau', desc: 'Abbruch und anschlieÃŸender Wiederaufbau.' },
                       { val: 'SONSTIGES', label: 'Sonstiges', desc: 'Andere planungsrechtliche Fragestellung.' }
                     ].map(goal => (
                       <label 
@@ -1104,14 +1104,14 @@ function AnalyseWizardPage() {
                   </div>
 
                   <div className="max-w-md border-t border-surface-dim pt-4 mt-6">
-                    <label className="block text-xs font-bold text-primary mb-1">Was ist Ihre wichtigste Frage? (1–2 Sätze)</label>
+                    <label className="block text-xs font-bold text-primary mb-1">Was ist Ihre wichtigste Frage? (1â€“2 SÃ¤tze)</label>
                     <textarea
                       name="importantQuestion"
                       value={formData.importantQuestion}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       rows={2}
-                      placeholder="z.B. Ist eine Hinterlandbebauung mit einem Flachdach-Bungalow zulässig?"
+                      placeholder="z.B. Ist eine Hinterlandbebauung mit einem Flachdach-Bungalow zulÃ¤ssig?"
                       className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs font-semibold focus:outline-none focus:border-primary-navy focus:ring-1 focus:ring-primary-navy bg-white text-primary"
                     ></textarea>
                   </div>
@@ -1121,7 +1121,7 @@ function AnalyseWizardPage() {
               {/* STEP 2: CONTACT DETAILS */}
               {currentStep === 2 && (
                 <div>
-                  <h2 className="text-headline-md font-headline-md text-primary-navy">Kontaktdaten für Rückfragen &amp; Ergebnisse</h2>
+                  <h2 className="text-headline-md font-headline-md text-primary-navy">Kontaktdaten fÃ¼r RÃ¼ckfragen &amp; Ergebnisse</h2>
                   <p className="text-body-md text-on-surface-variant mt-2 text-xs">Bitte hinterlegen Sie Ihre Kontaktdaten. Felder mit * sind Pflichtfelder.</p>
                   
                   <div className="space-y-4 max-w-md mt-6">
@@ -1169,7 +1169,7 @@ function AnalyseWizardPage() {
                     </div>
                     
                     <div>
-                      <label className="block text-xs font-bold text-primary mb-1">Telefonnummer (für Rückfragen)</label>
+                      <label className="block text-xs font-bold text-primary mb-1">Telefonnummer (fÃ¼r RÃ¼ckfragen)</label>
                       <input 
                         type="tel" 
                         name="contactPhone" 
@@ -1182,7 +1182,7 @@ function AnalyseWizardPage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-primary mb-1">Ihre Rolle zum Grundstück *</label>
+                      <label className="block text-xs font-bold text-primary mb-1">Ihre Rolle zum GrundstÃ¼ck *</label>
                       <select 
                         name="contactRole" 
                         value={formData.contactRole} 
@@ -1193,10 +1193,10 @@ function AnalyseWizardPage() {
                         className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs font-semibold focus:outline-none focus:border-primary-navy focus:ring-1 focus:ring-primary-navy bg-white text-primary"
                         required
                       >
-                        <option value="">-- Rolle wählen --</option>
-                        <option value="OWNER">Eigentümer</option>
+                        <option value="">-- Rolle wÃ¤hlen --</option>
+                        <option value="OWNER">EigentÃ¼mer</option>
                         <option value="CHILD_HEIR">Kind/Erbe</option>
-                        <option value="AUTHORIZED">Bevollmächtigt</option>
+                        <option value="AUTHORIZED">BevollmÃ¤chtigt</option>
                         <option value="OTHER">Sonstiges</option>
                       </select>
                     </div>
@@ -1215,7 +1215,7 @@ function AnalyseWizardPage() {
                           required
                         />
                         <span className="text-[10px] text-on-surface-variant leading-relaxed">
-                          Ich stimme den <Link href="/agb" target="_blank" className="text-primary-navy font-bold hover:underline">Allgemeinen Geschäftsbedingungen (AGB)</Link> und der <Link href="/datenschutz" target="_blank" className="text-primary-navy font-bold hover:underline">Datenschutzerklärung</Link> der van Valkenburg GmbH zu. *
+                          Ich stimme den <Link href="/agb" target="_blank" className="text-primary-navy font-bold hover:underline">Allgemeinen GeschÃ¤ftsbedingungen (AGB)</Link> und der <Link href="/datenschutz" target="_blank" className="text-primary-navy font-bold hover:underline">DatenschutzerklÃ¤rung</Link> der van Valkenburg GmbH zu. *
                         </span>
                       </label>
                     </div>
@@ -1226,20 +1226,20 @@ function AnalyseWizardPage() {
               {/* STEP 3: PROPERTY ADDRESS */}
               {currentStep === 3 && (
                 <div>
-                  <h2 className="text-headline-md font-headline-md text-primary-navy">Grundstück finden (Adresse &amp; Lage)</h2>
-                  <p className="text-body-md text-on-surface-variant mt-2 text-xs">Bitte tragen Sie den exakten Standort des Grundstücks ein.</p>
+                  <h2 className="text-headline-md font-headline-md text-primary-navy">GrundstÃ¼ck finden (Adresse &amp; Lage)</h2>
+                  <p className="text-body-md text-on-surface-variant mt-2 text-xs">Bitte tragen Sie den exakten Standort des GrundstÃ¼cks ein.</p>
                   
                   <div className="space-y-4 max-w-md mt-6">
                     <div className="grid grid-cols-3 gap-4">
                       <div className="col-span-2">
-                        <label className="block text-xs font-bold text-primary mb-1">Straße *</label>
+                        <label className="block text-xs font-bold text-primary mb-1">StraÃŸe *</label>
                         <input 
                           type="text" 
                           name="addressStreet" 
                           value={formData.addressStreet} 
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          placeholder="Musterstraße"
+                          placeholder="MusterstraÃŸe"
                           className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs font-semibold focus:outline-none focus:border-primary-navy focus:ring-1 focus:ring-primary-navy bg-white text-primary"
                           required
                         />
@@ -1281,7 +1281,7 @@ function AnalyseWizardPage() {
                           value={formData.addressCity} 
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          placeholder="Düsseldorf"
+                          placeholder="DÃ¼sseldorf"
                           className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs font-semibold focus:outline-none focus:border-primary-navy focus:ring-1 focus:ring-primary-navy bg-white text-primary"
                           required
                         />
@@ -1299,7 +1299,7 @@ function AnalyseWizardPage() {
                         }}
                         className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs font-semibold focus:outline-none focus:border-primary-navy focus:ring-1 focus:ring-primary-navy bg-white text-primary"
                       >
-                        {['Baden-Württemberg', 'Bayern', 'Berlin', 'Brandenburg', 'Bremen', 'Hamburg', 'Hessen', 'Mecklenburg-Vorpommern', 'Niedersachsen', 'Nordrhein-Westfalen', 'Rheinland-Pfalz', 'Saarland', 'Sachsen', 'Sachsen-Anhalt', 'Schleswig-Holstein', 'Thüringen'].map(state => (
+                        {['Baden-WÃ¼rttemberg', 'Bayern', 'Berlin', 'Brandenburg', 'Bremen', 'Hamburg', 'Hessen', 'Mecklenburg-Vorpommern', 'Niedersachsen', 'Nordrhein-Westfalen', 'Rheinland-Pfalz', 'Saarland', 'Sachsen', 'Sachsen-Anhalt', 'Schleswig-Holstein', 'ThÃ¼ringen'].map(state => (
                           <option key={state} value={state}>{state}</option>
                         ))}
                       </select>
@@ -1307,14 +1307,14 @@ function AnalyseWizardPage() {
 
                     <div className="pt-4 border-t border-surface-dim space-y-4 mt-6">
                       <div>
-                        <label className="block text-xs font-bold text-primary mb-1">Flurstück / Gemarkung (optional)</label>
+                        <label className="block text-xs font-bold text-primary mb-1">FlurstÃ¼ck / Gemarkung (optional)</label>
                         <input 
                           type="text" 
                           name="cadastralDistrict" 
                           value={formData.cadastralDistrict} 
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          placeholder="z.B. Gemarkung Altstadt, Flur 4, Flurstück 18/2"
+                          placeholder="z.B. Gemarkung Altstadt, Flur 4, FlurstÃ¼ck 18/2"
                           className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs font-semibold focus:outline-none focus:border-primary-navy focus:ring-1 focus:ring-primary-navy bg-white text-primary"
                         />
                       </div>
@@ -1327,7 +1327,7 @@ function AnalyseWizardPage() {
                           value={formData.geoportalLink} 
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          placeholder="z.B. Link von Boris.NRW o.ä. Portalen"
+                          placeholder="z.B. Link von Boris.NRW o.Ã¤. Portalen"
                           className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs font-semibold focus:outline-none focus:border-primary-navy focus:ring-1 focus:ring-primary-navy bg-white text-primary"
                         />
                         <span className="text-[9px] text-on-surface-variant block mt-0.5">Hinweis: Falls vorhanden, erleichtert uns dies die Einordnung.</span>
@@ -1340,12 +1340,12 @@ function AnalyseWizardPage() {
               {/* STEP 4: GEOMETRY & UTILITIES */}
               {currentStep === 4 && (
                 <div>
-                  <h2 className="text-headline-md font-headline-md text-primary-navy">Grundstücksdaten (Geometrie &amp; Erschließung)</h2>
+                  <h2 className="text-headline-md font-headline-md text-primary-navy">GrundstÃ¼cksdaten (Geometrie &amp; ErschlieÃŸung)</h2>
                   <p className="text-body-md text-on-surface-variant mt-2 text-xs">Tragen Sie hier die Ihnen bekannten geometrischen Daten ein.</p>
                   
                   <div className="space-y-4 max-w-md mt-6">
                     <div>
-                      <label className="block text-xs font-bold text-primary mb-1">Grundstücksfläche (in m²) (empfohlen)</label>
+                      <label className="block text-xs font-bold text-primary mb-1">GrundstÃ¼cksflÃ¤che (in mÂ²) (empfohlen)</label>
                       <input 
                         type="number" 
                         name="plotArea" 
@@ -1364,7 +1364,7 @@ function AnalyseWizardPage() {
                           { val: 'NORMAL', label: 'Normal / Rechteckig' },
                           { val: 'NARROW', label: 'Schmal' },
                           { val: 'DEEP', label: 'Sehr tief' },
-                          { val: 'CORNER', label: 'Eckgrundstück' }
+                          { val: 'CORNER', label: 'EckgrundstÃ¼ck' }
                         ].map(item => (
                           <button
                             key={item.val}
@@ -1395,7 +1395,7 @@ function AnalyseWizardPage() {
                           }}
                           className="w-full px-2 py-1.5 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold focus:ring-primary-navy"
                         >
-                          <option value="">Bitte wählen</option>
+                          <option value="">Bitte wÃ¤hlen</option>
                           <option value="YES">Ja</option>
                           <option value="NO">Nein</option>
                           <option value="DONT_KNOW">Unbekannt</option>
@@ -1403,7 +1403,7 @@ function AnalyseWizardPage() {
                       </div>
 
                       <div>
-                        <label className="block text-[10px] font-bold text-primary mb-1">Erschließung</label>
+                        <label className="block text-[10px] font-bold text-primary mb-1">ErschlieÃŸung</label>
                         <select 
                           name="developmentStatus" 
                           value={formData.developmentStatus} 
@@ -1413,7 +1413,7 @@ function AnalyseWizardPage() {
                           }}
                           className="w-full px-2 py-1.5 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold focus:ring-primary-navy"
                         >
-                          <option value="">Bitte wählen</option>
+                          <option value="">Bitte wÃ¤hlen</option>
                           <option value="DEVELOPED">erschlossen</option>
                           <option value="PARTIAL">teilweise</option>
                           <option value="UNRESOLVED">unklar</option>
@@ -1431,9 +1431,9 @@ function AnalyseWizardPage() {
                           }}
                           className="w-full px-2 py-1.5 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold focus:ring-primary-navy"
                         >
-                          <option value="">Bitte wählen</option>
+                          <option value="">Bitte wÃ¤hlen</option>
                           <option value="DIRECT">direkt</option>
-                          <option value="EASEMENT">über Wegerecht</option>
+                          <option value="EASEMENT">Ã¼ber Wegerecht</option>
                           <option value="UNRESOLVED">unklar</option>
                         </select>
                       </div>
@@ -1446,7 +1446,7 @@ function AnalyseWizardPage() {
               {currentStep === 5 && (
                 <div>
                   <h2 className="text-headline-md font-headline-md text-primary-navy">Bestand (was steht heute drauf?)</h2>
-                  <p className="text-body-md text-on-surface-variant mt-2 text-xs">Geben Sie an, ob das Grundstück derzeit bebaut oder unbebaut ist.</p>
+                  <p className="text-body-md text-on-surface-variant mt-2 text-xs">Geben Sie an, ob das GrundstÃ¼ck derzeit bebaut oder unbebaut ist.</p>
                   
                   <div className="space-y-6 max-w-md mt-6">
                     <div className="flex gap-4">
@@ -1479,7 +1479,7 @@ function AnalyseWizardPage() {
                     {formData.plotIsBuilt && (
                       <div className="space-y-4 border-t border-surface-dim pt-4 mt-4">
                         <div>
-                          <label className="block text-xs font-bold text-primary mb-1">Gebäudeart</label>
+                          <label className="block text-xs font-bold text-primary mb-1">GebÃ¤udeart</label>
                           <select 
                             name="buildingType" 
                             value={formData.buildingType} 
@@ -1489,10 +1489,10 @@ function AnalyseWizardPage() {
                             }}
                             className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold"
                           >
-                            <option value="">Bitte wählen</option>
+                            <option value="">Bitte wÃ¤hlen</option>
                             <option value="EFH">Einfamilienhaus (EFH)</option>
                             <option value="MFH">Mehrfamilienhaus (MFH)</option>
-                            <option value="COMMERCIAL">Gewerbegebäude</option>
+                            <option value="COMMERCIAL">GewerbegebÃ¤ude</option>
                             <option value="MIXED">gemischte Nutzung</option>
                             <option value="OTHER">Sonstiges</option>
                           </select>
@@ -1536,7 +1536,7 @@ function AnalyseWizardPage() {
                             }}
                             className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold"
                           >
-                            <option value="">Bitte wählen</option>
+                            <option value="">Bitte wÃ¤hlen</option>
                             <option value="SELF_USED">selbst genutzt</option>
                             <option value="RENTED">vermietet</option>
                             <option value="VACANT">leerstehend</option>
@@ -1554,7 +1554,7 @@ function AnalyseWizardPage() {
                             }}
                             className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold"
                           >
-                            <option value="">Bitte wählen</option>
+                            <option value="">Bitte wÃ¤hlen</option>
                             <option value="YES">ja</option>
                             <option value="NO">nein</option>
                             <option value="DONT_KNOW">unbekannt</option>
@@ -1585,7 +1585,7 @@ function AnalyseWizardPage() {
                         className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold"
                       >
                         <option value="YES">ja</option>
-                        <option value="NO">nein (Innenbereich nach § 34)</option>
+                        <option value="NO">nein (Innenbereich nach Â§ 34)</option>
                         <option value="DONT_KNOW">unbekannt</option>
                       </select>
                     </div>
@@ -1633,10 +1633,10 @@ function AnalyseWizardPage() {
                         }}
                         className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold"
                       >
-                        <option value="">Bitte wählen</option>
-                        <option value="EFH">überwiegend EFH (Einfamilienhäuser)</option>
+                        <option value="">Bitte wÃ¤hlen</option>
+                        <option value="EFH">Ã¼berwiegend EFH (EinfamilienhÃ¤user)</option>
                         <option value="MIXED">gemischt</option>
-                        <option value="MFH">überwiegend MFH (Mehrfamilienhäuser)</option>
+                        <option value="MFH">Ã¼berwiegend MFH (MehrfamilienhÃ¤user)</option>
                         <option value="COMMERCIAL">Gewerbebebauung</option>
                         <option value="DONT_KNOW">unklar</option>
                       </select>
@@ -1675,7 +1675,7 @@ function AnalyseWizardPage() {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         rows={3}
-                        placeholder="Z.B. Bekannte Satzungen, mündliche Auskünfte vom Bauamt..."
+                        placeholder="Z.B. Bekannte Satzungen, mÃ¼ndliche AuskÃ¼nfte vom Bauamt..."
                         className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs font-semibold focus:outline-none focus:border-primary-navy bg-white text-primary"
                       ></textarea>
                     </div>
@@ -1687,14 +1687,14 @@ function AnalyseWizardPage() {
               {currentStep === 7 && (
                 <div>
                   <h2 className="text-headline-md font-headline-md text-primary-navy">Vorhaben konkretisieren</h2>
-                  <p className="text-body-md text-on-surface-variant mt-2 text-xs">Bitte präzisieren Sie Ihre Wünsche entsprechend dem gewählten Pfad.</p>
+                  <p className="text-body-md text-on-surface-variant mt-2 text-xs">Bitte prÃ¤zisieren Sie Ihre WÃ¼nsche entsprechend dem gewÃ¤hlten Pfad.</p>
                   
                   <div className="space-y-4 max-w-md mt-6">
                     {/* CASE A: NEUBAU or ERSATZNEUBAU */}
                     {(formData.analysisGoal === 'NEUBAU' || formData.analysisGoal === 'ERSATZNEUBAU') && (
                       <>
                         <div>
-                          <label className="block text-xs font-bold text-primary mb-1">Geplanter Gebäudetyp</label>
+                          <label className="block text-xs font-bold text-primary mb-1">Geplanter GebÃ¤udetyp</label>
                           <select 
                             name="targetType" 
                             value={formData.targetType} 
@@ -1704,7 +1704,7 @@ function AnalyseWizardPage() {
                             }}
                             className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold"
                           >
-                            <option value="">Bitte wählen</option>
+                            <option value="">Bitte wÃ¤hlen</option>
                             <option value="EFH">Einfamilienhaus (EFH)</option>
                             <option value="DH_REH">Doppelhaus / Reiheneckhaus</option>
                             <option value="MFH">Mehrfamilienhaus (MFH)</option>
@@ -1713,14 +1713,14 @@ function AnalyseWizardPage() {
                         </div>
 
                         <div>
-                          <label className="block text-xs font-bold text-primary mb-1">Gewünschte Wohnfläche (in m²) (optional)</label>
+                          <label className="block text-xs font-bold text-primary mb-1">GewÃ¼nschte WohnflÃ¤che (in mÂ²) (optional)</label>
                           <input 
                             type="text" 
                             name="targetArea" 
                             value={formData.targetArea} 
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            placeholder="z.B. ca. 180 m² oder 150-200 m²"
+                            placeholder="z.B. ca. 180 mÂ² oder 150-200 mÂ²"
                             className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs font-semibold bg-white text-primary"
                           />
                         </div>
@@ -1754,10 +1754,10 @@ function AnalyseWizardPage() {
                             }}
                             className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold"
                           >
-                            <option value="">Bitte wählen</option>
-                            <option value="EXTENSION">Anbau / Gebäudeerweiterung</option>
+                            <option value="">Bitte wÃ¤hlen</option>
+                            <option value="EXTENSION">Anbau / GebÃ¤udeerweiterung</option>
                             <option value="GARDEN_BUILDING">Neubau im Garten (Hinterland)</option>
-                            <option value="ADDITIONAL_UNIT">Zusätzliche Einheit im Bestand</option>
+                            <option value="ADDITIONAL_UNIT">ZusÃ¤tzliche Einheit im Bestand</option>
                             <option value="OTHER">Sonstiges</option>
                           </select>
                         </div>
@@ -1773,9 +1773,9 @@ function AnalyseWizardPage() {
                             }}
                             className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold"
                           >
-                            <option value="">Bitte wählen</option>
+                            <option value="">Bitte wÃ¤hlen</option>
                             <option value="1_UNIT">1 Wohneinheit</option>
-                            <option value="2_4_UNITS">2–4 Wohneinheiten</option>
+                            <option value="2_4_UNITS">2â€“4 Wohneinheiten</option>
                             <option value="MORE_4">&gt; 4 Wohneinheiten</option>
                           </select>
                         </div>
@@ -1786,7 +1786,7 @@ function AnalyseWizardPage() {
                     {formData.analysisGoal === 'AUFSTOCKUNG' && (
                       <>
                         <div>
-                          <label className="block text-xs font-bold text-primary mb-1">Höhe der Aufstockung</label>
+                          <label className="block text-xs font-bold text-primary mb-1">HÃ¶he der Aufstockung</label>
                           <select 
                             name="targetFloors" 
                             value={formData.targetFloors} 
@@ -1796,7 +1796,7 @@ function AnalyseWizardPage() {
                             }}
                             className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold"
                           >
-                            <option value="">Bitte wählen</option>
+                            <option value="">Bitte wÃ¤hlen</option>
                             <option value="1_FLOOR">1 Geschoss aufstocken</option>
                             <option value="2_FLOORS">2 Geschosse aufstocken</option>
                             <option value="DONT_KNOW">unklar</option>
@@ -1804,7 +1804,7 @@ function AnalyseWizardPage() {
                         </div>
 
                         <div>
-                          <label className="block text-xs font-bold text-primary mb-1">Sind die Konstruktionspläne / Statikpläne des Bestands bekannt?</label>
+                          <label className="block text-xs font-bold text-primary mb-1">Sind die KonstruktionsplÃ¤ne / StatikplÃ¤ne des Bestands bekannt?</label>
                           <div className="flex gap-4 mt-2">
                             <button
                               type="button"
@@ -1839,7 +1839,7 @@ function AnalyseWizardPage() {
                     {formData.analysisGoal === 'TEILUNG' && (
                       <>
                         <div>
-                          <label className="block text-xs font-bold text-primary mb-1">Anzahl der geplanten Grundstücksteile</label>
+                          <label className="block text-xs font-bold text-primary mb-1">Anzahl der geplanten GrundstÃ¼cksteile</label>
                           <select 
                             name="targetDivisions" 
                             value={formData.targetDivisions} 
@@ -1849,7 +1849,7 @@ function AnalyseWizardPage() {
                             }}
                             className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold"
                           >
-                            <option value="">Bitte wählen</option>
+                            <option value="">Bitte wÃ¤hlen</option>
                             <option value="2">2 Teile</option>
                             <option value="3">3 Teile</option>
                             <option value="MORE_3">&gt; 3 Teile</option>
@@ -1897,7 +1897,7 @@ function AnalyseWizardPage() {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         rows={4}
-                        placeholder="Schreiben Sie uns Details zur geplanten Raumaufteilung, Architektur oder Wünschen."
+                        placeholder="Schreiben Sie uns Details zur geplanten Raumaufteilung, Architektur oder WÃ¼nschen."
                         className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs font-semibold focus:outline-none focus:border-primary-navy bg-white text-primary"
                       ></textarea>
                     </div>
@@ -1923,16 +1923,16 @@ function AnalyseWizardPage() {
                         }}
                         className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold"
                       >
-                        <option value="">Bitte wählen</option>
-                        <option value="ASAP">so schnell wie möglich</option>
-                        <option value="3_6_MONTHS">3–6 Monate</option>
+                        <option value="">Bitte wÃ¤hlen</option>
+                        <option value="ASAP">so schnell wie mÃ¶glich</option>
+                        <option value="3_6_MONTHS">3â€“6 Monate</option>
                         <option value="MORE_6_MONTHS">&gt; 6 Monate</option>
                         <option value="DONT_KNOW">unklar</option>
                       </select>
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-primary mb-1">Was ist Ihr primäres Ziel?</label>
+                      <label className="block text-xs font-bold text-primary mb-1">Was ist Ihr primÃ¤res Ziel?</label>
                       <select 
                         name="projectGoal" 
                         value={formData.projectGoal} 
@@ -1942,11 +1942,11 @@ function AnalyseWizardPage() {
                         }}
                         className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold"
                       >
-                        <option value="">Bitte wählen</option>
+                        <option value="">Bitte wÃ¤hlen</option>
                         <option value="OWN_USE">Eigennutzung</option>
-                        <option value="SALE">Verkauf des Grundstücks / des Neubaus</option>
+                        <option value="SALE">Verkauf des GrundstÃ¼cks / des Neubaus</option>
                         <option value="RENTAL">Vermietung</option>
-                        <option value="FAMILY">Familienlösung (z.B. Mehrgenerationen)</option>
+                        <option value="FAMILY">FamilienlÃ¶sung (z.B. Mehrgenerationen)</option>
                         <option value="INVESTOR">Partner / Investor suchen</option>
                       </select>
                     </div>
@@ -1962,11 +1962,11 @@ function AnalyseWizardPage() {
                         }}
                         className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs bg-white text-primary font-semibold"
                       >
-                        <option value="">Bitte wählen</option>
-                        <option value="LESS_300K">&lt; 300.000 €</option>
-                        <option value="300K_600K">300.000 € – 600.000 €</option>
-                        <option value="600K_1_2M">600.000 € – 1,2 Mio. €</option>
-                        <option value="MORE_1_2M">&gt; 1,2 Mio. €</option>
+                        <option value="">Bitte wÃ¤hlen</option>
+                        <option value="LESS_300K">&lt; 300.000 â‚¬</option>
+                        <option value="300K_600K">300.000 â‚¬ â€“ 600.000 â‚¬</option>
+                        <option value="600K_1_2M">600.000 â‚¬ â€“ 1,2 Mio. â‚¬</option>
+                        <option value="MORE_1_2M">&gt; 1,2 Mio. â‚¬</option>
                         <option value="DONT_KNOW">unklar</option>
                       </select>
                     </div>
@@ -1978,17 +1978,17 @@ function AnalyseWizardPage() {
               {currentStep === 9 && (
                 <div className="space-y-8" id="step-upload">
                   <div className="border-b border-surface-dim pb-4">
-                    <h2 className="text-headline-md font-headline-md text-primary-navy">Dokumente &amp; Pläne hochladen</h2>
-                    <p className="text-body-md text-on-surface-variant mt-2 text-xs">Um eine präzise Analyse zu gewährleisten, benötigen wir Zugriff auf relevante Unterlagen.</p>
+                    <h2 className="text-headline-md font-headline-md text-primary-navy">Dokumente &amp; PlÃ¤ne hochladen</h2>
+                    <p className="text-body-md text-on-surface-variant mt-2 text-xs">Um eine prÃ¤zise Analyse zu gewÃ¤hrleisten, benÃ¶tigen wir Zugriff auf relevante Unterlagen.</p>
                   </div>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {[
-                      { key: 'SITE_PLAN', label: 'Lageplan', icon: 'cloud_upload', desc: 'Datei auswählen' },
-                      { key: 'ZONING_PLAN', label: 'Bebauungsplan', icon: 'description', desc: 'Datei auswählen' },
-                      { key: 'LAND_REGISTRY_EXTRACT', label: 'Grundbuchauszug', icon: 'history_edu', desc: 'Datei auswählen' },
-                      { key: 'BUILDING_PLAN', label: 'Bestandspläne', icon: 'architecture', desc: 'Datei auswählen' },
-                      { key: 'ADDITIONAL', label: 'Sonstige Dokumente', icon: 'folder_open', desc: 'Datei auswählen' },
+                      { key: 'SITE_PLAN', label: 'Lageplan', icon: 'cloud_upload', desc: 'Datei auswÃ¤hlen' },
+                      { key: 'ZONING_PLAN', label: 'Bebauungsplan', icon: 'description', desc: 'Datei auswÃ¤hlen' },
+                      { key: 'LAND_REGISTRY_EXTRACT', label: 'Grundbuchauszug', icon: 'history_edu', desc: 'Datei auswÃ¤hlen' },
+                      { key: 'BUILDING_PLAN', label: 'BestandsplÃ¤ne', icon: 'architecture', desc: 'Datei auswÃ¤hlen' },
+                      { key: 'ADDITIONAL', label: 'Sonstige Dokumente', icon: 'folder_open', desc: 'Datei auswÃ¤hlen' },
                       { key: 'PROPERTY_PHOTO', label: 'Umfeldfotos', icon: 'photo_library', desc: 'Bilder hochladen' },
                     ].map(cat => {
                       const hasFiles = uploadedDocs.some(d => d.category === cat.key);
@@ -2012,7 +2012,7 @@ function AnalyseWizardPage() {
                               {cat.icon}
                             </span>
                             <p className="font-bold text-label-md text-primary text-xs font-sans">
-                              {hasFiles ? `${filesCount} Datei(en) ausgewählt` : cat.desc}
+                              {hasFiles ? `${filesCount} Datei(en) ausgewÃ¤hlt` : cat.desc}
                             </p>
                           </div>
                         </div>
@@ -2022,7 +2022,7 @@ function AnalyseWizardPage() {
 
                   <div className="text-center">
                     <p className="text-caption text-on-surface-variant text-[11px]">
-                      Unterstützte Formate: <span className="font-bold">PDF, JPG, PNG</span> —{' '}
+                      UnterstÃ¼tzte Formate: <span className="font-bold">PDF, JPG, PNG</span> â€”{' '}
                       <span className="text-primary-navy font-bold">Max. 25 MB pro Datei</span>
                     </p>
                   </div>
@@ -2038,7 +2038,7 @@ function AnalyseWizardPage() {
 
                   {isUploading && (
                     <div className="flex items-center gap-2 justify-center text-xs text-accent-teal font-bold">
-                      <span className="material-symbols-outlined animate-spin text-[16px]">sync</span>
+                      <span translate="no" className="material-symbols-outlined animate-spin text-[16px]">sync</span>
                       Datei wird hochgeladen...
                     </div>
                   )}
@@ -2054,7 +2054,7 @@ function AnalyseWizardPage() {
                     {/* Images Section */}
                     <div>
                       <div className="flex items-center gap-3 mb-4">
-                        <span className="material-symbols-outlined text-primary-navy">photo_camera</span>
+                        <span translate="no" className="material-symbols-outlined text-primary-navy">photo_camera</span>
                         <h3 className="font-headline-sm text-headline-sm font-bold text-primary">Hochgeladene Fotos</h3>
                       </div>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -2066,7 +2066,7 @@ function AnalyseWizardPage() {
                               onClick={() => handleDeleteDocument(doc.id)}
                               className="absolute bottom-2 right-2 bg-white/90 p-1 rounded-full text-error shadow-sm hover:bg-white transition-colors"
                             >
-                              <span className="material-symbols-outlined text-sm">delete</span>
+                              <span translate="no" className="material-symbols-outlined text-sm">delete</span>
                             </button>
                           </div>
                         ))}
@@ -2074,7 +2074,7 @@ function AnalyseWizardPage() {
                           onClick={() => triggerCategoryUpload('PROPERTY_PHOTO')}
                           className="aspect-square rounded-lg bg-surface-container border-2 border-dashed border-ui-steel flex items-center justify-center hover:bg-white transition-colors cursor-pointer"
                         >
-                          <span className="material-symbols-outlined text-ui-steel">add_a_photo</span>
+                          <span translate="no" className="material-symbols-outlined text-ui-steel">add_a_photo</span>
                         </div>
                       </div>
                     </div>
@@ -2083,7 +2083,7 @@ function AnalyseWizardPage() {
                     {uploadedDocs.filter(d => d.category !== 'PROPERTY_PHOTO' && !d.fileName.toLowerCase().endsWith('.jpg') && !d.fileName.toLowerCase().endsWith('.jpeg') && !d.fileName.toLowerCase().endsWith('.png')).length > 0 && (
                       <div className="border-t border-surface-dim pt-6">
                         <div className="flex items-center gap-3 mb-4">
-                          <span className="material-symbols-outlined text-primary-navy">folder_open</span>
+                          <span translate="no" className="material-symbols-outlined text-primary-navy">folder_open</span>
                           <h3 className="font-headline-sm text-headline-sm font-bold text-primary">Andere Dokumente</h3>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -2099,7 +2099,7 @@ function AnalyseWizardPage() {
                                     : doc.category === 'ZONING_PLAN' ? 'Bebauungsplan' 
                                     : doc.category === 'LAND_REGISTRY_EXTRACT' ? 'Grundbuch' 
                                     : doc.category === 'BUILDING_PLAN' ? 'Bestandsplan' 
-                                    : 'Sonstiges'} • {(doc.fileSize / 1024 / 1024).toFixed(2)} MB
+                                    : 'Sonstiges'} â€¢ {(doc.fileSize / 1024 / 1024).toFixed(2)} MB
                                 </p>
                               </div>
                               <div className="flex items-center gap-3 shrink-0">
@@ -2116,7 +2116,7 @@ function AnalyseWizardPage() {
                                   onClick={() => handleDeleteDocument(doc.id)}
                                   className="text-error font-bold hover:underline"
                                 >
-                                  Löschen
+                                  LÃ¶schen
                                 </button>
                               </div>
                             </div>
@@ -2133,7 +2133,7 @@ function AnalyseWizardPage() {
                 <div className="space-y-8" id="step-summary">
                   <div className="border-b border-surface-dim pb-4">
                     <h2 className="text-headline-md font-headline-md text-primary-navy">Zusammenfassung</h2>
-                    <p className="text-body-md text-on-surface-variant mt-2 text-xs">Bitte prüfen Sie Ihre Angaben vor der Beauftragung.</p>
+                    <p className="text-body-md text-on-surface-variant mt-2 text-xs">Bitte prÃ¼fen Sie Ihre Angaben vor der Beauftragung.</p>
                   </div>
                   
                   <div className="space-y-4 text-xs">
@@ -2141,37 +2141,37 @@ function AnalyseWizardPage() {
                     <div className="bg-surface-white border border-surface-dim rounded-xl p-6">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="font-bold text-label-md flex items-center gap-2 text-primary font-sans text-sm">
-                          <span className="material-symbols-outlined text-ui-steel text-lg">person</span> Kontaktdaten
+                          <span translate="no" className="material-symbols-outlined text-ui-steel text-lg">person</span> Kontaktdaten
                         </h3>
                         <button type="button" onClick={() => handleStepChange(2)} className="text-accent-teal text-caption font-bold hover:underline">Bearbeiten</button>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 text-sm">
-                        <p><span className="text-on-surface-variant">Name:</span> {formData.contactFirstName} {formData.contactLastName} ({formData.contactRole === 'OWNER' ? 'Eigentümer' : formData.contactRole === 'CHILD_HEIR' ? 'Kind/Erbe' : formData.contactRole === 'AUTHORIZED' ? 'Bevollmächtigt' : 'Sonstiges'})</p>
+                        <p><span className="text-on-surface-variant">Name:</span> {formData.contactFirstName} {formData.contactLastName} ({formData.contactRole === 'OWNER' ? 'EigentÃ¼mer' : formData.contactRole === 'CHILD_HEIR' ? 'Kind/Erbe' : formData.contactRole === 'AUTHORIZED' ? 'BevollmÃ¤chtigt' : 'Sonstiges'})</p>
                         <p><span className="text-on-surface-variant">E-Mail:</span> {formData.contactEmail}</p>
                         <p><span className="text-on-surface-variant">Telefon:</span> {formData.contactPhone || 'Keine Angabe'}</p>
                       </div>
                     </div>
 
-                    {/* Section: Grundstück */}
+                    {/* Section: GrundstÃ¼ck */}
                     <div className="bg-surface-white border border-surface-dim rounded-xl p-6">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="font-bold text-label-md flex items-center gap-2 text-primary font-sans text-sm">
-                          <span className="material-symbols-outlined text-ui-steel text-lg">location_on</span> Grundstück &amp; Bestand
+                          <span translate="no" className="material-symbols-outlined text-ui-steel text-lg">location_on</span> GrundstÃ¼ck &amp; Bestand
                         </h3>
                         <button type="button" onClick={() => handleStepChange(3)} className="text-accent-teal text-caption font-bold hover:underline">Bearbeiten</button>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 text-sm">
                         <p><span className="text-on-surface-variant">Adresse:</span> {formData.addressStreet} {formData.addressNumber}, {formData.addressZip} {formData.addressCity}</p>
-                        <p><span className="text-on-surface-variant">Größe:</span> {formData.plotArea ? `${formData.plotArea} m²` : 'Keine Angabe'}</p>
+                        <p><span className="text-on-surface-variant">GrÃ¶ÃŸe:</span> {formData.plotArea ? `${formData.plotArea} mÂ²` : 'Keine Angabe'}</p>
                         <p><span className="text-on-surface-variant">Bestand:</span> {formData.plotIsBuilt ? `Bebaut (${formData.buildingType || 'Altbestand'})` : 'Unbebaut / freie Parzelle'}</p>
                       </div>
                     </div>
 
-                    {/* Section: Planungswünsche */}
+                    {/* Section: PlanungswÃ¼nsche */}
                     <div className="bg-surface-white border border-surface-dim rounded-xl p-6">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="font-bold text-label-md flex items-center gap-2 text-primary font-sans text-sm">
-                          <span className="material-symbols-outlined text-ui-steel text-lg">architecture</span> Planungswünsche
+                          <span translate="no" className="material-symbols-outlined text-ui-steel text-lg">architecture</span> PlanungswÃ¼nsche
                         </h3>
                         <button type="button" onClick={() => handleStepChange(7)} className="text-accent-teal text-caption font-bold hover:underline">Bearbeiten</button>
                       </div>
@@ -2185,7 +2185,7 @@ function AnalyseWizardPage() {
                     <div className="bg-surface-white border border-surface-dim rounded-xl p-6">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="font-bold text-label-md flex items-center gap-2 text-primary font-sans text-sm">
-                          <span className="material-symbols-outlined text-ui-steel text-lg">upload_file</span> Dokumente &amp; Fotos
+                          <span translate="no" className="material-symbols-outlined text-ui-steel text-lg">upload_file</span> Dokumente &amp; Fotos
                         </h3>
                         <button type="button" onClick={() => handleStepChange(9)} className="text-accent-teal text-caption font-bold hover:underline">Bearbeiten</button>
                       </div>
@@ -2195,7 +2195,7 @@ function AnalyseWizardPage() {
                         ) : (
                           uploadedDocs.map(doc => (
                             <span key={doc.id} className="bg-surface-container px-3 py-1 rounded-full text-caption border border-surface-dim flex items-center gap-1 font-semibold text-primary">
-                              {doc.fileName} <span className="material-symbols-outlined text-[14px] text-accent-teal">check</span>
+                              {doc.fileName} <span translate="no" className="material-symbols-outlined text-[14px] text-accent-teal">check</span>
                             </span>
                           ))
                         )}
@@ -2204,9 +2204,9 @@ function AnalyseWizardPage() {
                   </div>
 
                   <div className="bg-primary-navy/5 border border-primary-navy/20 rounded-xl p-6 text-xs leading-relaxed max-w-xl">
-                    <p className="font-semibold text-primary mb-2">Wichtige Information zur Prüfung:</p>
+                    <p className="font-semibold text-primary mb-2">Wichtige Information zur PrÃ¼fung:</p>
                     <p>
-                      Wir erstellen für Sie eine **städtebauliche Machbarkeits-Vorprüfung**. Diese Einschätzung ist keine rechtlich bindende Zusage der Gemeinde und stellt keine offizielle Baugenehmigungsplanung dar. Sie dient der Klärung Ihrer Potenziale vor weiteren Investitionen.
+                      Wir erstellen fÃ¼r Sie eine **stÃ¤dtebauliche Machbarkeits-VorprÃ¼fung**. Diese EinschÃ¤tzung ist keine rechtlich bindende Zusage der Gemeinde und stellt keine offizielle Baugenehmigungsplanung dar. Sie dient der KlÃ¤rung Ihrer Potenziale vor weiteren Investitionen.
                     </p>
                   </div>
 
@@ -2217,7 +2217,7 @@ function AnalyseWizardPage() {
                       className="bg-primary-navy text-white px-8 py-3.5 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity flex items-center gap-2 shadow"
                     >
                       Weiter zur Paketauswahl
-                      <span className="material-symbols-outlined">chevron_right</span>
+                      <span translate="no" className="material-symbols-outlined">chevron_right</span>
                     </button>
                   </div>
                 </div>
@@ -2232,8 +2232,8 @@ function AnalyseWizardPage() {
                     disabled={currentStep === 1}
                     className="flex items-center gap-2 text-primary-navy font-bold hover:translate-x-[-4px] transition-transform disabled:opacity-30 disabled:hover:translate-x-0 text-xs"
                   >
-                    <span className="material-symbols-outlined text-sm">arrow_back</span>
-                    <span>Zurück</span>
+                    <span translate="no" className="material-symbols-outlined text-sm">arrow_back</span>
+                    <span>ZurÃ¼ck</span>
                   </button>
                   
                   {currentStep < 10 ? (
@@ -2244,7 +2244,7 @@ function AnalyseWizardPage() {
                       className="px-12 py-4 bg-primary-navy text-white font-bold rounded-lg hover:shadow-xl hover:scale-[1.02] transition-all flex items-center gap-2 disabled:opacity-50 text-xs shadow"
                     >
                       Weiter
-                      <span className="material-symbols-outlined text-sm">chevron_right</span>
+                      <span translate="no" className="material-symbols-outlined text-sm">chevron_right</span>
                     </button>
                   ) : (
                     <button
@@ -2254,7 +2254,7 @@ function AnalyseWizardPage() {
                       className="px-12 py-4 bg-primary-navy text-white font-bold rounded-lg hover:shadow-xl hover:scale-[1.02] transition-all flex items-center gap-2 disabled:opacity-50 text-xs shadow"
                     >
                       Weiter zur Paketauswahl
-                      <span className="material-symbols-outlined text-sm">chevron_right</span>
+                      <span translate="no" className="material-symbols-outlined text-sm">chevron_right</span>
                     </button>
                   )}
                 </div>
@@ -2272,7 +2272,7 @@ function AnalyseWizardPage() {
             <img src="/logo.png" alt="mein-baupotenzial.de Logo" className="h-6 w-auto object-contain" />
             <span className="text-label-md font-bold text-primary">van Valkenburg GmbH</span>
           </div>
-          <span className="text-body-md font-body-md text-on-surface-variant opacity-80 mt-2 md:mt-0">© {new Date().getFullYear()} van Valkenburg GmbH. Alle Rechte vorbehalten.</span>
+          <span className="text-body-md font-body-md text-on-surface-variant opacity-80 mt-2 md:mt-0">Â© {new Date().getFullYear()} van Valkenburg GmbH. Alle Rechte vorbehalten.</span>
           <div className="flex gap-4 mt-2 md:mt-0">
             <Link className="text-on-surface-variant text-label-md font-label-md hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="/impressum">Impressum</Link>
             <Link className="text-on-surface-variant text-label-md font-label-md hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="/datenschutz">Datenschutz</Link>

@@ -7,6 +7,7 @@ const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
+  weight: ['400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
@@ -21,13 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de" className="scroll-smooth">
-      <head>
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" 
-          rel="stylesheet"
-        />
-      </head>
-      <body className={`${inter.className} bg-[#F5F7FA] text-[#1F2937] antialiased`}>
+      <body className={`${inter.variable} font-sans bg-[#F8F7F4] text-[#5E646B] antialiased`}>
         <Providers>{children}</Providers>
       </body>
     </html>
