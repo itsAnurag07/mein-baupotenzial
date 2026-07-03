@@ -121,34 +121,31 @@ export default function HomePage() {
         {/* ═══════════════════════════════════════
             SECTION 1 — HERO
         ═══════════════════════════════════════ */}
-        <section
-          className="bg-surface-white border-b border-surface-dim"
-          style={{ paddingTop: '80px', paddingBottom: '100px' }}
-        >
-          <div className="max-w-[1280px] mx-auto px-4 md:px-10 grid md:grid-cols-[48%_52%] gap-16 items-center">
+        <section className="bg-surface-white border-b border-surface-dim py-12 md:py-20">
+          <div className="max-w-[1280px] mx-auto px-4 md:px-10 grid grid-cols-1 md:grid-cols-[48%_52%] gap-10 md:gap-16 items-center">
 
             {/* Left col */}
             <div>
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 border border-accent/40 text-accent px-4 py-1.5 rounded-full text-[13px] font-semibold mb-8 bg-accent-container">
+              <div className="inline-flex items-center gap-2 border border-accent/40 text-accent px-4 py-1.5 rounded-full text-[12px] md:text-[13px] font-semibold mb-6 md:mb-8 bg-accent-container">
                 <BadgeCheck size={14} strokeWidth={2} />
                 Über 40 Jahre Erfahrung · Unabhängig · Fachlich fundiert
               </div>
 
               <h1
                 className="font-bold text-primary mb-6 leading-[1.1] tracking-tight"
-                style={{ fontSize: 'clamp(32px, 4vw, 58px)' }}
+                style={{ fontSize: 'clamp(28px, 4vw, 58px)' }}
               >
                 Bevor Sie entscheiden, sollten Sie wissen, was Ihr Grundstück wirklich kann.
               </h1>
 
-              <p className="text-[18px] text-on-surface-variant mb-8 leading-[1.6]" style={{ maxWidth: '52ch' }}>
+              <p className="text-[16px] md:text-[18px] text-on-surface-variant mb-6 md:mb-8 leading-[1.6]" style={{ maxWidth: '52ch' }}>
                 Möchten Sie wissen, ob Nachverdichtung, Aufstockung, Grundstücksteilung oder
                 Neubau möglich ist? Unsere Baupotenzialanalyse schafft Klarheit — verständlich,
                 unabhängig und auf Basis aktueller planungsrechtlicher Vorschriften.
               </p>
 
-              <div className="flex flex-wrap gap-x-6 gap-y-2 text-[15px] font-medium text-on-surface-variant mb-10">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap gap-x-6 gap-y-2 text-[14px] md:text-[15px] font-medium text-on-surface-variant mb-8 md:mb-10">
                 {[
                   'Über 40 Jahre Erfahrung',
                   'Spezialist für Nachverdichtung',
@@ -163,7 +160,7 @@ export default function HomePage() {
 
               <Link
                 href="/analyse"
-                className="inline-flex items-center gap-2.5 bg-secondary text-on-secondary font-semibold text-[16px] hover:bg-cta-hover transition-colors duration-[120ms]"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-secondary text-on-secondary font-semibold text-[16px] hover:bg-cta-hover transition-colors duration-[120ms]"
                 style={{ height: '56px', paddingLeft: '32px', paddingRight: '32px', borderRadius: '14px' }}
               >
                 <Building2 size={18} strokeWidth={2} />
@@ -212,8 +209,8 @@ export default function HomePage() {
         {/* ═══════════════════════════════════════
             SECTION 2 — TRUST BAR
         ═══════════════════════════════════════ */}
-        <div className="bg-primary py-6 text-white border-b border-primary-container">
-          <div className="max-w-[1280px] mx-auto px-4 md:px-10 flex flex-wrap justify-between items-center gap-6">
+        <div className="bg-primary py-5 md:py-6 text-white border-b border-primary-container">
+          <div className="max-w-[1280px] mx-auto px-4 md:px-10 flex flex-col sm:flex-row flex-wrap justify-center md:justify-between items-center gap-4 md:gap-6">
             {[
               { Icon: BookOpen,  label: 'Über 40 Jahre Erfahrung' },
               { Icon: Scale,     label: 'Unabhängige Beurteilung' },
@@ -222,8 +219,8 @@ export default function HomePage() {
               { Icon: FileText,  label: 'Verständlicher PDF-Report' },
             ].map(({ Icon, label }) => (
               <div key={label} className="flex items-center gap-2.5 min-w-max">
-                <Icon size={18} strokeWidth={2} className="text-accent" />
-                <span className="text-[14px] font-medium text-white/80">{label}</span>
+                <Icon size={16} strokeWidth={2} className="text-accent" />
+                <span className="text-[13px] md:text-[14px] font-medium text-white/80">{label}</span>
               </div>
             ))}
           </div>
@@ -232,23 +229,23 @@ export default function HomePage() {
         {/* ═══════════════════════════════════════
             SECTION 3 — WHY A BUILDING-POTENTIAL ANALYSIS?
         ═══════════════════════════════════════ */}
-        <section className="py-[120px] bg-surface-white border-b border-surface-dim" id="wissen">
+        <section className="py-16 md:py-24 bg-surface-white border-b border-surface-dim" id="wissen">
           <div className="max-w-[1280px] mx-auto px-4 md:px-10">
-            <div style={{ maxWidth: '60ch' }} className="mb-14 mx-auto text-center">
+            <div style={{ maxWidth: '60ch' }} className="mb-10 md:mb-14 mx-auto text-center">
               <h2
-                className="font-bold text-primary mb-6 leading-[1.15] tracking-tight"
+                className="font-bold text-primary mb-4 md:mb-6 leading-[1.15] tracking-tight"
                 style={{ fontSize: 'clamp(28px, 3vw, 42px)' }}
               >
                 Viele Grundstücke haben deutlich mehr Potenzial als ihre Eigentümer ahnen.
               </h2>
-              <p className="text-[18px] text-on-surface-variant leading-[1.6]">
+              <p className="text-[16px] md:text-[18px] text-on-surface-variant leading-[1.6]">
                 Ob Nachverdichtung, Grundstücksteilung, Aufstockung oder Ersatzneubau — wertvolle
                 Optionen bleiben oft ungenutzt, weil der planungsrechtliche Rahmen nicht bekannt ist.
                 Unsere Analyse zeigt Ihnen, welche Optionen realistisch sind.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               {[
                 {
                   Icon: Map,
@@ -268,7 +265,7 @@ export default function HomePage() {
               ].map(({ Icon, title, desc }) => (
                 <div
                   key={title}
-                  className="bg-surface-bright p-8 rounded-[18px] shadow-card hover:shadow-card-hover transition-shadow duration-[250ms]"
+                  className="bg-surface-bright p-6 md:p-8 rounded-[18px] shadow-card hover:shadow-card-hover transition-shadow duration-[250ms]"
                 >
                   <div className="w-11 h-11 bg-white rounded-[12px] flex items-center justify-center mb-6 shadow-soft">
                     <Icon size={20} strokeWidth={2} className="text-secondary" />
@@ -284,22 +281,22 @@ export default function HomePage() {
         {/* ═══════════════════════════════════════
             SECTION 4 — WHY OWNERS TRUST US
         ═══════════════════════════════════════ */}
-        <section className="py-[120px] bg-surface-bright border-b border-surface-dim">
+        <section className="py-16 md:py-24 bg-surface-bright border-b border-surface-dim">
           <div className="max-w-[1280px] mx-auto px-4 md:px-10">
-            <div className="text-center mb-14">
+            <div className="text-center mb-10 md:mb-14">
               <h2
-                className="font-bold text-primary mb-6 leading-[1.15] tracking-tight"
+                className="font-bold text-primary mb-4 md:mb-6 leading-[1.15] tracking-tight"
                 style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}
               >
                 Warum Eigentümer uns vertrauen
               </h2>
-              <p className="text-[18px] text-on-surface-variant mx-auto leading-[1.6]" style={{ maxWidth: '52ch' }}>
+              <p className="text-[16px] md:text-[18px] text-on-surface-variant mx-auto leading-[1.6]" style={{ maxWidth: '52ch' }}>
                 Fundierte Einschätzungen, klare Handlungsempfehlungen und ein professioneller
                 Analyseprozess — seit über vier Jahrzehnten.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
               {[
                 { Icon: BookOpen,  stat: '40+',  unit: 'Jahre',  label: 'Erfahrung in der\nstädtebaulichen Beratung' },
                 { Icon: Scale,     stat: '100 %',unit: '',       label: 'Unabhängige Beurteilung —\nohne Interessenkonflikt' },
@@ -308,14 +305,14 @@ export default function HomePage() {
               ].map(({ Icon, stat, unit, label }) => (
                 <div
                   key={stat + label}
-                  className="bg-white p-8 rounded-[18px] shadow-card flex flex-col items-center text-center hover:shadow-card-hover transition-shadow duration-[250ms]"
+                  className="bg-white p-6 md:p-8 rounded-[18px] shadow-card flex flex-col items-center text-center hover:shadow-card-hover transition-shadow duration-[250ms]"
                 >
                   <div className="w-12 h-12 bg-surface-bright rounded-[12px] flex items-center justify-center mb-5">
                     <Icon size={20} strokeWidth={2} className="text-secondary" />
                   </div>
-                  <div className="text-[38px] font-bold text-primary mb-1 leading-none">
+                  <div className="text-[34px] md:text-[38px] font-bold text-primary mb-1 leading-none">
                     {stat}
-                    {unit && <span className="text-[20px] font-semibold text-accent ml-1">{unit}</span>}
+                    {unit && <span className="text-[18px] md:text-[20px] font-semibold text-accent ml-1">{unit}</span>}
                   </div>
                   <p className="text-[13px] text-on-surface-variant mt-2 leading-snug whitespace-pre-line">
                     {label}
@@ -329,13 +326,13 @@ export default function HomePage() {
         {/* ═══════════════════════════════════════
             SECTION 5 — HOW THE ANALYSIS WORKS
         ═══════════════════════════════════════ */}
-        <section className="py-[120px] bg-surface-white border-b border-surface-dim" id="so-funktionierts">
+        <section className="py-16 md:py-24 bg-surface-white border-b border-surface-dim" id="so-funktionierts">
           <div className="max-w-[1280px] mx-auto px-4 md:px-10">
-            <div className="grid md:grid-cols-2 gap-16 items-start">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
 
               {/* Left — headline + 4 steps */}
               <div className="md:sticky md:top-24">
-                <div className="inline-flex items-center gap-2 border border-accent/40 text-accent px-3 py-1 rounded-full text-[13px] font-semibold mb-6 bg-accent-container">
+                <div className="inline-flex items-center gap-2 border border-accent/40 text-accent px-3 py-1 rounded-full text-[12px] md:text-[13px] font-semibold mb-6 bg-accent-container">
                   <PlayCircle size={13} strokeWidth={2} />
                   Jetzt direkt starten
                 </div>
@@ -345,11 +342,11 @@ export default function HomePage() {
                 >
                   So funktioniert Ihre Baupotenzialanalyse
                 </h2>
-                <p className="text-[18px] text-on-surface-variant mb-10 leading-[1.6]" style={{ maxWidth: '50ch' }}>
+                <p className="text-[16px] md:text-[18px] text-on-surface-variant mb-8 md:mb-10 leading-[1.6]" style={{ maxWidth: '50ch' }}>
                   Starten Sie direkt — das Formular rechts ist das echte Analyse-Formular. Geben Sie Ihr Ziel, Ihre Daten und die Adresse ein, und unser Expertenteam übernimmt den Rest.
                 </p>
 
-                <ol className="space-y-7">
+                <ol className="space-y-6 md:space-y-7">
                   {[
                     { n: 1, title: 'Grundstücksdaten eingeben',         desc: 'Erfassen Sie Ihr Planungsziel, Ihre Kontaktdaten und die genaue Lage des Grundstücks direkt im Formular.',                                                        Icon: PenLine  },
                     { n: 2, title: 'Planungsrahmenbedingungen angeben', desc: 'Teilen Sie Informationen zum Bestand, zum Planungsrecht (B-Plan, § 34) und zu Ihrem konkreten Vorhaben mit.',                                                       Icon: Scale    },
@@ -370,24 +367,24 @@ export default function HomePage() {
                           <span className="text-accent mr-1.5 text-[13px] font-bold">{String(n).padStart(2, '0')}.</span>
                           {title}
                         </h4>
-                        <p className="text-on-surface-variant text-[15px] leading-[1.6]">{desc}</p>
+                        <p className="text-on-surface-variant text-[14px] md:text-[15px] leading-[1.6]">{desc}</p>
                       </div>
                     </li>
                   ))}
                 </ol>
 
                 {/* Trust note */}
-                <div className="mt-10 flex items-center gap-3 bg-surface-bright rounded-[14px] p-4">
+                <div className="mt-8 md:mt-10 flex items-center gap-3 bg-surface-bright rounded-[14px] p-4">
                   <Shield size={18} strokeWidth={2} className="text-accent flex-shrink-0" />
                   <p className="text-[13px] text-on-surface-variant leading-snug">
                     <strong className="text-primary font-semibold">DSGVO-konform.</strong>{' '}
-                    Ihre Daten werden verschlüsselt übertragen und ausschließlich für die Analyse verwendet.
+                    Ihre Daten werden verarbeitet und verschlüsselt übertragen.
                   </p>
                 </div>
               </div>
 
               {/* Right — LIVE embedded wizard */}
-              <div>
+              <div className="w-full">
                 <HomeWizard />
               </div>
             </div>
@@ -397,33 +394,33 @@ export default function HomePage() {
         {/* ═══════════════════════════════════════
             SECTION 6 — SERVICES / PRICING
         ═══════════════════════════════════════ */}
-        <section className="py-[120px] bg-surface-bright border-b border-surface-dim" id="leistungen">
+        <section className="py-16 md:py-24 bg-surface-bright border-b border-surface-dim" id="leistungen">
           <div className="max-w-[1280px] mx-auto px-4 md:px-10">
-            <div className="text-center mb-14">
+            <div className="text-center mb-10 md:mb-14">
               <h2
-                className="font-bold text-primary mb-6 leading-[1.15] tracking-tight"
+                className="font-bold text-primary mb-4 md:mb-6 leading-[1.15] tracking-tight"
                 style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}
               >
                 Welche Analyse passt zu Ihrem Vorhaben?
               </h2>
-              <p className="text-[18px] text-on-surface-variant mx-auto leading-[1.6]" style={{ maxWidth: '56ch' }}>
+              <p className="text-[16px] md:text-[18px] text-on-surface-variant mx-auto leading-[1.6]" style={{ maxWidth: '56ch' }}>
                 Je nach Ziel reicht manchmal ein schneller Überblick — oder Sie benötigen eine
                 tiefergehende Beurteilung. Drei Analyse-Optionen mit klar definiertem Leistungsumfang.
                 Alle Preise zzgl. 19&nbsp;% MwSt.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 items-stretch">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
 
               {/* QuickCheck */}
-              <div className="bg-white p-8 rounded-[18px] shadow-card flex flex-col hover:shadow-card-hover transition-shadow duration-[250ms]">
+              <div className="bg-white p-6 md:p-8 rounded-[18px] shadow-card flex flex-col hover:shadow-card-hover transition-shadow duration-[250ms]">
                 <div className="flex-1">
                   <p className="text-[12px] text-on-surface-variant font-semibold uppercase tracking-wider mb-3">
                     Für eine schnelle Ersteinschätzung
                   </p>
                   <h3 className="text-[24px] font-bold text-primary mb-1">QuickCheck</h3>
                   <div className="mb-3 mt-5">
-                    <span className="text-[38px] font-bold text-primary">249 €</span>
+                    <span className="text-[34px] md:text-[38px] font-bold text-primary">249 €</span>
                     <span className="text-[13px] text-on-surface-variant ml-2">+ 19&nbsp;% MwSt.</span>
                   </div>
                   <p className="text-[13px] font-medium text-secondary mb-6 flex items-center gap-1.5">
@@ -431,7 +428,7 @@ export default function HomePage() {
                     Bearbeitung: 3 Werktage
                   </p>
                   <div className="h-px bg-surface-dim mb-6" />
-                  <ul className="space-y-3 text-[15px] text-on-surface-variant mb-8">
+                  <ul className="space-y-3 text-[14px] md:text-[15px] text-on-surface-variant mb-8">
                     {['Planungsrechtliche Vorprüfung', 'Prüfung nach BauGB § 34 / B-Plan', 'Verständlicher PDF-Kurzbericht', 'Klare Handlungsempfehlung'].map((f) => (
                       <li key={f} className="flex items-start gap-2">
                         <Check size={14} strokeWidth={2.5} className="text-secondary flex-shrink-0 mt-0.5" />
@@ -456,17 +453,17 @@ export default function HomePage() {
               </div>
 
               {/* Potenzialanalyse — FEATURED */}
-              <div className="bg-primary p-9 rounded-[18px] flex flex-col relative shadow-card-hover">
+              <div className="bg-primary p-7 md:p-9 rounded-[18px] flex flex-col relative shadow-card-hover my-2 md:my-0">
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent text-white px-5 py-1.5 rounded-full text-[12px] font-bold uppercase tracking-wider whitespace-nowrap">
                   Unsere Empfehlung
                 </div>
                 <div className="flex-1">
-                  <p className="text-[12px] text-white/50 font-semibold uppercase tracking-wider mb-3">
+                  <p className="text-[12px] text-white/50 font-semibold uppercase tracking-wider mb-3 mt-2 md:mt-0">
                     Umfassende Prüfung inkl. Fachgespräch
                   </p>
                   <h3 className="text-[24px] font-bold text-white mb-1">Potenzialanalyse</h3>
                   <div className="mb-3 mt-5">
-                    <span className="text-[46px] font-bold text-white">690 €</span>
+                    <span className="text-[40px] md:text-[46px] font-bold text-white">690 €</span>
                     <span className="text-[13px] text-white/50 ml-2">+ 19&nbsp;% MwSt.</span>
                   </div>
                   <p className="text-[13px] font-medium text-accent mb-6 flex items-center gap-1.5">
@@ -474,7 +471,7 @@ export default function HomePage() {
                     Bearbeitung: 5 Werktage
                   </p>
                   <div className="h-px bg-white/15 mb-6" />
-                  <ul className="space-y-3 text-[15px] text-white/80 mb-8">
+                  <ul className="space-y-3 text-[14px] md:text-[15px] text-white/80 mb-8">
                     {['Vollständige planungsrechtliche Prüfung', 'Ermittlung des max. Bauvolumens', 'Detaillierter PDF-Report', '30 Min. telefonisches Expertengespräch', 'Handlungsempfehlung für Bauvorbescheid'].map((f) => (
                       <li key={f} className="flex items-start gap-2">
                         <Check size={14} strokeWidth={2.5} className="text-accent flex-shrink-0 mt-0.5" />
@@ -493,14 +490,14 @@ export default function HomePage() {
               </div>
 
               {/* Machbarkeitsstudie */}
-              <div className="bg-white p-8 rounded-[18px] shadow-card flex flex-col hover:shadow-card-hover transition-shadow duration-[250ms]">
+              <div className="bg-white p-6 md:p-8 rounded-[18px] shadow-card flex flex-col hover:shadow-card-hover transition-shadow duration-[250ms]">
                 <div className="flex-1">
                   <p className="text-[12px] text-on-surface-variant font-semibold uppercase tracking-wider mb-3">
                     Für komplexe Bauvorhaben &amp; Projektentwickler
                   </p>
                   <h3 className="text-[24px] font-bold text-primary mb-1">Machbarkeitsstudie</h3>
                   <div className="mb-3 mt-5">
-                    <span className="text-[38px] font-bold text-primary">ab 3.490 €</span>
+                    <span className="text-[34px] md:text-[38px] font-bold text-primary">ab 3.490 €</span>
                     <span className="text-[13px] text-on-surface-variant ml-2">+ 19&nbsp;% MwSt.</span>
                   </div>
                   <p className="text-[13px] font-medium text-secondary mb-6 flex items-center gap-1.5">
@@ -508,7 +505,7 @@ export default function HomePage() {
                     Bearbeitung: 10–15 Werktage
                   </p>
                   <div className="h-px bg-surface-dim mb-6" />
-                  <ul className="space-y-3 text-[15px] text-on-surface-variant mb-8">
+                  <ul className="space-y-3 text-[14px] md:text-[15px] text-on-surface-variant mb-8">
                     {['Vollumfängliche planungsrechtliche Analyse', 'Städtebauliche Skizzen & Massenstudien', 'Ausführlicher Gutachterbericht', '60 Min. Beratung durch Fachexperten', 'Behördenabstimmung & Vorbescheidbegleitung'].map((f) => (
                       <li key={f} className="flex items-start gap-2">
                         <Check size={14} strokeWidth={2.5} className="text-secondary flex-shrink-0 mt-0.5" />
@@ -532,16 +529,16 @@ export default function HomePage() {
         {/* ═══════════════════════════════════════
             SECTION 7 — FAQ (40 questions)
         ═══════════════════════════════════════ */}
-        <section className="py-[120px] bg-surface-white border-b border-surface-dim" id="faq">
+        <section className="py-16 md:py-24 bg-surface-white border-b border-surface-dim" id="faq">
           <div className="max-w-[760px] mx-auto px-4">
-            <div className="text-center mb-12">
+            <div className="text-center mb-10 md:mb-12">
               <h2
-                className="font-bold text-primary mb-5 leading-[1.15] tracking-tight"
+                className="font-bold text-primary mb-4 md:mb-5 leading-[1.15] tracking-tight"
                 style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}
               >
                 Häufig gestellte Fragen
               </h2>
-              <p className="text-[18px] text-on-surface-variant mb-8 leading-[1.6]">
+              <p className="text-[16px] md:text-[18px] text-on-surface-variant mb-6 md:mb-8 leading-[1.6]">
                 Antworten auf die wichtigsten Fragen rund um Baupotenzial, Planungsrecht und unsere Analyse.
               </p>
               <div className="relative">
@@ -568,10 +565,10 @@ export default function HomePage() {
                   return (
                     <div key={index}>
                       <button
-                        className="w-full py-5 px-6 flex justify-between items-center text-left focus:outline-none"
+                        className="w-full py-4 px-5 md:py-5 md:px-6 flex justify-between items-center text-left focus:outline-none"
                         onClick={() => toggleFaq(index)}
                       >
-                        <span className="text-[15px] md:text-[16px] font-semibold text-primary hover:text-secondary transition-colors duration-[120ms] pr-4">
+                        <span className="text-[14px] md:text-[16px] font-semibold text-primary hover:text-secondary transition-colors duration-[120ms] pr-4">
                           {faq.q}
                         </span>
                         <ChevronDown
@@ -581,7 +578,7 @@ export default function HomePage() {
                         />
                       </button>
                       <div className={`overflow-hidden transition-all duration-[250ms] ${isOpen ? 'max-h-[400px]' : 'max-h-0'}`}>
-                        <div className="pb-5 px-6 text-[15px] leading-[1.6] text-on-surface-variant">
+                        <div className="pb-5 px-5 md:px-6 text-[14px] md:text-[15px] leading-[1.6] text-on-surface-variant">
                           {faq.a}
                         </div>
                       </div>
@@ -613,12 +610,12 @@ export default function HomePage() {
         {/* ═══════════════════════════════════════
             SECTION 8 — NEWSLETTER / LEAD MAGNET
         ═══════════════════════════════════════ */}
-        <section className="py-[120px] bg-surface-bright border-b border-surface-dim" id="baupotenzial-report">
+        <section className="py-16 md:py-24 bg-surface-bright border-b border-surface-dim" id="baupotenzial-report">
           <div className="max-w-[1280px] mx-auto px-4 md:px-10">
-            <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
               {/* Left */}
               <div>
-                <div className="inline-flex items-center gap-2 border border-accent/40 text-accent px-4 py-1.5 rounded-full text-[13px] font-semibold mb-6 bg-accent-container">
+                <div className="inline-flex items-center gap-2 border border-accent/40 text-accent px-4 py-1.5 rounded-full text-[12px] md:text-[13px] font-semibold mb-6 bg-accent-container">
                   <Rss size={13} strokeWidth={2} />
                   Kostenlos &amp; jederzeit kündbar
                 </div>
@@ -628,19 +625,19 @@ export default function HomePage() {
                 >
                   Bleiben Sie beim Thema Baupotenzial auf dem Laufenden.
                 </h2>
-                <p className="text-[18px] text-on-surface-variant leading-[1.6] mb-8" style={{ maxWidth: '52ch' }}>
+                <p className="text-[16px] md:text-[18px] text-on-surface-variant leading-[1.6] mb-6 md:mb-8" style={{ maxWidth: '52ch' }}>
                   Unser Baupotenzial-Report hält Sie über aktuelle Entwicklungen im Planungsrecht
                   auf dem Laufenden — ohne generisches Newsletter-Getöse. Nur relevante Inhalte
                   für Grundstückseigentümer, Investoren und Projektentwickler.
                 </p>
-                <ul className="space-y-4 mb-10">
+                <ul className="space-y-4 mb-8 md:mb-10">
                   {[
                     { Icon: Scale,       text: 'Planungsrechtliche Änderungen & Praxishinweise' },
                     { Icon: Lightbulb,   text: 'Praxisbeispiele & Analyseergebnisse' },
                     { Icon: TrendingUp,  text: 'Marktentwicklungen bei Nachverdichtung & Teilung' },
                     { Icon: Zap,         text: 'Exklusive Tipps für Eigentümer & Investoren' },
                   ].map(({ Icon, text }) => (
-                    <li key={text} className="flex items-center gap-3 text-[16px] font-medium text-primary">
+                    <li key={text} className="flex items-center gap-3 text-[15px] md:text-[16px] font-medium text-primary">
                       <div className="w-8 h-8 bg-white rounded-[10px] flex items-center justify-center flex-shrink-0 shadow-soft">
                         <Icon size={15} strokeWidth={2} className="text-secondary" />
                       </div>
@@ -651,7 +648,7 @@ export default function HomePage() {
               </div>
 
               {/* Right — email form */}
-              <div className="bg-white rounded-[18px] shadow-card p-10">
+              <div className="bg-white rounded-[18px] shadow-card p-6 md:p-10">
                 {newsletterSubmitted ? (
                   <div className="text-center py-8">
                     <div className="w-14 h-14 bg-surface-bright rounded-full flex items-center justify-center mx-auto mb-4">
@@ -664,8 +661,8 @@ export default function HomePage() {
                   </div>
                 ) : (
                   <>
-                    <h3 className="text-[22px] font-bold text-primary mb-2">Jetzt kostenfrei anmelden</h3>
-                    <p className="text-[15px] text-on-surface-variant mb-6">
+                    <h3 className="text-[20px] md:text-[22px] font-bold text-primary mb-2">Jetzt kostenfrei anmelden</h3>
+                    <p className="text-[14px] md:text-[15px] text-on-surface-variant mb-6">
                       Kein Spam. Keine Werbung. Nur Inhalt, der wirklich zählt.
                     </p>
                     <form onSubmit={handleNewsletterSubmit} className="space-y-4">
@@ -717,7 +714,7 @@ export default function HomePage() {
         {/* ═══════════════════════════════════════
             SECTION 9 — CONTACT CTA
         ═══════════════════════════════════════ */}
-        <section className="py-[120px] bg-primary border-b border-primary-container" id="kontakt">
+        <section className="py-16 md:py-24 bg-primary border-b border-primary-container" id="kontakt">
           <div className="max-w-[1280px] mx-auto px-4 md:px-10 text-center">
             <div className="max-w-[52ch] mx-auto">
               <div className="w-14 h-14 bg-white/8 rounded-[16px] flex items-center justify-center mx-auto mb-6">
@@ -730,7 +727,7 @@ export default function HomePage() {
                 Klarheit über Ihr Grundstück? Starten Sie jetzt Ihre Baupotenzialanalyse — oder
                 sprechen Sie direkt mit unserem Expertenteam.
               </h2>
-              <p className="text-[18px] text-white/60 mb-10 leading-[1.6]">
+              <p className="text-[16px] md:text-[18px] text-white/60 mb-10 leading-[1.6]">
                 Unsere Experten begleiten Sie von der ersten Frage bis zur klaren Handlungsempfehlung.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
