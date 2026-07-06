@@ -212,11 +212,11 @@ export default function HomePage() {
         <div className="bg-primary py-5 md:py-6 text-white border-b border-primary-container">
           <div className="max-w-[1280px] mx-auto px-4 md:px-10 flex flex-col sm:flex-row flex-wrap justify-center md:justify-between items-center gap-4 md:gap-6">
             {[
-              { Icon: BookOpen,  label: 'Über 40 Jahre Erfahrung' },
-              { Icon: Scale,     label: 'Unabhängige Beurteilung' },
+              { Icon: BookOpen, label: 'Über 40 Jahre Erfahrung' },
+              { Icon: Scale, label: 'Unabhängige Beurteilung' },
               { Icon: UserCheck, label: 'Persönliche Expertenauswertung' },
-              { Icon: Clock,     label: 'Bearbeitung in 5 Werktagen' },
-              { Icon: FileText,  label: 'Verständlicher PDF-Report' },
+              { Icon: Clock, label: 'Bearbeitung in 5 Werktagen' },
+              { Icon: FileText, label: 'Verständlicher PDF-Report' },
             ].map(({ Icon, label }) => (
               <div key={label} className="flex items-center gap-2.5 min-w-max">
                 <Icon size={16} strokeWidth={2} className="text-accent" />
@@ -298,10 +298,10 @@ export default function HomePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
               {[
-                { Icon: BookOpen,  stat: '40+',  unit: 'Jahre',  label: 'Erfahrung in der\nstädtebaulichen Beratung' },
-                { Icon: Scale,     stat: '100 %',unit: '',       label: 'Unabhängige Beurteilung —\nohne Interessenkonflikt' },
-                { Icon: UserCheck, stat: '1:1',  unit: '',       label: 'Persönliche Expertenauswertung\njedes einzelnen Falls' },
-                { Icon: Flag,      stat: '1',    unit: 'Ziel',   label: 'Klare Entscheidungsgrundlage\nfür Ihr Grundstück' },
+                { Icon: BookOpen, stat: '40+', unit: 'years', label: ' of experience in project development and consulting.' },
+                { Icon: Scale, stat: '100 %', unit: '', label: 'Unabhängige Beurteilung —\nohne Interessenkonflikt' },
+                { Icon: UserCheck, stat: '1:1', unit: '', label: 'Persönliche Expertenauswertung\njedes einzelnen Falls' },
+                { Icon: Flag, stat: '1', unit: 'Ziel', label: 'Klare Entscheidungsgrundlage\nfür Ihr Grundstück' },
               ].map(({ Icon, stat, unit, label }) => (
                 <div
                   key={stat + label}
@@ -343,15 +343,15 @@ export default function HomePage() {
                   So funktioniert Ihre Baupotenzialanalyse
                 </h2>
                 <p className="text-[16px] md:text-[18px] text-on-surface-variant mb-8 md:mb-10 leading-[1.6]" style={{ maxWidth: '50ch' }}>
-                  Starten Sie direkt — das Formular rechts ist das echte Analyse-Formular. Geben Sie Ihr Ziel, Ihre Daten und die Adresse ein, und unser Expertenteam übernimmt den Rest.
+                  Starten Sie direkt im Analyseformular. Geben Sie Ihr Ziel, Ihre Daten und die Adresse ein, und unser Experten-Team übernimmt den Rest.
                 </p>
 
                 <ol className="space-y-6 md:space-y-7">
                   {[
-                    { n: 1, title: 'Grundstücksdaten eingeben',         desc: 'Erfassen Sie Ihr Planungsziel, Ihre Kontaktdaten und die genaue Lage des Grundstücks direkt im Formular.',                                                        Icon: PenLine  },
-                    { n: 2, title: 'Planungsrahmenbedingungen angeben', desc: 'Teilen Sie Informationen zum Bestand, zum Planungsrecht (B-Plan, § 34) und zu Ihrem konkreten Vorhaben mit.',                                                       Icon: Scale    },
-                    { n: 3, title: 'Expertenanalyse Ihres Grundstücks', desc: 'Unser Expertenteam prüft Ihr Grundstück planungsrechtlich und bewertet alle Entwicklungsoptionen fachlich fundiert.',                                               Icon: Search   },
-                    { n: 4, title: 'PDF-Report mit Handlungsempfehlungen',desc: 'Sie erhalten einen strukturierten PDF-Report mit klaren Einschätzungen, konkreten Optionen und dem nächsten sinnvollen Schritt.',                                  Icon: FileText },
+                    { n: 1, title: 'Grundstücksdaten eingeben', desc: 'Erfassen Sie Ihr Planungsziel, Ihre Kontaktdaten und die genaue Lage des Grundstücks direkt im Formular.', Icon: PenLine },
+                    { n: 2, title: 'Planungsrahmenbedingungen angeben', desc: 'Teilen Sie Informationen zum Bestand, zum Planungsrecht (B-Plan, § 34) und zu Ihrem konkreten Vorhaben mit – soweit diese Informationen vorliegen.', Icon: Scale },
+                    { n: 3, title: 'Expertenanalyse Ihres Grundstücks', desc: 'Unser Expertenteam prüft Ihr Grundstück planungsrechtlich und bewertet alle Entwicklungsoptionen fachlich fundiert.', Icon: Search },
+                    { n: 4, title: 'PDF-Report mit Handlungsempfehlungen', desc: 'Sie erhalten einen strukturierten PDF-Report mit klaren Einschätzungen, konkreten Optionen und dem nächsten sinnvollen Schritt.', Icon: FileText },
                   ].map(({ n, title, desc, Icon }) => (
                     <li key={n} className="flex items-start gap-4">
                       <div className="relative flex-shrink-0">
@@ -632,10 +632,10 @@ export default function HomePage() {
                 </p>
                 <ul className="space-y-4 mb-8 md:mb-10">
                   {[
-                    { Icon: Scale,       text: 'Planungsrechtliche Änderungen & Praxishinweise' },
-                    { Icon: Lightbulb,   text: 'Praxisbeispiele & Analyseergebnisse' },
-                    { Icon: TrendingUp,  text: 'Marktentwicklungen bei Nachverdichtung & Teilung' },
-                    { Icon: Zap,         text: 'Exklusive Tipps für Eigentümer & Investoren' },
+                    { Icon: Scale, text: 'Planungsrechtliche Änderungen & Praxishinweise' },
+                    { Icon: Lightbulb, text: 'Praxisbeispiele & Analyseergebnisse' },
+                    { Icon: TrendingUp, text: 'Marktentwicklungen bei Nachverdichtung & Teilung' },
+                    { Icon: Zap, text: 'Exklusive Tipps für Eigentümer & Investoren' },
                   ].map(({ Icon, text }) => (
                     <li key={text} className="flex items-center gap-3 text-[15px] md:text-[16px] font-medium text-primary">
                       <div className="w-8 h-8 bg-white rounded-[10px] flex items-center justify-center flex-shrink-0 shadow-soft">

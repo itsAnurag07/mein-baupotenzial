@@ -13,17 +13,17 @@ import {
 } from 'lucide-react';
 
 const NAV = [
-  { href: '/analyse',           label: 'Analyse starten' },
-  { href: '/#leistungen',       label: 'Leistungen' },
+  { href: '/analyse', label: 'Analyse starten' },
+  { href: '/#leistungen', label: 'Leistungen' },
   { href: '/#so-funktionierts', label: "So funktioniert's" },
-  { href: '/#wissen',           label: 'Wissen' },
-  { href: '/#faq',              label: 'FAQ' },
+  { href: '/#wissen', label: 'Wissen' },
+  { href: '/#faq', label: 'FAQ' },
 ];
 
 const NAV_ICONS = [
   <Building2 size={18} strokeWidth={2} />,
-  <Layers     size={18} strokeWidth={2} />,
-  <Route      size={18} strokeWidth={2} />,
+  <Layers size={18} strokeWidth={2} />,
+  <Route size={18} strokeWidth={2} />,
   <GraduationCap size={18} strokeWidth={2} />,
   <HelpCircle size={18} strokeWidth={2} />,
 ];
@@ -40,9 +40,8 @@ export default function Header() {
 
   return (
     <header
-      className={`bg-surface-white sticky top-0 z-50 transition-all duration-[250ms] ${
-        scrolled ? 'shadow-soft border-b border-surface-dim' : 'border-b border-surface-dim'
-      }`}
+      className={`bg-surface-white sticky top-0 z-50 transition-all duration-[250ms] ${scrolled ? 'shadow-soft border-b border-surface-dim' : 'border-b border-surface-dim'
+        }`}
     >
       <div className="flex justify-between items-center w-full px-4 md:px-10 max-w-[1440px] mx-auto h-20">
 
@@ -50,10 +49,10 @@ export default function Header() {
         <div className="flex items-center">
           <Link href="/" className="hover:opacity-80 transition-opacity duration-[120ms] flex items-center">
             <img
-              src="/logo.png"
+              src="/logo_without_bg_1.png"
               alt="mein-baupotenzial.de Logo"
               className="object-contain"
-              style={{ maxHeight: '44px', width: 'auto' }}
+              style={{ maxHeight: '47px', width: '200px' }}
             />
           </Link>
         </div>
@@ -95,9 +94,8 @@ export default function Header() {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-[250ms] ease-in-out ${
-          mobileMenuOpen ? 'max-h-[500px] border-t border-surface-dim' : 'max-h-0'
-        }`}
+        className={`md:hidden overflow-hidden transition-all duration-[250ms] ease-in-out ${mobileMenuOpen ? 'max-h-[500px] border-t border-surface-dim' : 'max-h-0'
+          }`}
       >
         <nav className="flex flex-col px-4 py-4 bg-surface-white gap-1">
           <Link

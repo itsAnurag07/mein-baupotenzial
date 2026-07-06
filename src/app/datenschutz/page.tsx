@@ -8,7 +8,7 @@ export default function DatenschutzPage() {
       <Header />
       <main className="flex-grow max-w-4xl mx-auto px-4 py-16 w-full font-sans">
         <h1 className="text-3xl md:text-4xl font-extrabold text-primary mb-8 border-b border-surface-dim pb-4">DatenschutzerklÃ¤rung</h1>
-        
+
         <div className="space-y-6 text-on-surface-variant text-sm leading-relaxed">
           <section>
             <h2 className="text-xl font-bold text-primary mb-3">1. Datenschutz auf einen Blick</h2>
@@ -26,7 +26,7 @@ export default function DatenschutzPage() {
               van Valkenburg GmbH<br />
               KÃ¶nigsallee 60F<br />
               40212 DÃ¼sseldorf<br />
-              E-Mail: info@mein-baupotenzial.de
+              E-Mail:  wolf@van-valkenburg.de
             </p>
           </section>
 

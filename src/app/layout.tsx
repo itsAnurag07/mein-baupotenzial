@@ -21,7 +21,39 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className="scroll-smooth">
+    <html lang="de" className="scroll-smooth" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=block"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const orgRemove = Node.prototype.removeChild;
+                Node.prototype.removeChild = function(child) {
+                  if (child && child.parentNode !== this) {
+                    if (console) console.warn('Bypassed child node parent mismatch on removeChild:', this, child);
+                    return child;
+                  }
+                  return orgRemove.call(this, child);
+                };
+                const orgInsert = Node.prototype.insertBefore;
+                Node.prototype.insertBefore = function(newChild, refChild) {
+                  if (refChild && refChild.parentNode !== this) {
+                    if (console) console.warn('Bypassed child node parent mismatch on insertBefore:', this, refChild);
+                    return newChild;
+                  }
+                  return orgInsert.call(this, newChild, refChild);
+                };
+              })();
+            `
+          }}
+        />
+      </head>
       <body className={`${inter.variable} font-sans bg-[#F8F7F4] text-[#5E646B] antialiased`}>
         <Providers>{children}</Providers>
       </body>

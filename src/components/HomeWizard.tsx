@@ -154,19 +154,34 @@ export default function HomeWizard() {
 
   const validate = (): boolean => {
     const errs: typeof errors = {};
-    if (step === 1 && !form.analysisGoal) errs.analysisGoal = 'Bitte wählen Sie ein Ziel.';
+    if (step === 1) {
+      if (!form.analysisGoal) errs.analysisGoal = 'Bitte wählen Sie ein Ziel.';
+    }
     if (step === 2) {
-      if (!form.contactFirstName) errs.contactFirstName = 'Pflichtfeld';
-      if (!form.contactLastName)  errs.contactLastName  = 'Pflichtfeld';
-      if (!form.contactEmail || !/\S+@\S+\.\S+/.test(form.contactEmail)) errs.contactEmail = 'Gültige E-Mail erforderlich.';
-      if (!form.contactRole)      errs.contactRole      = 'Bitte wählen Sie Ihre Rolle.';
-      if (!form.agbAcceptedStep2) errs.agbAcceptedStep2 = 'Bitte stimmen Sie zu.';
+      if (!form.addressStreet) errs.addressStreet = 'Pflichtfeld';
+      if (!form.addressNumber || form.addressNumber.trim().length === 0) errs.addressNumber = 'Pflichtfeld';
+      if (!form.addressZip) {
+        errs.addressZip = 'Pflichtfeld';
+      } else if (!/^\d{5}$/.test(form.addressZip)) {
+        errs.addressZip = 'Muss 5-stellig sein';
+      }
+      if (!form.addressCity) errs.addressCity = 'Pflichtfeld';
     }
     if (step === 3) {
-      if (!form.addressStreet) errs.addressStreet = 'Pflichtfeld';
-      if (!form.addressNumber) errs.addressNumber = 'Pflichtfeld';
-      if (!form.addressZip)    errs.addressZip    = 'Pflichtfeld';
-      if (!form.addressCity)   errs.addressCity   = 'Pflichtfeld';
+      if (!form.contactFirstName) errs.contactFirstName = 'Pflichtfeld';
+      if (!form.contactLastName)  errs.contactLastName  = 'Pflichtfeld';
+      if (!form.contactEmail) {
+        errs.contactEmail = 'Pflichtfeld';
+      } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(form.contactEmail)) {
+        errs.contactEmail = 'Gültige E-Mail erforderlich.';
+      }
+      if (!form.contactPhone) {
+        errs.contactPhone = 'Pflichtfeld';
+      } else if (form.contactPhone.replace(/[^0-9]/g, '').length < 6) {
+        errs.contactPhone = 'Gültige Telefonnummer erforderlich.';
+      }
+      if (!form.contactRole)      errs.contactRole      = 'Bitte wählen Sie Ihre Rolle.';
+      if (!form.agbAcceptedStep2) errs.agbAcceptedStep2 = 'Bitte stimmen Sie zu.';
     }
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -224,7 +239,7 @@ export default function HomeWizard() {
       {/* ── Step indicator + progress bar ── */}
       <div className="px-6 pt-5 pb-4 border-b border-surface-dim bg-surface-white flex-shrink-0">
         <div className="flex items-center gap-2 mb-4">
-          {['Planungsziel', 'Ihre Daten', 'Grundstück'].map((label, i) => {
+          {['Planungsziel', 'Grundstück', 'Ihre Daten'].map((label, i) => {
             const n = i + 1;
             const done   = n < step;
             const active = n === step;
@@ -260,7 +275,7 @@ export default function HomeWizard() {
           />
         </div>
         <p className="text-[11px] text-on-surface-variant mt-1.5 font-medium">
-          Schritt {step} von 3 — 10 Schritte insgesamt auf der nächsten Seite
+          Schritt {step} von 3 — 5 Schritte insgesamt auf der nächsten Seite
         </p>
       </div>
 
@@ -327,79 +342,8 @@ export default function HomeWizard() {
           </div>
         )}
 
-        {/* STEP 2 — Contact Details */}
+        {/* STEP 2 — Property Address */}
         {step === 2 && (
-          <div>
-            <h3 className="text-lg font-bold text-primary mb-1">Ihre Kontaktdaten</h3>
-            <p className="text-[13px] text-on-surface-variant mb-5">
-              Damit wir Ihr Ergebnis zustellen und bei Rückfragen erreichbar sind. Felder mit * sind Pflicht.
-            </p>
-            <div className="space-y-4 max-w-sm">
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-primary mb-1">Vorname *</label>
-                  <input type="text" value={form.contactFirstName}
-                    onChange={(e) => set('contactFirstName', e.target.value)} onBlur={() => save()}
-                    placeholder="Max" className={inputCls('contactFirstName')} />
-                  {errors.contactFirstName && <p className="text-[10px] text-red-500 mt-1">{errors.contactFirstName}</p>}
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-primary mb-1">Nachname *</label>
-                  <input type="text" value={form.contactLastName}
-                    onChange={(e) => set('contactLastName', e.target.value)} onBlur={() => save()}
-                    placeholder="Mustermann" className={inputCls('contactLastName')} />
-                  {errors.contactLastName && <p className="text-[10px] text-red-500 mt-1">{errors.contactLastName}</p>}
-                </div>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-primary mb-1">E-Mail *</label>
-                <input type="email" value={form.contactEmail}
-                  onChange={(e) => set('contactEmail', e.target.value)} onBlur={() => save()}
-                  placeholder="max@beispiel.de" className={inputCls('contactEmail')} />
-                {errors.contactEmail && <p className="text-[10px] text-red-500 mt-1">{errors.contactEmail}</p>}
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-primary mb-1">Telefon (optional)</label>
-                <input type="tel" value={form.contactPhone}
-                  onChange={(e) => set('contactPhone', e.target.value)} onBlur={() => save()}
-                  placeholder="+49 170 1234567" className={inputCls('contactPhone')} />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-primary mb-1">Ihre Rolle *</label>
-                <select value={form.contactRole}
-                  onChange={(e) => { set('contactRole', e.target.value); save({ ...form, contactRole: e.target.value }); }}
-                  className={inputCls('contactRole')}>
-                  <option value="">-- Rolle wählen --</option>
-                  <option value="OWNER">Eigentümer</option>
-                  <option value="CHILD_HEIR">Kind / Erbe</option>
-                  <option value="AUTHORIZED">Bevollmächtigt</option>
-                  <option value="OTHER">Sonstiges</option>
-                </select>
-                {errors.contactRole && <p className="text-[10px] text-red-500 mt-1">{errors.contactRole}</p>}
-              </div>
-              <div className="pt-3 border-t border-surface-dim">
-                <label className="flex items-start gap-2.5 cursor-pointer">
-                  <input
-                    type="checkbox" checked={form.agbAcceptedStep2}
-                    onChange={(e) => { set('agbAcceptedStep2', e.target.checked); save({ ...form, agbAcceptedStep2: e.target.checked }); }}
-                    className="rounded border-surface-dim text-secondary mt-0.5"
-                  />
-                  <span className="text-[11px] text-on-surface-variant leading-relaxed">
-                    Ich stimme den{' '}
-                    <Link href="/agb" target="_blank" className="text-primary font-semibold hover:underline">AGB</Link>
-                    {' '}und der{' '}
-                    <Link href="/datenschutz" target="_blank" className="text-primary font-semibold hover:underline">Datenschutzerklärung</Link>
-                    {' '}der van Valkenburg GmbH zu. *
-                  </span>
-                </label>
-                {errors.agbAcceptedStep2 && <p className="text-[10px] text-red-500 mt-1">{errors.agbAcceptedStep2}</p>}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* STEP 3 — Property Address */}
-        {step === 3 && (
           <div>
             <h3 className="text-lg font-bold text-primary mb-1">Wo liegt das Grundstück?</h3>
             <p className="text-[13px] text-on-surface-variant mb-5">
@@ -449,8 +393,80 @@ export default function HomeWizard() {
               <div className="bg-surface-bright rounded-[12px] p-3 text-[12px] text-on-surface-variant flex items-start gap-2">
                 <Info size={14} strokeWidth={2} className="flex-shrink-0 mt-0.5 text-accent" />
                 <span>
-                  Danach geht es weiter: Grundstücksdaten, Bestand, Planungsrecht, Vorhaben und Upload — alles im vollständigen Analyse-Formular.
+                  Danach geht es weiter: Kontaktdaten, Upload und Prüfung — alles im vollständigen Analyse-Formular.
                 </span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* STEP 3 — Contact Details */}
+        {step === 3 && (
+          <div>
+            <h3 className="text-lg font-bold text-primary mb-1">Ihre Kontaktdaten</h3>
+            <p className="text-[13px] text-on-surface-variant mb-5">
+              Damit wir Ihr Ergebnis zustellen und bei Rückfragen erreichbar sind. Felder mit * sind Pflicht.
+            </p>
+            <div className="space-y-4 max-w-sm">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-primary mb-1">Vorname *</label>
+                  <input type="text" value={form.contactFirstName}
+                    onChange={(e) => set('contactFirstName', e.target.value)} onBlur={() => save()}
+                    placeholder="Max" className={inputCls('contactFirstName')} />
+                  {errors.contactFirstName && <p className="text-[10px] text-red-500 mt-1">{errors.contactFirstName}</p>}
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-primary mb-1">Nachname *</label>
+                  <input type="text" value={form.contactLastName}
+                    onChange={(e) => set('contactLastName', e.target.value)} onBlur={() => save()}
+                    placeholder="Mustermann" className={inputCls('contactLastName')} />
+                  {errors.contactLastName && <p className="text-[10px] text-red-500 mt-1">{errors.contactLastName}</p>}
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-primary mb-1">E-Mail *</label>
+                <input type="email" value={form.contactEmail}
+                  onChange={(e) => set('contactEmail', e.target.value)} onBlur={() => save()}
+                  placeholder="max@beispiel.de" className={inputCls('contactEmail')} />
+                {errors.contactEmail && <p className="text-[10px] text-red-500 mt-1">{errors.contactEmail}</p>}
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-primary mb-1">Telefon *</label>
+                <input type="tel" value={form.contactPhone}
+                  onChange={(e) => set('contactPhone', e.target.value)} onBlur={() => save()}
+                  placeholder="+49 170 1234567" className={inputCls('contactPhone')} />
+                {errors.contactPhone && <p className="text-[10px] text-red-500 mt-1">{errors.contactPhone}</p>}
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-primary mb-1">Ihre Rolle *</label>
+                <select value={form.contactRole}
+                  onChange={(e) => { set('contactRole', e.target.value); save({ ...form, contactRole: e.target.value }); }}
+                  className={inputCls('contactRole')}>
+                  <option value="">-- Rolle wählen --</option>
+                  <option value="OWNER">Eigentümer</option>
+                  <option value="CHILD_HEIR">Kind / Erbe</option>
+                  <option value="AUTHORIZED">Bevollmächtigt</option>
+                  <option value="OTHER">Sonstiges</option>
+                </select>
+                {errors.contactRole && <p className="text-[10px] text-red-500 mt-1">{errors.contactRole}</p>}
+              </div>
+              <div className="pt-3 border-t border-surface-dim">
+                <label className="flex items-start gap-2.5 cursor-pointer">
+                  <input
+                    type="checkbox" checked={form.agbAcceptedStep2}
+                    onChange={(e) => { set('agbAcceptedStep2', e.target.checked); save({ ...form, agbAcceptedStep2: e.target.checked }); }}
+                    className="rounded border-surface-dim text-secondary mt-0.5"
+                  />
+                  <span className="text-[11px] text-on-surface-variant leading-relaxed">
+                    Ich stimme den{' '}
+                    <Link href="/agb" target="_blank" className="text-primary font-semibold hover:underline">AGB</Link>
+                    {' '}und der{' '}
+                    <Link href="/datenschutz" target="_blank" className="text-primary font-semibold hover:underline">Datenschutzerklärung</Link>
+                    {' '}der van Valkenburg GmbH zu. *
+                  </span>
+                </label>
+                {errors.agbAcceptedStep2 && <p className="text-[10px] text-red-500 mt-1">{errors.agbAcceptedStep2}</p>}
               </div>
             </div>
           </div>
