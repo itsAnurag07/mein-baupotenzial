@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     return NextResponse.json(document);
   } catch (error: any) {
     console.error('File upload api error:', error);
-    return NextResponse.json({ error: 'Fehler beim Hochladen der Datei.' }, { status: 500 });
+    return NextResponse.json({ error: error.message || 'Fehler beim Hochladen der Datei.' }, { status: 500 });
   }
 }
 
