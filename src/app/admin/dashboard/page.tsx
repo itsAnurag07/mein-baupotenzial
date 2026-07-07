@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
@@ -17,9 +17,11 @@ interface Lead {
   paymentStatus?: string | null;
   createdAt: string;
   updatedAt: string;
-  contactName?: string | null;
+  contactFirstName?: string | null;
+  contactLastName?: string | null;
   contactEmail?: string | null;
   contactPhone?: string | null;
+  importantQuestion?: string | null;
   addressStreet?: string | null;
   addressNumber?: string | null;
   addressZip?: string | null;
@@ -121,9 +123,10 @@ export default function AdminDashboardPage() {
     return leads.filter(lead => {
       // 1. Search Query
       const query = searchQuery.toLowerCase();
+      const fullName = `${lead.contactFirstName || ''} ${lead.contactLastName || ''}`.toLowerCase();
       const matchesSearch = 
         lead.id.toLowerCase().includes(query) ||
-        (lead.contactName || '').toLowerCase().includes(query) ||
+        fullName.includes(query) ||
         (lead.contactEmail || '').toLowerCase().includes(query) ||
         (lead.addressStreet || '').toLowerCase().includes(query) ||
         (lead.addressCity || '').toLowerCase().includes(query) ||
@@ -157,7 +160,7 @@ export default function AdminDashboardPage() {
       new Date(l.createdAt).toLocaleDateString('de-DE'),
       l.status,
       l.packageSelected || 'Kein Paket',
-      l.contactName || '',
+      `${l.contactFirstName || ''} ${l.contactLastName || ''}`.trim(),
       l.contactEmail || '',
       l.contactPhone || '',
       l.addressStreet || '',
@@ -312,7 +315,11 @@ export default function AdminDashboardPage() {
                         <div className="text-[10px] text-on-surface-variant mt-0.5">{new Date(lead.createdAt).toLocaleDateString('de-DE')}</div>
                       </td>
                       <td className="py-4 px-6">
-                        <div className="font-bold text-primary">{lead.contactName || 'Draft Lead'}</div>
+                        <div className="font-bold text-primary">
+                          {(lead.contactFirstName || lead.contactLastName) 
+                            ? `${lead.contactFirstName || ''} ${lead.contactLastName || ''}`.trim() 
+                            : 'Entwurf'}
+                        </div>
                         <div className="text-on-surface-variant mt-0.5">{lead.contactEmail || 'N/A'}</div>
                       </td>
                       <td className="py-4 px-6 max-w-[180px] truncate">
@@ -408,10 +415,16 @@ export default function AdminDashboardPage() {
                   <div>
                     <h3 className="font-bold text-primary text-sm mb-2 font-sans border-b border-surface-dim pb-1">Kundendaten</h3>
                     <div className="grid grid-cols-2 gap-4">
-                      <p><strong>Name:</strong> {selectedLead.contactName || '-'}</p>
+                      <p><strong>Name:</strong> {(selectedLead.contactFirstName || selectedLead.contactLastName) ? `${selectedLead.contactFirstName || ''} ${selectedLead.contactLastName || ''}`.trim() : '-'}</p>
                       <p><strong>E-Mail:</strong> {selectedLead.contactEmail || '-'}</p>
                       <p><strong>Telefon:</strong> {selectedLead.contactPhone || '-'}</p>
                       <p><strong>Zweck:</strong> {selectedLead.analysisGoal || '-'}</p>
+                      {selectedLead.importantQuestion && (
+                        <p className="col-span-2 text-xs bg-surface-bright p-3 rounded-lg border border-surface-dim mt-1">
+                          <strong className="block text-primary mb-1">Wichtigste Frage:</strong>
+                          <span className="italic text-on-surface-variant font-sans">{selectedLead.importantQuestion}</span>
+                        </p>
+                      )}
                     </div>
                   </div>
 
