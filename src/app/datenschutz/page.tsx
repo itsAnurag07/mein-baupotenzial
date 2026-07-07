@@ -24,9 +24,10 @@ export default function DatenschutzPage() {
             <p>
               Die verantwortliche Stelle fÃ¼r die Datenverarbeitung auf dieser Website ist:<br />
               van Valkenburg GmbH<br />
-              KÃ¶nigsallee 60F<br />
-              40212 DÃ¼sseldorf<br />
-              E-Mail:  wolf@van-valkenburg.de
+              c/o Ulmer Schanze<br />
+              Wagnerstraße 25<br />
+              89077 Ulm<br />
+              E-Mail: info@van-valkenburg.de
             </p>
           </section>
 

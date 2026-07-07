@@ -47,8 +47,9 @@ export const emailService = {
       ? `<p>Bitte überweisen Sie den Betrag von <strong>${amount.toFixed(2)} € (zzgl. MwSt.)</strong> auf folgendes Konto:</p>
          <table style="border: 1px solid #ddd; padding: 10px; width: 100%;">
            <tr><td><strong>Empfänger:</strong></td><td>van Valkenburg GmbH</td></tr>
-           <tr><td><strong>IBAN:</strong></td><td>DE89 3704 0044 0532 0130 00</td></tr>
-           <tr><td><strong>BIC:</strong></td><td>WELADED1XXX</td></tr>
+           <tr><td><strong>Bank:</strong></td><td>GLS Gemeinschaftsbank eG</td></tr>
+           <tr><td><strong>IBAN:</strong></td><td>DE62 4306 0967 1324 3634 00</td></tr>
+           <tr><td><strong>BIC:</strong></td><td>GENODEM1GLS</td></tr>
            <tr><td><strong>Verwendungszweck:</strong></td><td>Analyse ${leadId.substring(0, 8)}</td></tr>
          </table>
          <p>Die Analyse beginnt unmittelbar nach Zahlungseingang.</p>`

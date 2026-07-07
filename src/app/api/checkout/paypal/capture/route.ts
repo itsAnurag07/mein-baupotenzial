@@ -49,9 +49,9 @@ export async function POST(request: Request) {
     if (token === 'mock_token' || orderId === 'MOCK_PAYMENT') {
       console.log(`💰 PayPal Capture Mock Success: leadId=${leadId}, orderId=${orderId}`);
       
-      const price = lead.packageSelected === 'QUICK_CHECK' ? 189 
-        : lead.packageSelected === 'POTENTIAL_ANALYSIS' ? 490 
-        : 2490;
+      const price = lead.packageSelected === 'QUICK_CHECK' ? 249 
+        : lead.packageSelected === 'POTENTIAL_ANALYSIS' ? 690 
+        : 3490;
       
       // Update lead to PAID status
       await dbService.updateLead(leadId, {

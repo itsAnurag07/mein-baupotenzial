@@ -18,9 +18,9 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3 text-[14px]">
               <li><Link href="/#so-funktionierts" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Über uns</Link></li>
-              <li><Link href="/#leistungen"       className="text-white/60 hover:text-white transition-colors duration-[120ms]">Unser Team</Link></li>
-              <li><Link href="/kontakt"            className="text-white/60 hover:text-white transition-colors duration-[120ms]">Karriere</Link></li>
-              <li><Link href="/kontakt"            className="text-white/60 hover:text-white transition-colors duration-[120ms]">Presse</Link></li>
+              <li><Link href="/#leistungen" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Unser Team</Link></li>
+              <li><Link href="/kontakt" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Karriere</Link></li>
+              <li><Link href="/kontakt" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Presse</Link></li>
             </ul>
           </div>
 
@@ -30,10 +30,10 @@ export default function Footer() {
               Leistungen
             </h4>
             <ul className="space-y-3 text-[14px]">
-              <li><Link href="/analyse?package=QUICK_CHECK"        className="text-white/60 hover:text-white transition-colors duration-[120ms]">QuickCheck</Link></li>
+              <li><Link href="/analyse?package=QUICK_CHECK" className="text-white/60 hover:text-white transition-colors duration-[120ms]">QuickCheck</Link></li>
               <li><Link href="/analyse?package=POTENTIAL_ANALYSIS" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Potenzialanalyse</Link></li>
               <li><Link href="/analyse?package=FEASIBILITY_STUDY" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Machbarkeitsstudie</Link></li>
-              <li><Link href="/#leistungen"                        className="text-white/60 hover:text-white transition-colors duration-[120ms]">Alle Leistungen</Link></li>
+              <li><Link href="/#leistungen" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Alle Leistungen</Link></li>
             </ul>
           </div>
 
@@ -43,11 +43,11 @@ export default function Footer() {
               Wissen
             </h4>
             <ul className="space-y-3 text-[14px]">
-              <li><Link href="/#wissen"               className="text-white/60 hover:text-white transition-colors duration-[120ms]">Baupotenzial verstehen</Link></li>
-              <li><Link href="/#faq"                  className="text-white/60 hover:text-white transition-colors duration-[120ms]">Planungsrecht erklärt</Link></li>
-              <li><Link href="/#faq"                  className="text-white/60 hover:text-white transition-colors duration-[120ms]">Nachverdichtung</Link></li>
-              <li><Link href="/#faq"                  className="text-white/60 hover:text-white transition-colors duration-[120ms]">Grundstücksteilung</Link></li>
-              <li><Link href="/#baupotenzial-report"  className="text-white/60 hover:text-white transition-colors duration-[120ms]">Baupotenzial-Report</Link></li>
+              <li><Link href="/#wissen" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Baupotenzial verstehen</Link></li>
+              <li><Link href="/#faq" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Planungsrecht erklärt</Link></li>
+              <li><Link href="/#faq" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Nachverdichtung</Link></li>
+              <li><Link href="/#faq" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Grundstücksteilung</Link></li>
+              <li><Link href="/#baupotenzial-report" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Baupotenzial-Report</Link></li>
             </ul>
           </div>
 
@@ -83,10 +83,10 @@ export default function Footer() {
               Rechtliches
             </h4>
             <ul className="space-y-3 text-[14px]">
-              <li><Link href="/impressum"  className="text-white/60 hover:text-white transition-colors duration-[120ms]">Impressum</Link></li>
-              <li><Link href="/datenschutz"className="text-white/60 hover:text-white transition-colors duration-[120ms]">Datenschutz</Link></li>
-              <li><Link href="/agb"        className="text-white/60 hover:text-white transition-colors duration-[120ms]">AGB</Link></li>
-              <li><Link href="/widerruf"   className="text-white/60 hover:text-white transition-colors duration-[120ms]">Widerrufsbelehrung</Link></li>
+              <li><Link href="/impressum" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Impressum</Link></li>
+              <li><Link href="/datenschutz" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Datenschutz</Link></li>
+              <li><Link href="/agb" className="text-white/60 hover:text-white transition-colors duration-[120ms]">AGB</Link></li>
+              <li><Link href="/widerruf" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Widerrufsbelehrung</Link></li>
             </ul>
           </div>
 
@@ -98,20 +98,19 @@ export default function Footer() {
             <ul className="space-y-3 text-[14px] text-white/60">
               <li className="flex items-start gap-2">
                 <Building2 size={14} strokeWidth={2} className="text-accent mt-0.5 flex-shrink-0" />
-                van Valkenburg GmbH
+                <span>
+                  mein Baupotential<br />
+                  c/o Ulmer Schanze<br />
+                  Prittwitzstraße 100, 89075 Ulm
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <Mail size={14} strokeWidth={2} className="text-accent mt-0.5 flex-shrink-0" />
-                <a href="mailto:info@mein-baupotenzial.de" className="hover:text-white transition-colors duration-[120ms]">
+                <a href="mailto:info@mein-baupotenzial.de" className="hover:text-white transition-colors duration-[120ms] whitespace-nowrap">
                   info@mein-baupotenzial.de
                 </a>
               </li>
-              <li className="flex items-start gap-2">
-                <Phone size={14} strokeWidth={2} className="text-accent mt-0.5 flex-shrink-0" />
-                <a href="tel:+4921112345670" className="hover:text-white transition-colors duration-[120ms]">
-                  +49 (0) 211 1234567
-                </a>
-              </li>
+
               <li className="mt-4">
                 <Link
                   href="/analyse"

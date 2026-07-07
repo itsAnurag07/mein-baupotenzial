@@ -29,10 +29,10 @@ export default function ImpressumPage() {
           <section>
             <h2 className="text-xl font-bold text-primary mb-2">Kontakt</h2>
             <p>
-              Tel. 0731 14394705<br />
+              Tel. +49 731 14394705<br />
               E-Mail:{' '}
               <a href="mailto:wolf@van-valkenburg.de" className="text-secondary hover:underline">
-                wolf@van-valkenburg.de
+                info@van-valkenburg.de
               </a>
             </p>
           </section>

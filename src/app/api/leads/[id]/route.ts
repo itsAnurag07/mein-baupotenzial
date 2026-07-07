@@ -25,10 +25,43 @@ export async function PATCH(
 ) {
   try {
     const { id } = await params;
-    const body = await request.json();
+    
+    let body;
+    try {
+      body = await request.json();
+    } catch (e) {
+      console.warn('⚠️ Received empty or invalid JSON body in PATCH request.');
+      return NextResponse.json({ error: 'Invalid or empty JSON body' }, { status: 400 });
+    }
     
     // Fetch current state of the lead first to see if status is changing
     const currentLead = await dbService.getLead(id);
+    if (!currentLead) {
+      return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
+    }
+
+    // Validate referral code payment method
+    if (body.paymentMethod === 'REFERRAL') {
+      const pkg = body.packageSelected || currentLead.packageSelected;
+      if (pkg !== 'QUICK_CHECK') {
+        return NextResponse.json(
+          { error: 'Referral code only applies to Quick Check package.' },
+          { status: 400 }
+        );
+      }
+
+      const code = body.referralCodeUsed || currentLead.referralCodeUsed || '';
+      const ref = await dbService.getReferralCode(code);
+      if (!ref || !ref.isValid || (ref.maxUses !== null && ref.currentUses >= ref.maxUses)) {
+        return NextResponse.json(
+          { error: 'Invalid, expired, or fully used referral code.' },
+          { status: 400 }
+        );
+      }
+
+      // Increment referral code usage count
+      await dbService.incrementReferralCode(ref.code);
+    }
     
     const updatedLead = await dbService.updateLead(id, body);
 
@@ -48,9 +81,9 @@ export async function PATCH(
         
         // Also send order confirmation to customer
         if (updatedLead.contactEmail) {
-          const price = updatedLead.packageSelected === 'QUICK_CHECK' ? 189 
-            : updatedLead.packageSelected === 'POTENTIAL_ANALYSIS' ? 490 
-            : 2490;
+          const price = updatedLead.packageSelected === 'QUICK_CHECK' ? 249 
+            : updatedLead.packageSelected === 'POTENTIAL_ANALYSIS' ? 690 
+            : 3490;
           
           await emailService.sendOrderConfirmation(
             updatedLead.contactEmail,

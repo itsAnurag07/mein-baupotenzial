@@ -103,9 +103,7 @@ class MockStorage {
 
   constructor() {
     // Seed some mock referral codes
-    this.referralCodes.set('FREECHECK', { code: 'FREECHECK', isValid: true, currentUses: 0, maxUses: 100, createdAt: new Date() });
-    this.referralCodes.set('PROMO100', { code: 'PROMO100', isValid: true, currentUses: 5, maxUses: 10, createdAt: new Date() });
-    this.referralCodes.set('EXPIRED', { code: 'EXPIRED', isValid: false, currentUses: 10, maxUses: 10, createdAt: new Date() });
+    this.referralCodes.set('WALDBUND', { code: 'WALDBUND', isValid: true, currentUses: 0, maxUses: null, createdAt: new Date() });
   }
 
   async getLead(id: string): Promise<LeadData | null> {
@@ -197,11 +195,8 @@ async function checkDbConnection() {
   if (!globalForDbCheck.dbCheckPromise) {
     globalForDbCheck.dbCheckPromise = (async () => {
       try {
-        // Simple query to test connection with a very short timeout
-        await Promise.race([
-          prisma.$queryRaw`SELECT 1`,
-          new Promise((_, reject) => setTimeout(() => reject(new Error('DB Timeout')), 500))
-        ]);
+        // Simple query to test connection
+        await prisma.$queryRaw`SELECT 1`;
         globalForDbCheck.isDbConnected = true;
       } catch (error) {
         console.warn('⚠️ PostgreSQL database connection failed. Falling back to In-Memory storage.');
@@ -228,7 +223,8 @@ export const dbService = {
         include: { documents: true }
       });
       return lead as LeadData | null;
-    } catch (e) {
+    } catch (e: any) {
+      console.error('getLead failed:', e.message || e);
       globalForDbCheck.isDbConnected = false;
       return mockDb.getLead(id);
     }
@@ -247,7 +243,8 @@ export const dbService = {
         }
       });
       return lead as LeadData;
-    } catch (e) {
+    } catch (e: any) {
+      console.error('createLead failed:', e.message || e);
       globalForDbCheck.isDbConnected = false;
       return mockDb.createLead();
     }
@@ -270,7 +267,8 @@ export const dbService = {
         }
       });
       return lead as LeadData;
-    } catch (e) {
+    } catch (e: any) {
+      console.error('updateLead failed:', e.message || e);
       globalForDbCheck.isDbConnected = false;
       return mockDb.updateLead(id, cleanData);
     }

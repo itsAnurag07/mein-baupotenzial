@@ -281,6 +281,10 @@ function AnalyseWizardPage() {
       
       if (res.ok) {
         lastSavedData.current = dataString;
+      } else if (res.status === 404) {
+        console.warn('Lead session invalid (404), resetting...');
+        localStorage.removeItem('mein_baupotenzial_lead_id');
+        initializeNewLead(formData.packageSelected);
       }
     } catch (e) {
       console.error('Autosave failed:', e);
@@ -431,6 +435,10 @@ function AnalyseWizardPage() {
       if (res.ok) {
         setCheckoutCompleted(true);
       } else {
+        if (res.status === 404) {
+          localStorage.removeItem('mein_baupotenzial_lead_id');
+          initializeNewLead(formData.packageSelected);
+        }
         setCheckoutError('Fehler beim Abschließen Ihrer Bestellung.');
       }
     } catch (err) {
@@ -457,6 +465,10 @@ function AnalyseWizardPage() {
       if (res.ok) {
         setCheckoutCompleted(true);
       } else {
+        if (res.status === 404) {
+          localStorage.removeItem('mein_baupotenzial_lead_id');
+          initializeNewLead(formData.packageSelected);
+        }
         setCheckoutError('Fehler beim Abschließen Ihrer Bestellung.');
       }
     } catch (err) {
@@ -466,9 +478,9 @@ function AnalyseWizardPage() {
 
   // Pricing math
   const isQuickCheck = formData.packageSelected === 'QUICK_CHECK';
-  const rawPrice = isQuickCheck ? 189 
-    : formData.packageSelected === 'POTENTIAL_ANALYSIS' ? 490 
-    : 2490;
+  const rawPrice = isQuickCheck ? 249 
+    : formData.packageSelected === 'POTENTIAL_ANALYSIS' ? 690 
+    : 3490;
   
   const isFree = isQuickCheck && referralIsValid === true;
   const price = isFree ? 0 : rawPrice;
@@ -692,8 +704,9 @@ function AnalyseWizardPage() {
                     <table className="w-full text-xs">
                       <tbody>
                         <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">Empfänger:</td><td className="py-2 text-right">van Valkenburg GmbH</td></tr>
-                        <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">IBAN:</td><td className="py-2 text-right">DE89 3704 0044 0532 0130 00</td></tr>
-                        <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">BIC:</td><td className="py-2 text-right font-medium">WELADED1XXX</td></tr>
+                        <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">Kreditinstitut:</td><td className="py-2 text-right">GLS Gemeinschaftsbank eG</td></tr>
+                        <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">IBAN:</td><td className="py-2 text-right">DE62 4306 0967 1324 3634 00</td></tr>
+                        <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">BIC:</td><td className="py-2 text-right font-medium">GENODEM1GLS</td></tr>
                         <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">Verwendungszweck:</td><td className="py-2 text-right font-mono font-bold text-primary-navy">Analyse {leadId?.substring(0, 8)}</td></tr>
                         <tr><td className="py-2 font-bold">Betrag (Brutto):</td><td className="py-2 text-right font-black text-accent-teal">{totalPrice.toFixed(2)} €</td></tr>
                       </tbody>
@@ -735,7 +748,7 @@ function AnalyseWizardPage() {
                   >
                     <div className="p-6 border-b border-surface-dim bg-surface-bright">
                       <h4 className="font-headline-sm text-headline-sm text-primary mb-2">Quick Check</h4>
-                      <p className="text-headline-md font-bold text-primary">189 € <span className="text-caption font-normal text-on-surface-variant">netto</span></p>
+                      <p className="text-headline-md font-bold text-primary">249 € <span className="text-caption font-normal text-on-surface-variant">netto</span></p>
                     </div>
                     <div className="p-6 flex-1 space-y-4">
                       <ul className="text-label-md space-y-3">
@@ -773,7 +786,7 @@ function AnalyseWizardPage() {
                     <div className="bg-primary-navy/5 text-center py-1 text-[10px] font-bold tracking-widest uppercase text-primary-navy">Empfohlen</div>
                     <div className="p-6 border-b border-surface-dim bg-surface-bright">
                       <h4 className="font-headline-sm text-headline-sm text-primary-navy mb-2">Potenzialanalyse</h4>
-                      <p className="text-headline-md font-bold text-primary">490 € <span className="text-caption font-normal text-on-surface-variant">netto</span></p>
+                      <p className="text-headline-md font-bold text-primary">690 € <span className="text-caption font-normal text-on-surface-variant">netto</span></p>
                     </div>
                     <div className="p-6 flex-1 space-y-4">
                       <ul className="text-label-md space-y-3">
@@ -814,7 +827,7 @@ function AnalyseWizardPage() {
                   >
                     <div className="p-6 border-b border-surface-dim bg-surface-bright">
                       <h4 className="font-headline-sm text-headline-sm text-primary mb-2">Machbarkeit</h4>
-                      <p className="text-headline-md font-bold text-primary">2.490 € <span className="text-caption font-normal text-on-surface-variant">netto</span></p>
+                      <p className="text-headline-md font-bold text-primary">3.490 € <span className="text-caption font-normal text-on-surface-variant">netto</span></p>
                     </div>
                     <div className="p-6 flex-1 space-y-4">
                       <ul className="text-label-md space-y-3">
