@@ -1473,11 +1473,25 @@ function AnalyseWizardPage() {
 
               {/* STEP 4: FILE UPLOAD */}
               {currentStep === 4 && (
-                <div className="space-y-8" id="step-upload">
+                <div className="space-y-8 relative" id="step-upload">
                   <div className="border-b border-surface-dim pb-4">
                     <h2 className="text-headline-md font-headline-md text-primary-navy">Dokumente &amp; Pläne hochladen</h2>
                     <p className="text-body-md text-on-surface-variant mt-2 text-xs">Um eine präzise Analyse zu gewährleisten, benötigen wir Zugriff auf relevante Unterlagen (Lagepläne, Planungsrecht, Vorhaben).</p>
                   </div>
+
+                  {uploadError && (
+                    <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl flex items-center gap-2 font-medium">
+                      <span className="material-symbols-outlined text-sm text-red-500 shrink-0">error</span>
+                      <span>{uploadError}</span>
+                    </div>
+                  )}
+
+                  {isUploading && (
+                    <div className="absolute inset-0 bg-white/60 z-30 flex flex-col items-center justify-center gap-3 backdrop-blur-[1px] rounded-2xl">
+                      <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary-navy border-t-transparent"></div>
+                      <span className="text-xs font-bold text-primary-navy">Datei wird hochgeladen...</span>
+                    </div>
+                  )}
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {[
