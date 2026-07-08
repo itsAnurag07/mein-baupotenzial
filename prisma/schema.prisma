@@ -102,3 +102,11 @@ model ReferralCode {
   maxUses     Int?
   createdAt   DateTime @default(now())
 }
+
+model Subscriber {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  source    String   @default("NEWSLETTER") // NEWSLETTER, CHECKOUT
+  createdAt DateTime @default(now())
+}

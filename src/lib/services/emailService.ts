@@ -279,5 +279,46 @@ export const emailService = {
 
     const html = wrapInInternalEmailTemplate(title, bodyContent);
     await sendMail(TEAM_EMAIL, `[Zahlung] 💰 Zahlung erhalten für Lead ${leadId.substring(0, 8)}`, html);
+  },
+
+  async sendNewsletterWelcome(toEmail: string, name?: string) {
+    const title = 'Willkommen bei mein-baupotenzial.de!';
+    const displayName = name ? `Hallo ${name}` : 'Hallo';
+    
+    const bodyContent = `
+      <p style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600; color: #1F2328;">${displayName},</p>
+      <p style="margin: 0 0 16px 0;">vielen Dank für Ihre Anmeldung zu unserem Newsletter! Wir freuen uns, Sie auf Ihrem Weg zum maximalen Baupotenzial begleiten zu dürfen.</p>
+      <p style="margin: 0 0 16px 0;">Ab sofort erhalten Sie regelmäßig wertvolle Tipps, Fallbeispiele und Experten-Einblicke rund um das deutsche Bauplanungsrecht, Nachverdichtung, Aufstockung und städtebauliche Analysen – direkt und auf den Punkt gebracht.</p>
+      <div style="background-color: #EAF0EC; border-left: 4px solid #234436; padding: 16px; margin: 24px 0; border-radius: 4px;">
+        <p style="margin: 0; font-size: 13px; color: #234436; font-weight: 600;">
+          Wussten Sie schon?<br>
+          Über 40 Jahre Erfahrung in der städtebaulichen Beratung fließen in unsere Analysen und Tipps ein.
+        </p>
+      </div>
+      <p style="margin: 0 0 20px 0;">Falls Sie Fragen zu unseren Analyse-Paketen haben, können Sie jederzeit einfach auf diese E-Mail antworten.</p>
+      <p style="margin: 20px 0 0 0; color: #1F2328; font-weight: 500;">
+        Mit freundlichen Grüßen,<br>
+        <span style="color: #234436; font-weight: 700;">Ihr Team von mein-baupotenzial.de</span>
+      </p>
+    `;
+
+    const html = wrapInEmailTemplate(title, bodyContent);
+    await sendMail(toEmail, 'Willkommen bei mein-baupotenzial.de (Newsletter)', html);
+  },
+
+  async sendInternalNewSubscriber(email: string, name?: string, source?: string) {
+    const title = 'Neuer Newsletter-Abonnent';
+    const bodyContent = `
+      <p>Es gibt eine neue Newsletter-Anmeldung auf der Plattform:</p>
+      <ul style="padding-left: 20px;">
+        <li style="margin-bottom: 8px;"><strong>E-Mail:</strong> ${email}</li>
+        <li style="margin-bottom: 8px;"><strong>Name:</strong> ${name || 'N/A'}</li>
+        <li style="margin-bottom: 8px;"><strong>Quelle:</strong> ${source || 'NEWSLETTER'}</li>
+        <li style="margin-bottom: 8px;"><strong>Datum:</strong> ${new Date().toLocaleString('de-DE')}</li>
+      </ul>
+    `;
+
+    const html = wrapInInternalEmailTemplate(title, bodyContent);
+    await sendMail(TEAM_EMAIL, `[Newsletter] Neuer Abonnent: ${email}`, html);
   }
 };

@@ -94,6 +94,7 @@ export default function HomePage() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const [visibleFaqCount, setVisibleFaqCount] = useState(8);
   const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterName, setNewsletterName] = useState('');
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
 
   const toggleFaq = (index: number) => {
@@ -107,9 +108,25 @@ export default function HomePage() {
   );
   const displayedFaqs = filteredFaqs.slice(0, visibleFaqCount);
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (newsletterEmail) setNewsletterSubmitted(true);
+    if (newsletterEmail) {
+      setNewsletterSubmitted(true);
+      try {
+        await fetch('/api/newsletter', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: newsletterEmail,
+            name: newsletterName,
+          }),
+        });
+      } catch (error) {
+        console.error('Failed to submit newsletter:', error);
+      }
+    }
   };
 
   // Structured Data (JSON-LD) for SEO / AIO / GEO
@@ -762,6 +779,8 @@ export default function HomePage() {
                         <input
                           type="text"
                           placeholder="Max"
+                          value={newsletterName}
+                          onChange={(e) => setNewsletterName(e.target.value)}
                           className="w-full h-11 px-4 rounded-[10px] border border-surface-dim focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20 transition-colors duration-[120ms] bg-surface-white text-[15px] text-primary"
                         />
                       </div>

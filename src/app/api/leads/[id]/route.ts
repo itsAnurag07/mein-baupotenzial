@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { dbService } from '@/lib/services/dbService';
 import { emailService } from '@/lib/services/emailService';
+import prisma from '@/lib/prisma';
 
 export async function GET(
   request: Request,
@@ -95,6 +96,31 @@ export async function PATCH(
             updatedLead.paymentMethod === 'BANK_TRANSFER',
             id
           );
+
+          // Automatically subscribe customer to newsletter database
+          try {
+            const existingSubscriber = await prisma.subscriber.findUnique({
+              where: { email: updatedLead.contactEmail },
+            });
+
+            if (!existingSubscriber) {
+              await prisma.subscriber.create({
+                data: {
+                  email: updatedLead.contactEmail,
+                  name: customerName,
+                  source: 'CHECKOUT',
+                },
+              });
+
+              // Send welcome to newsletter email (2nd email)
+              await emailService.sendNewsletterWelcome(updatedLead.contactEmail, customerName);
+
+              // Notify admin about new subscription
+              await emailService.sendInternalNewSubscriber(updatedLead.contactEmail, customerName, 'CHECKOUT');
+            }
+          } catch (subscribeErr) {
+            console.error('Failed to auto-subscribe customer to newsletter:', subscribeErr);
+          }
         }
       } catch (err) {
         console.error('Failed to send status update notification emails:', err);
