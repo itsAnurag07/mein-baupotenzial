@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { signIn, useSession } from 'next-auth/react';
@@ -34,7 +34,7 @@ export default function AdminLoginPage() {
       });
 
       if (result?.error) {
-        setError('UngÃ¼ltiger Benutzername oder Passwort.');
+        setError('Ungültiger Benutzername oder Passwort.');
       } else {
         router.push('/admin/dashboard');
       }

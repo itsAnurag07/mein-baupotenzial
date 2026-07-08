@@ -162,7 +162,7 @@ export default function AdminDashboardPage() {
       'Lead ID', 'Erstellungsdatum', 'Status', 'Paket', 'Name', 'E-Mail', 'Telefon', 
       'Strasse', 'Hausnummer', 'PLZ', 'Ort', 'Bundesland', 'Zweck', 'Flaeche (qm)', 
       'Gemarkung/Flurstueck', 'Bestehende Bebauung', 'Bebauungsplan', 'Projektbeschreibung', 
-      'Zeitrahmen', 'Budget', 'Referral Code', 'Bezahlter Betrag (â‚¬)', 'Zahlungsart'
+      'Zeitrahmen', 'Budget', 'Referral Code', 'Bezahlter Betrag (€)', 'Zahlungsart'
     ];
 
     // Build rows
@@ -234,7 +234,7 @@ export default function AdminDashboardPage() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
           <div>
             <h1 className="text-2xl font-bold text-primary font-sans">Lead-Management Dashboard</h1>
-            <p className="text-xs text-on-surface-variant mt-1">Verwalten und prÃ¼fen Sie alle eingegangenen GrundstÃ¼cksanfragen.</p>
+            <p className="text-xs text-on-surface-variant mt-1">Verwalten und prüfen Sie alle eingegangenen Grundstücksanfragen.</p>
           </div>
           <button 
             onClick={handleExportCsv}
@@ -253,7 +253,7 @@ export default function AdminDashboardPage() {
             <div className="relative">
               <input 
                 type="text" 
-                placeholder="Name, E-Mail, StraÃŸe, ID..." 
+                placeholder="Name, E-Mail, Straße, ID..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full h-10 pl-10 pr-4 rounded-lg border border-surface-dim focus:outline-none focus:border-secondary text-xs text-primary font-medium bg-[#F5F7FA]"
@@ -273,7 +273,7 @@ export default function AdminDashboardPage() {
               <option value="DRAFT">Entwurf (Draft)</option>
               <option value="COMPLETED">Eingereicht (Completed)</option>
               <option value="PAID">Bezahlt (Paid)</option>
-              <option value="IN_REVIEW">In PrÃ¼fung (In Review)</option>
+              <option value="IN_REVIEW">In Prüfung (In Review)</option>
               <option value="DELIVERED">Ausgeliefert (Delivered)</option>
             </select>
           </div>
@@ -371,7 +371,7 @@ export default function AdminDashboardPage() {
                         }`}>
                           {lead.status === 'PAID' ? 'Bezahlt'
                             : lead.status === 'COMPLETED' ? 'Eingereicht'
-                            : lead.status === 'IN_REVIEW' ? 'In PrÃ¼fung'
+                            : lead.status === 'IN_REVIEW' ? 'In Prüfung'
                             : lead.status === 'DELIVERED' ? 'Ausgeliefert'
                             : 'Entwurf'}
                         </span>
@@ -429,7 +429,7 @@ export default function AdminDashboardPage() {
                       <option value="DRAFT">Entwurf (Draft)</option>
                       <option value="COMPLETED">Eingereicht (Completed)</option>
                       <option value="PAID">Bezahlt (Paid)</option>
-                      <option value="IN_REVIEW">In PrÃ¼fung (In Review)</option>
+                      <option value="IN_REVIEW">In Prüfung (In Review)</option>
                       <option value="DELIVERED">Ausgeliefert (Delivered)</option>
                     </select>
                   </div>
@@ -463,10 +463,10 @@ export default function AdminDashboardPage() {
 
                   {/* Property details */}
                   <div>
-                    <h3 className="font-bold text-primary text-sm mb-2 font-sans border-b border-surface-dim pb-1">GrundstÃ¼cksdetails</h3>
+                    <h3 className="font-bold text-primary text-sm mb-2 font-sans border-b border-surface-dim pb-1">Grundstücksdetails</h3>
                     <div className="grid grid-cols-2 gap-4">
-                      <p><strong>FlÃ¤che (qm):</strong> {selectedLead.plotArea || '-'}</p>
-                      <p><strong>FlurstÃ¼ck/Gemarkung:</strong> {selectedLead.cadastralDistrict || '-'}</p>
+                      <p><strong>Fläche (qm):</strong> {selectedLead.plotArea || '-'}</p>
+                      <p><strong>Flurstück/Gemarkung:</strong> {selectedLead.cadastralDistrict || '-'}</p>
                       <p><strong>Bebauungsplan vorh.?</strong> {selectedLead.zoningPlanExists || '-'}</p>
                       <p><strong>Altbestand vorh.?</strong> {selectedLead.existingBuildingsExist ? 'Ja' : 'Nein'}</p>
                     </div>
@@ -494,14 +494,14 @@ export default function AdminDashboardPage() {
                     <div className="grid grid-cols-2 gap-4">
                       <p><strong>Paket:</strong> {selectedLead.packageSelected || '-'}</p>
                       <p><strong>Referral Code:</strong> {selectedLead.referralCodeUsed || '-'}</p>
-                      <p><strong>Bezahlter Betrag:</strong> {selectedLead.pricePaid ? `${selectedLead.pricePaid} â‚¬` : '-'}</p>
+                      <p><strong>Bezahlter Betrag:</strong> {selectedLead.pricePaid ? `${selectedLead.pricePaid} €` : '-'}</p>
                       <p><strong>Zahlungsmethode:</strong> {selectedLead.paymentMethod || '-'}</p>
                     </div>
                   </div>
 
                   {/* Uploaded Files */}
                   <div>
-                    <h3 className="font-bold text-primary text-sm mb-2 font-sans border-b border-surface-dim pb-1">GrundstÃ¼cksunterlagen</h3>
+                    <h3 className="font-bold text-primary text-sm mb-2 font-sans border-b border-surface-dim pb-1">Grundstücksunterlagen</h3>
                     {!selectedLead.documents || selectedLead.documents.length === 0 ? (
                       <p className="text-on-surface-variant italic">Keine Unterlagen hochgeladen.</p>
                     ) : (
@@ -514,7 +514,7 @@ export default function AdminDashboardPage() {
                             <div className="truncate pr-3">
                               <span className="font-bold text-primary block truncate">{doc.fileName}</span>
                               <span className="text-[10px] text-on-surface-variant uppercase font-medium">
-                                {doc.category} â€¢ {(doc.fileSize / 1024 / 1024).toFixed(2)} MB
+                                {doc.category} • {(doc.fileSize / 1024 / 1024).toFixed(2)} MB
                               </span>
                             </div>
                             <a 
@@ -538,7 +538,7 @@ export default function AdminDashboardPage() {
                   onClick={() => setSelectedLead(null)}
                   className="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-bold"
                 >
-                  SchlieÃŸen
+                  Schließen
                 </button>
               </div>
             </div>

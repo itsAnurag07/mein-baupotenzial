@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -13,27 +13,27 @@ export default function WiderrufPage() {
           <section>
             <h2 className="text-xl font-bold text-primary mb-3">Widerrufsrecht</h2>
             <p>
-              Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von GrÃ¼nden diesen Vertrag zu widerrufen.
+              Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.
             </p>
             <p>
-              Die Widerrufsfrist betrÃ¤gt vierzehn Tage ab dem Tag des Vertragsabschlusses.
+              Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag des Vertragsabschlusses.
             </p>
             <p>
-              Um Ihr Widerrufsrecht auszuÃ¼ben, mÃ¼ssen Sie uns (van Valkenburg GmbH, KÃ¶nigsallee 60F, 40212 DÃ¼sseldorf, E-Mail: info@mein-baupotenzial.de) mittels einer eindeutigen ErklÃ¤rung (z. B. ein mit der Post versandter Brief oder E-Mail) Ã¼ber Ihren Entschluss, diesen Vertrag zu widerrufen, informieren.
+              Um Ihr Widerrufsrecht auszuüben, müssen Sie uns (van Valkenburg GmbH, Königsallee 60F, 40212 Düsseldorf, E-Mail: info@mein-baupotenzial.de) mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief oder E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren.
             </p>
           </section>
 
           <section>
             <h2 className="text-xl font-bold text-primary mb-3">Folgen des Widerrufs</h2>
             <p>
-              Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen alle Zahlungen, die wir von Ihnen erhalten haben, unverzÃ¼glich und spÃ¤testens binnen vierzehn Tagen ab dem Tag zurÃ¼ckzuzahlen, an dem die Mitteilung Ã¼ber Ihren Widerruf dieses Vertrags bei uns eingegangen ist. FÃ¼r diese RÃ¼ckzahlung verwenden wir dasselbe Zahlungsmittel, das Sie bei der ursprÃ¼nglichen Transaktion eingesetzt haben, es sei denn, mit Ihnen wurde ausdrÃ¼cklich etwas anderes vereinbart.
+              Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen alle Zahlungen, die wir von Ihnen erhalten haben, unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags bei uns eingegangen ist. Für diese Rückzahlung verwenden wir dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Transaktion eingesetzt haben, es sei denn, mit Ihnen wurde ausdrücklich etwas anderes vereinbart.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-primary mb-3">Besonderer Hinweis zum vorzeitigen ErlÃ¶schen</h2>
+            <h2 className="text-xl font-bold text-primary mb-3">Besonderer Hinweis zum vorzeitigen Erlöschen</h2>
             <p className="p-4 bg-secondary-container text-on-secondary-container rounded-xl text-xs font-semibold">
-              Ihr Widerrufsrecht erlischt vorzeitig, wenn wir die Dienstleistung vollstÃ¤ndig erbracht haben und mit der AusfÃ¼hrung der Dienstleistung erst begonnen haben, nachdem Sie dazu Ihre ausdrÃ¼ckliche Zustimmung gegeben und gleichzeitig Ihre Kenntnis davon bestÃ¤tigt haben, dass Sie Ihr Widerrufsrecht bei vollstÃ¤ndiger VertragserfÃ¼llung durch uns verlieren.
+              Ihr Widerrufsrecht erlischt vorzeitig, wenn wir die Dienstleistung vollständig erbracht haben und mit der Ausführung der Dienstleistung erst begonnen haben, nachdem Sie dazu Ihre ausdrückliche Zustimmung gegeben und gleichzeitig Ihre Kenntnis davon bestätigt haben, dass Sie Ihr Widerrufsrecht bei vollständiger Vertragserfüllung durch uns verlieren.
             </p>
           </section>
         </div>
