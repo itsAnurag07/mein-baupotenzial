@@ -19,7 +19,7 @@ export default function WiderrufPage() {
               Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag des Vertragsabschlusses.
             </p>
             <p>
-              Um Ihr Widerrufsrecht auszuüben, müssen Sie uns (van Valkenburg GmbH, Königsallee 60F, 40212 Düsseldorf, E-Mail: info@mein-baupotenzial.com) mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief oder E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren.
+              Um Ihr Widerrufsrecht auszuüben, müssen Sie uns (van Valkenburg GmbH, Königsallee 60F, 40212 Düsseldorf, E-Mail: info@mein-baupotenzial.de) mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief oder E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren.
             </p>
           </section>
 
