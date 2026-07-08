@@ -712,7 +712,7 @@ function AnalyseWizardPage() {
                       </tbody>
                     </table>
                     <p className="mt-4 text-[10px] text-on-surface-variant leading-snug">
-                      * Die planungsrechtliche Analyse beginnt unmittelbar nach Verifizierung Ihres Zahlungseingangs.
+                      * Die planungsrechtliche Analyse beginnt unmittelbar nach Verifizierung Ihres Zahlungseingangs. Eine entsprechende Rechnung erhalten Sie nach Zahlungseingang per E-Mail.
                     </p>
                   </>
                 ) : (

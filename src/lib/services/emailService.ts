@@ -52,7 +52,7 @@ export const emailService = {
            <tr><td><strong>BIC:</strong></td><td>GENODEM1GLS</td></tr>
            <tr><td><strong>Verwendungszweck:</strong></td><td>Analyse ${leadId.substring(0, 8)}</td></tr>
          </table>
-         <p>Die Analyse beginnt unmittelbar nach Zahlungseingang.</p>`
+         <p>Die Analyse beginnt unmittelbar nach Zahlungseingang. Eine entsprechende Rechnung wird Ihnen nach Zahlungseingang zugesandt.</p>`
       : `<p>Vielen Dank für Ihre PayPal-Zahlung. Wir haben Ihre Zahlung von <strong>${amount.toFixed(2)} € (zzgl. MwSt.)</strong> erhalten.</p>`;
 
     const html = `
