@@ -298,7 +298,7 @@ export default function HomePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
               {[
-                { Icon: BookOpen, stat: '40+', unit: 'years', label: ' of experience in project development and consulting.' },
+                { Icon: BookOpen, stat: '40+', unit: 'Jahre', label: 'Erfahrung in der Projektentwicklung und Beratung.' },
                 { Icon: Scale, stat: '100 %', unit: '', label: 'Unabhängige Beurteilung —\nohne Interessenkonflikt' },
                 { Icon: UserCheck, stat: '1:1', unit: '', label: 'Persönliche Expertenauswertung\njedes einzelnen Falls' },
                 { Icon: Flag, stat: '1', unit: 'Ziel', label: 'Klare Entscheidungsgrundlage\nfür Ihr Grundstück' },
