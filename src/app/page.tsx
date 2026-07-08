@@ -43,7 +43,7 @@ const faqs = [
   { q: 'Für wen ist eine Baupotenzialanalyse sinnvoll?', a: 'Für Grundstückseigentümer, die wissen wollen, ob Nachverdichtung, Aufstockung, Teilung oder Neubau möglich ist – sowie für Käufer vor dem Erwerb, Erbengemeinschaften, Investoren und Projektentwickler.' },
   { q: 'Was ist der Unterschied zwischen Baupotenzialanalyse und Baugenehmigung?', a: 'Die Baupotenzialanalyse ist eine fachliche Voreinschätzung auf Basis des geltenden Planungsrechts. Eine Baugenehmigung ist ein rechtsverbindlicher Bescheid, der nur von der zuständigen Bauaufsichtsbehörde erteilt werden kann.' },
   { q: 'Kann ich die Analyse als Grundlage für eine Kaufentscheidung nutzen?', a: 'Ja. Die Analyse liefert Ihnen eine fundierte Einschätzung des tatsächlichen Entwicklungspotenzials – ideal als Entscheidungshilfe vor einem Kauf oder Verkauf.' },
-  { q: 'Was unterscheidet mein-baupotenzial.de von einem klassischen Architekten?', a: 'Wir liefern eine rein planungsrechtliche Vorprüfung – ohne Planungsauftrag, ohne Interessenkonflikt, unabhängig und auf das Wesentliche fokussiert. Unsere Experten haben über 40 Jahre Erfahrung in der städtebaulichen Beratung.' },
+  { q: 'Was unterscheidet mein-baupotenzial.de von einem klassischen Architekten?', a: 'Wir liefern eine rein planungsrechtliche Vorprüfung – ohne Planungsauftrag, neutral und objektiv, unabhängig und auf das Wesentliche fokussiert. Unsere Experten haben über 40 Jahre Erfahrung in der städtebaulichen Beratung.' },
   // B) Planungsrechtliche Grundlagen
   { q: 'Was ist der Bebauungsplan und warum ist er wichtig?', a: 'Der Bebauungsplan (B-Plan) legt rechtsverbindlich fest, was auf einem Grundstück gebaut werden darf – z. B. Grundflächenzahl, Geschossflächenzahl, Bauweise, Dachform. Er ist die wichtigste Grundlage unserer Analyse.' },
   { q: 'Was gilt, wenn es keinen Bebauungsplan gibt (§ 34 BauGB)?', a: 'In Gebieten ohne B-Plan gilt das sogenannte Einfügungsgebot: Ein Vorhaben ist zulässig, wenn es sich nach Art und Maß der Nutzung, Bauweise und überbaubarer Grundstücksfläche in die Eigenart der näheren Umgebung einfügt. Wir analysieren das konkret für Ihr Grundstück.' },
@@ -299,7 +299,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
               {[
                 { Icon: BookOpen, stat: '40+', unit: 'Jahre', label: 'Erfahrung in der Projektentwicklung und Beratung.' },
-                { Icon: Scale, stat: '100 %', unit: '', label: 'Unabhängige Beurteilung —\nohne Interessenkonflikt' },
+                { Icon: Scale, stat: '100 %', unit: '', label: 'Unabhängige Beurteilung —\nneutral und objektiv' },
                 { Icon: UserCheck, stat: '1:1', unit: '', label: 'Persönliche Expertenauswertung\njedes einzelnen Falls' },
                 { Icon: Flag, stat: '1', unit: 'Ziel', label: 'Klare Entscheidungsgrundlage\nfür Ihr Grundstück' },
               ].map(({ Icon, stat, unit, label }) => (
