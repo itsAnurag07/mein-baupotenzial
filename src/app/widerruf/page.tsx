@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -8,7 +8,7 @@ export default function WiderrufPage() {
       <Header />
       <main className="flex-grow max-w-4xl mx-auto px-4 py-16 w-full font-sans">
         <h1 className="text-3xl md:text-4xl font-extrabold text-primary mb-8 border-b border-surface-dim pb-4">Widerrufsbelehrung</h1>
-        
+
         <div className="space-y-6 text-on-surface-variant text-sm leading-relaxed">
           <section>
             <h2 className="text-xl font-bold text-primary mb-3">Widerrufsrecht</h2>
