@@ -1,6 +1,11 @@
-﻿import React from 'react';
+import { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+
+export const metadata: Metadata = {
+  title: 'Widerrufsbelehrung & Muster-Widerrufsformular | mein-baupotenzial.de',
+  description: 'Widerrufsrecht für Verbraucher beim Kauf einer planungsrechtlichen Analyse bei der van Valkenburg GmbH.',
+};
 
 export default function WiderrufPage() {
   return (

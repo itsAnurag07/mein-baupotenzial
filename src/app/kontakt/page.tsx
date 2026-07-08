@@ -1,6 +1,11 @@
-﻿import React from 'react';
+import { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+
+export const metadata: Metadata = {
+  title: 'Kontakt & Städtebauliche Beratung | mein-baupotenzial.de',
+  description: 'Haben Sie Fragen zur planungsrechtlichen Vorprüfung Ihres Grundstücks? Schreiben Sie uns oder rufen Sie uns direkt an – wir sind gerne für Sie da.',
+};
 
 export default function KontaktPage() {
   return (

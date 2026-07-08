@@ -1,6 +1,11 @@
-import React from 'react';
+import { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+
+export const metadata: Metadata = {
+  title: 'Allgemeine Geschäftsbedingungen (AGB) | mein-baupotenzial.de',
+  description: 'Allgemeine Geschäftsbedingungen der van Valkenburg GmbH für die Erstellung städtebaulicher Analysen und planungsrechtlicher Vorprüfungen.',
+};
 
 export default function AGBPage() {
   return (

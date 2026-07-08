@@ -112,8 +112,97 @@ export default function HomePage() {
     if (newsletterEmail) setNewsletterSubmitted(true);
   };
 
+  // Structured Data (JSON-LD) for SEO / AIO / GEO
+  const jsonLdData = [
+    // 1. Organization Schema
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      'name': 'van Valkenburg GmbH',
+      'url': 'https://mein-baupotenzial.de',
+      'logo': 'https://mein-baupotenzial.de/logo.png',
+      'address': {
+        '@type': 'PostalAddress',
+        'streetAddress': 'Königsallee 60F',
+        'addressLocality': 'Düsseldorf',
+        'postalCode': '40212',
+        'addressCountry': 'DE'
+      },
+      'contactPoint': {
+        '@type': 'ContactPoint',
+        'email': 'info@mein-baupotenzial.com',
+        'contactType': 'customer support'
+      }
+    },
+    // 2. Services Schema
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      'serviceType': 'Planungsrechtliche Baupotenzialanalyse',
+      'provider': {
+        '@type': 'Organization',
+        'name': 'van Valkenburg GmbH'
+      },
+      'areaServed': 'DE',
+      'hasOfferCatalog': {
+        '@type': 'OfferCatalog',
+        'name': 'Baupotenzialanalyse Pakete',
+        'itemListElement': [
+          {
+            '@type': 'Offer',
+            'itemOffered': {
+              '@type': 'Service',
+              'name': 'Quick Check',
+              'description': 'Schnelle planungsrechtliche Ersteinschätzung und Grobcheck des Baurechts für Ihr Grundstück in 3 Werktagen.'
+            },
+            'price': '249.00',
+            'priceCurrency': 'EUR'
+          },
+          {
+            '@type': 'Offer',
+            'itemOffered': {
+              '@type': 'Service',
+              'name': 'Potenzialanalyse',
+              'description': 'Umfassende planungsrechtliche Analyse inklusive Ermittlung des maximalen Bauvolumens und 30-minütigem Expertengespräch.'
+            },
+            'price': '690.00',
+            'priceCurrency': 'EUR'
+          },
+          {
+            '@type': 'Offer',
+            'itemOffered': {
+              '@type': 'Service',
+              'name': 'Machbarkeitsstudie',
+              'description': 'Detaillierte planungsrechtliche und städtebauliche Prüfung komplexer Projekte inklusive Massenstudien und Vorentwurfsplanung.'
+            },
+            'price': '3490.00',
+            'priceCurrency': 'EUR'
+          }
+        ]
+      }
+    },
+    // 3. FAQPage Schema
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      'mainEntity': faqs.map(f => ({
+        '@type': 'Question',
+        'name': f.q,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': f.a
+        }
+      }))
+    }
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-surface-white">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
+      />
       <Header />
 
       <main className="flex-grow">

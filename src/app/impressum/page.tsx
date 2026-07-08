@@ -1,6 +1,11 @@
-import React from 'react';
+import { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+
+export const metadata: Metadata = {
+  title: 'Impressum | mein-baupotenzial.de | van Valkenburg GmbH',
+  description: 'Rechtliche Angaben und Impressum für die Online-Plattform mein-baupotenzial.de, betrieben von der van Valkenburg GmbH.',
+};
 
 export default function ImpressumPage() {
   return (
