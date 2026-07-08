@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const FROM_EMAIL = process.env.EMAIL_FROM || 'info@mein-baupotenzial.de';
+const FROM_EMAIL = process.env.EMAIL_FROM || 'info@mein-baupotenzial.com';
 const TEAM_EMAIL = process.env.INTERNAL_NOTIFICATION_EMAIL || 'team@mein-baupotenzial.de';
 
 async function sendMail(to: string, subject: string, html: string) {

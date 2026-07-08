@@ -80,7 +80,7 @@ export default function KontaktPage() {
             <div className="bg-surface-white p-8 rounded-2xl border border-surface-dim shadow-sm">
               <h2 className="text-xl font-bold text-primary mb-4">Direkter Kontakt</h2>
               <div className="space-y-2 text-sm text-on-surface-variant">
-                <p><strong>E-Mail:</strong> info@mein-baupotenzial.de</p>
+                <p><strong>E-Mail:</strong> info@mein-baupotenzial.com</p>
                 <p><strong>Telefon:</strong> +49 (0) 211 1234567</p>
                 <p><strong>Bürozeiten:</strong> Mo. - Fr. 09:00 - 17:00 Uhr</p>
               </div>
