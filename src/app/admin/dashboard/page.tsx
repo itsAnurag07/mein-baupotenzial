@@ -46,13 +46,26 @@ interface Lead {
   }[];
 }
 
+interface Subscriber {
+  id: string;
+  email: string;
+  name?: string | null;
+  source: string;
+  createdAt: string;
+}
+
 export default function AdminDashboardPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingSubscribers, setLoadingSubscribers] = useState(false);
   const [error, setError] = useState('');
+  
+  // Tab control
+  const [activeTab, setActiveTab] = useState<'LEADS' | 'SUBSCRIBERS'>('LEADS');
   
   // Filtering states
   const [searchQuery, setSearchQuery] = useState('');
@@ -87,11 +100,34 @@ export default function AdminDashboardPage() {
     }
   };
 
+  const fetchSubscribers = async () => {
+    setLoadingSubscribers(true);
+    try {
+      const res = await fetch('/api/admin/subscribers');
+      if (res.ok) {
+        const data = await res.json();
+        setSubscribers(data);
+      } else {
+        setError('Abonnenten konnten nicht geladen werden.');
+      }
+    } catch (err) {
+      setError('Verbindung zum Server fehlgeschlagen.');
+    } finally {
+      setLoadingSubscribers(false);
+    }
+  };
+
   useEffect(() => {
     if (status === 'authenticated') {
       fetchLeads();
     }
   }, [status]);
+
+  useEffect(() => {
+    if (status === 'authenticated' && activeTab === 'SUBSCRIBERS') {
+      fetchSubscribers();
+    }
+  }, [status, activeTab]);
 
   const handleUpdateStatus = async (leadId: string, newStatus: string) => {
     setUpdatingStatus(true);
@@ -209,6 +245,42 @@ export default function AdminDashboardPage() {
     document.body.removeChild(link);
   };
 
+  const getFilteredSubscribers = () => {
+    return subscribers.filter(s => {
+      const query = searchQuery.toLowerCase();
+      return (
+        s.email.toLowerCase().includes(query) ||
+        (s.name || '').toLowerCase().includes(query) ||
+        s.source.toLowerCase().includes(query)
+      );
+    });
+  };
+
+  const handleExportSubscribersCsv = () => {
+    const filtered = getFilteredSubscribers();
+    if (filtered.length === 0) return;
+    const headers = ['E-Mail', 'Name', 'Anmeldequelle', 'Registrierungsdatum'];
+    const rows = filtered.map(s => [
+      s.email,
+      s.name || '',
+      s.source,
+      new Date(s.createdAt).toLocaleDateString('de-DE')
+    ]);
+    const csvContent = [
+      headers.join(';'),
+      ...rows.map(row => row.map(val => `"${String(val).replace(/"/g, '""')}"`).join(';'))
+    ].join('\n');
+
+    const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `subscribers_export_${Date.now()}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   if (status === 'loading' || loading) {
     return (
       <div className="min-h-screen flex flex-col bg-background">
@@ -233,166 +305,291 @@ export default function AdminDashboardPage() {
       <main className="flex-grow max-w-7xl mx-auto px-4 md:px-10 py-12 w-full">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-primary font-sans">Lead-Management Dashboard</h1>
-            <p className="text-xs text-on-surface-variant mt-1">Verwalten und prüfen Sie alle eingegangenen Grundstücksanfragen.</p>
+            <h1 className="text-2xl font-bold text-primary font-sans">
+              {activeTab === 'LEADS' ? 'Lead-Management Dashboard' : 'Newsletter-Abonnenten'}
+            </h1>
+            <p className="text-xs text-on-surface-variant mt-1">
+              {activeTab === 'LEADS' 
+                ? 'Verwalten und prüfen Sie alle eingegangenen Grundstücksanfragen.' 
+                : 'Verwalten und exportieren Sie Ihre Newsletter-Kontakte.'}
+            </p>
           </div>
-          <button 
-            onClick={handleExportCsv}
-            disabled={filteredLeads.length === 0}
-            className="bg-primary text-on-primary px-6 py-2.5 rounded-lg text-xs font-bold hover:opacity-90 transition-opacity flex items-center gap-1.5 disabled:opacity-50"
+          {activeTab === 'LEADS' ? (
+            <button 
+              onClick={handleExportCsv}
+              disabled={filteredLeads.length === 0}
+              className="bg-primary text-on-primary px-6 py-2.5 rounded-lg text-xs font-bold hover:opacity-90 transition-opacity flex items-center gap-1.5 disabled:opacity-50"
+            >
+              <span translate="no" className="material-symbols-outlined text-[16px]">download</span>
+              CSV Export ({filteredLeads.length})
+            </button>
+          ) : (
+            <button 
+              onClick={handleExportSubscribersCsv}
+              disabled={getFilteredSubscribers().length === 0}
+              className="bg-primary text-on-primary px-6 py-2.5 rounded-lg text-xs font-bold hover:opacity-90 transition-opacity flex items-center gap-1.5 disabled:opacity-50"
+            >
+              <span translate="no" className="material-symbols-outlined text-[16px]">download</span>
+              CSV Export ({getFilteredSubscribers().length})
+            </button>
+          )}
+        </div>
+
+        {/* Tab selection */}
+        <div className="flex border-b border-surface-dim mb-6">
+          <button
+            onClick={() => {
+              setActiveTab('LEADS');
+              setSearchQuery('');
+            }}
+            className={`px-6 py-3 font-sans font-bold text-xs border-b-2 transition-all ${
+              activeTab === 'LEADS'
+                ? 'border-secondary text-secondary bg-surface-white'
+                : 'border-transparent text-on-surface-variant hover:text-primary'
+            }`}
           >
-            <span translate="no" className="material-symbols-outlined text-[16px]">download</span>
-            CSV Export ({filteredLeads.length})
+            Bestellungen / Anfragen ({leads.length})
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab('SUBSCRIBERS');
+              setSearchQuery('');
+            }}
+            className={`px-6 py-3 font-sans font-bold text-xs border-b-2 transition-all ${
+              activeTab === 'SUBSCRIBERS'
+                ? 'border-secondary text-secondary bg-surface-white'
+                : 'border-transparent text-on-surface-variant hover:text-primary'
+            }`}
+          >
+            Newsletter-Abonnenten ({subscribers.length})
           </button>
         </div>
 
-        {/* Filters and search */}
-        <div className="bg-surface-white p-6 rounded-2xl border border-surface-dim shadow-sm grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-          <div className="md:col-span-2 relative">
-            <label className="block text-xs font-bold text-primary mb-1">Suche</label>
-            <div className="relative">
-              <input 
-                type="text" 
-                placeholder="Name, E-Mail, Straße, ID..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-10 pl-10 pr-4 rounded-lg border border-surface-dim focus:outline-none focus:border-secondary text-xs text-primary font-medium bg-[#F5F7FA]"
-              />
-              <span translate="no" className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+        {activeTab === 'LEADS' ? (
+          <>
+            {/* Filters and search */}
+            <div className="bg-surface-white p-6 rounded-2xl border border-surface-dim shadow-sm grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+              <div className="md:col-span-2 relative">
+                <label className="block text-xs font-bold text-primary mb-1">Suche</label>
+                <div className="relative">
+                  <input 
+                    type="text" 
+                    placeholder="Name, E-Mail, Straße, ID..." 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full h-10 pl-10 pr-4 rounded-lg border border-surface-dim focus:outline-none focus:border-secondary text-xs text-primary font-medium bg-[#F5F7FA]"
+                  />
+                  <span translate="no" className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-primary mb-1">Status</label>
+                <select 
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  className="w-full h-10 px-3 border border-surface-dim rounded-lg focus:outline-none focus:border-secondary text-xs bg-white text-primary font-medium"
+                >
+                  <option value="ALL">Alle Status</option>
+                  <option value="DRAFT">Entwurf (Draft)</option>
+                  <option value="COMPLETED">Eingereicht (Completed)</option>
+                  <option value="PAID">Bezahlt (Paid)</option>
+                  <option value="IN_REVIEW">In Prüfung (In Review)</option>
+                  <option value="DELIVERED">Ausgeliefert (Delivered)</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-primary mb-1">Paket</label>
+                <select 
+                  value={packageFilter}
+                  onChange={(e) => setPackageFilter(e.target.value)}
+                  className="w-full h-10 px-3 border border-surface-dim rounded-lg focus:outline-none focus:border-secondary text-xs bg-white text-primary font-medium"
+                >
+                  <option value="ALL">Alle Pakete</option>
+                  <option value="QUICK_CHECK">Quick Check</option>
+                  <option value="POTENTIAL_ANALYSIS">Potenzialanalyse</option>
+                  <option value="FEASIBILITY_STUDY">Machbarkeitsstudie</option>
+                </select>
+              </div>
+
+              <div className="flex items-end pb-2">
+                <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <input 
+                    type="checkbox" 
+                    checked={hideEmptyDrafts}
+                    onChange={(e) => setHideEmptyDrafts(e.target.checked)}
+                    className="w-4 h-4 rounded text-secondary border-surface-dim focus:ring-secondary cursor-pointer"
+                  />
+                  <span className="text-xs font-bold text-primary">Leere Entwürfe ausblenden</span>
+                </label>
+              </div>
             </div>
-          </div>
 
-          <div>
-            <label className="block text-xs font-bold text-primary mb-1">Status</label>
-            <select 
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full h-10 px-3 border border-surface-dim rounded-lg focus:outline-none focus:border-secondary text-xs bg-white text-primary font-medium"
-            >
-              <option value="ALL">Alle Status</option>
-              <option value="DRAFT">Entwurf (Draft)</option>
-              <option value="COMPLETED">Eingereicht (Completed)</option>
-              <option value="PAID">Bezahlt (Paid)</option>
-              <option value="IN_REVIEW">In Prüfung (In Review)</option>
-              <option value="DELIVERED">Ausgeliefert (Delivered)</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-xs font-bold text-primary mb-1">Paket</label>
-            <select 
-              value={packageFilter}
-              onChange={(e) => setPackageFilter(e.target.value)}
-              className="w-full h-10 px-3 border border-surface-dim rounded-lg focus:outline-none focus:border-secondary text-xs bg-white text-primary font-medium"
-            >
-              <option value="ALL">Alle Pakete</option>
-              <option value="QUICK_CHECK">Quick Check</option>
-              <option value="POTENTIAL_ANALYSIS">Potenzialanalyse</option>
-              <option value="FEASIBILITY_STUDY">Machbarkeitsstudie</option>
-            </select>
-          </div>
-
-          <div className="flex items-end pb-2">
-            <label className="flex items-center gap-2 cursor-pointer select-none">
-              <input 
-                type="checkbox" 
-                checked={hideEmptyDrafts}
-                onChange={(e) => setHideEmptyDrafts(e.target.checked)}
-                className="w-4 h-4 rounded text-secondary border-surface-dim focus:ring-secondary cursor-pointer"
-              />
-              <span className="text-xs font-bold text-primary">Leere Entwürfe ausblenden</span>
-            </label>
-          </div>
-        </div>
-
-        {/* Lead entries table */}
-        <div className="bg-surface-white rounded-2xl border border-surface-dim shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-[#112030] text-[#ECEEF1] text-xs font-bold font-sans uppercase">
-                  <th className="py-4 px-6">ID / Datum</th>
-                  <th className="py-4 px-6">Kunde</th>
-                  <th className="py-4 px-6">Adresse</th>
-                  <th className="py-4 px-6">Paket</th>
-                  <th className="py-4 px-6">Status</th>
-                  <th className="py-4 px-6 text-right">Aktionen</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-surface-dim text-xs">
-                {filteredLeads.length === 0 ? (
-                  <tr>
-                    <td colSpan={6} className="py-8 text-center text-on-surface-variant font-medium">
-                      Keine Leads gefunden.
-                    </td>
-                  </tr>
-                ) : (
-                  filteredLeads.map(lead => (
-                    <tr 
-                      key={lead.id}
-                      className="hover:bg-[#F5F7FA] transition-colors cursor-pointer"
-                      onClick={() => setSelectedLead(lead)}
-                    >
-                      <td className="py-4 px-6">
-                        <div className="font-bold text-primary font-mono">{lead.id.substring(0, 8)}</div>
-                        <div className="text-[10px] text-on-surface-variant mt-0.5">{new Date(lead.createdAt).toLocaleDateString('de-DE')}</div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="font-bold text-primary">
-                          {(lead.contactFirstName || lead.contactLastName) 
-                            ? `${lead.contactFirstName || ''} ${lead.contactLastName || ''}`.trim() 
-                            : 'Entwurf'}
-                        </div>
-                        <div className="text-on-surface-variant mt-0.5">{lead.contactEmail || 'N/A'}</div>
-                      </td>
-                      <td className="py-4 px-6 max-w-[180px] truncate">
-                        {lead.addressStreet ? (
-                          <>
-                            <div>{lead.addressStreet} {lead.addressNumber}</div>
-                            <div className="text-on-surface-variant">{lead.addressZip} {lead.addressCity}</div>
-                          </>
-                        ) : (
-                          <span className="text-surface-dim italic">Keine Adresse</span>
-                        )}
-                      </td>
-                      <td className="py-4 px-6 font-semibold">
-                        {lead.packageSelected === 'QUICK_CHECK' ? 'Quick Check'
-                          : lead.packageSelected === 'POTENTIAL_ANALYSIS' ? 'Potenzialanalyse'
-                          : lead.packageSelected === 'FEASIBILITY_STUDY' ? 'Machbarkeitsstudie'
-                          : 'Ausstehend'}
-                      </td>
-                      <td className="py-4 px-6">
-                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
-                          lead.status === 'PAID' ? 'bg-emerald-100 text-emerald-800'
-                            : lead.status === 'COMPLETED' ? 'bg-blue-100 text-blue-800'
-                            : lead.status === 'IN_REVIEW' ? 'bg-amber-100 text-amber-800'
-                            : lead.status === 'DELIVERED' ? 'bg-purple-100 text-purple-800'
-                            : 'bg-gray-100 text-gray-800'
-                        }`}>
-                          {lead.status === 'PAID' ? 'Bezahlt'
-                            : lead.status === 'COMPLETED' ? 'Eingereicht'
-                            : lead.status === 'IN_REVIEW' ? 'In Prüfung'
-                            : lead.status === 'DELIVERED' ? 'Ausgeliefert'
-                            : 'Entwurf'}
-                        </span>
-                      </td>
-                      <td className="py-4 px-6 text-right" onClick={(e) => e.stopPropagation()}>
-                        <div className="inline-flex gap-2">
-                          <button 
-                            onClick={() => setSelectedLead(lead)}
-                            className="bg-surface-bright border border-surface-dim hover:bg-surface-container text-primary px-3 py-1 rounded font-bold text-[10px]"
-                          >
-                            Details
-                          </button>
-                        </div>
-                      </td>
+            {/* Lead entries table */}
+            <div className="bg-surface-white rounded-2xl border border-surface-dim shadow-sm overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-[#112030] text-[#ECEEF1] text-xs font-bold font-sans uppercase">
+                      <th className="py-4 px-6">ID / Datum</th>
+                      <th className="py-4 px-6">Kunde</th>
+                      <th className="py-4 px-6">Adresse</th>
+                      <th className="py-4 px-6">Paket</th>
+                      <th className="py-4 px-6">Status</th>
+                      <th className="py-4 px-6 text-right">Aktionen</th>
                     </tr>
-                  ))
+                  </thead>
+                  <tbody className="divide-y divide-surface-dim text-xs">
+                    {filteredLeads.length === 0 ? (
+                      <tr>
+                        <td colSpan={6} className="py-8 text-center text-on-surface-variant font-medium">
+                          Keine Leads gefunden.
+                        </td>
+                      </tr>
+                    ) : (
+                      filteredLeads.map(lead => (
+                        <tr 
+                          key={lead.id}
+                          className="hover:bg-[#F5F7FA] transition-colors cursor-pointer"
+                          onClick={() => setSelectedLead(lead)}
+                        >
+                          <td className="py-4 px-6">
+                            <div className="font-bold text-primary font-mono">{lead.id.substring(0, 8)}</div>
+                            <div className="text-[10px] text-on-surface-variant mt-0.5">{new Date(lead.createdAt).toLocaleDateString('de-DE')}</div>
+                          </td>
+                          <td className="py-4 px-6">
+                            <div className="font-bold text-primary">
+                              {(lead.contactFirstName || lead.contactLastName) 
+                                ? `${lead.contactFirstName || ''} ${lead.contactLastName || ''}`.trim() 
+                                : 'Entwurf'}
+                            </div>
+                            <div className="text-on-surface-variant mt-0.5">{lead.contactEmail || 'N/A'}</div>
+                          </td>
+                          <td className="py-4 px-6 max-w-[180px] truncate">
+                            {lead.addressStreet ? (
+                              <>
+                                <div>{lead.addressStreet} {lead.addressNumber}</div>
+                                <div className="text-on-surface-variant">{lead.addressZip} {lead.addressCity}</div>
+                              </>
+                            ) : (
+                              <span className="text-surface-dim italic">Keine Adresse</span>
+                            )}
+                          </td>
+                          <td className="py-4 px-6 font-semibold">
+                            {lead.packageSelected === 'QUICK_CHECK' ? 'Quick Check'
+                              : lead.packageSelected === 'POTENTIAL_ANALYSIS' ? 'Potenzialanalyse'
+                              : lead.packageSelected === 'FEASIBILITY_STUDY' ? 'Machbarkeitsstudie'
+                              : 'Ausstehend'}
+                          </td>
+                          <td className="py-4 px-6">
+                            <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
+                              lead.status === 'PAID' ? 'bg-emerald-100 text-emerald-800'
+                                : lead.status === 'COMPLETED' ? 'bg-blue-100 text-blue-800'
+                                : lead.status === 'IN_REVIEW' ? 'bg-amber-100 text-amber-800'
+                                : lead.status === 'DELIVERED' ? 'bg-purple-100 text-purple-800'
+                                : 'bg-gray-100 text-gray-800'
+                            }`}>
+                              {lead.status === 'PAID' ? 'Bezahlt'
+                                : lead.status === 'COMPLETED' ? 'Eingereicht'
+                                : lead.status === 'IN_REVIEW' ? 'In Prüfung'
+                                : lead.status === 'DELIVERED' ? 'Ausgeliefert'
+                                : 'Entwurf'}
+                            </span>
+                          </td>
+                          <td className="py-4 px-6 text-right" onClick={(e) => e.stopPropagation()}>
+                            <div className="inline-flex gap-2">
+                              <button 
+                                onClick={() => setSelectedLead(lead)}
+                                className="bg-surface-bright border border-surface-dim hover:bg-surface-container text-primary px-3 py-1 rounded font-bold text-[10px]"
+                              >
+                                Details
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* Subscriber search filter */}
+            <div className="bg-surface-white p-6 rounded-2xl border border-surface-dim shadow-sm flex items-center gap-4 mb-6">
+              <div className="flex-1 relative">
+                <label className="block text-xs font-bold text-primary mb-1">Abonnenten-Suche</label>
+                <div className="relative">
+                  <input 
+                    type="text" 
+                    placeholder="Name, E-Mail-Adresse..." 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full h-10 pl-10 pr-4 rounded-lg border border-surface-dim focus:outline-none focus:border-secondary text-xs text-primary font-medium bg-[#F5F7FA]"
+                  />
+                  <span translate="no" className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Subscriber table */}
+            <div className="bg-surface-white rounded-2xl border border-surface-dim shadow-sm overflow-hidden">
+              <div className="overflow-x-auto">
+                {loadingSubscribers ? (
+                  <div className="text-center py-12">
+                    <span translate="no" className="material-symbols-outlined text-4xl animate-spin text-secondary mb-4">sync</span>
+                    <p className="text-sm font-semibold text-primary font-sans">Abonnenten werden geladen...</p>
+                  </div>
+                ) : (
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="bg-[#112030] text-[#ECEEF1] text-xs font-bold font-sans uppercase">
+                        <th className="py-4 px-6">Name</th>
+                        <th className="py-4 px-6">E-Mail-Adresse</th>
+                        <th className="py-4 px-6">Quelle</th>
+                        <th className="py-4 px-6">Registrierungsdatum</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-surface-dim text-xs">
+                      {getFilteredSubscribers().length === 0 ? (
+                        <tr>
+                          <td colSpan={4} className="py-8 text-center text-on-surface-variant font-medium">
+                            Keine Abonnenten gefunden.
+                          </td>
+                        </tr>
+                      ) : (
+                        getFilteredSubscribers().map(sub => (
+                          <tr key={sub.id} className="hover:bg-[#F5F7FA] transition-colors">
+                            <td className="py-4 px-6 font-bold text-primary">
+                              {sub.name || <span className="text-surface-dim italic">Kein Name</span>}
+                            </td>
+                            <td className="py-4 px-6 font-mono font-medium text-primary">
+                              {sub.email}
+                            </td>
+                            <td className="py-4 px-6">
+                              <span className={`px-2.5 py-0.5 rounded text-[10px] font-bold ${
+                                sub.source === 'CHECKOUT' 
+                                  ? 'bg-emerald-100 text-emerald-800' 
+                                  : 'bg-amber-100 text-amber-800'
+                              }`}>
+                                {sub.source === 'CHECKOUT' ? 'Bestell-Wizard' : 'Newsletter-Formular'}
+                              </span>
+                            </td>
+                            <td className="py-4 px-6 text-on-surface-variant">
+                              {new Date(sub.createdAt).toLocaleString('de-DE')}
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
                 )}
-              </tbody>
-            </table>
-          </div>
-        </div>
+              </div>
+            </div>
+          </>
+        )}
 
         {/* Lead detail drawer/modal */}
         {selectedLead && (
