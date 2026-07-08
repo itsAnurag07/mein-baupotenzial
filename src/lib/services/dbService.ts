@@ -211,6 +211,91 @@ async function checkDbConnection() {
 // Check database connection once at startup
 checkDbConnection();
 
+async function handleDbError(error: any) {
+  console.error('Database operation failed:', error.message || error);
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+  } catch (dbError) {
+    console.warn('⚠️ Database connection lost. Falling back to In-Memory storage.');
+    globalForDbCheck.isDbConnected = false;
+  }
+}
+
+function sanitizeLeadData(data: any): any {
+  const sanitized: any = {};
+  
+  const stringFields = [
+    'status', 'packageSelected', 'referralCodeUsed', 'paymentMethod', 'paymentStatus',
+    'analysisGoal', 'importantQuestion', 'contactFirstName', 'contactLastName',
+    'contactEmail', 'contactPhone', 'contactRole', 'addressStreet', 'addressNumber',
+    'addressZip', 'addressCity', 'addressState', 'cadastralDistrict', 'geoportalLink',
+    'plotShape', 'slope', 'developmentStatus', 'accessRoad', 'buildingType',
+    'constructionYear', 'floorsCount', 'buildingUsage', 'demolitionPossible',
+    'zoningPlanExists', 'neighborhoodZoning', 'planningSpecialNotes', 'planningInfoDetails',
+    'targetType', 'targetArea', 'targetUnits', 'targetDensityType', 'targetDensityUnits',
+    'targetFloors', 'targetDivisions', 'projectDetails', 'timelineUrgency',
+    'projectGoal', 'budgetRange', 'budget'
+  ];
+  
+  for (const field of stringFields) {
+    if (field in data) {
+      const val = data[field];
+      if (val === undefined || val === null || val === '') {
+        sanitized[field] = null;
+      } else {
+        sanitized[field] = String(val);
+      }
+    }
+  }
+  
+  if ('currentStep' in data) {
+    const val = data.currentStep;
+    if (val === undefined || val === null || val === '') {
+      sanitized.currentStep = 1;
+    } else {
+      const parsed = parseInt(String(val), 10);
+      sanitized.currentStep = isNaN(parsed) ? 1 : parsed;
+    }
+  }
+  
+  if ('pricePaid' in data) {
+    const val = data.pricePaid;
+    if (val === undefined || val === null || val === '') {
+      sanitized.pricePaid = null;
+    } else {
+      const parsed = parseFloat(String(val));
+      sanitized.pricePaid = isNaN(parsed) ? null : parsed;
+    }
+  }
+  
+  if ('plotArea' in data) {
+    const val = data.plotArea;
+    if (val === undefined || val === null || val === '') {
+      sanitized.plotArea = null;
+    } else {
+      const parsed = parseFloat(String(val));
+      sanitized.plotArea = isNaN(parsed) ? null : parsed;
+    }
+  }
+  
+  const booleanFields = [
+    'plotIsBuilt', 'hasPlanningDocuments', 'knowsStructure', 'isSalePlanned'
+  ];
+  
+  for (const field of booleanFields) {
+    if (field in data) {
+      const val = data[field];
+      if (val === undefined || val === null || val === '') {
+        sanitized[field] = null;
+      } else {
+        sanitized[field] = val === true || val === 'true' || val === 1 || val === '1';
+      }
+    }
+  }
+  
+  return sanitized;
+}
+
 export const dbService = {
   async getLead(id: string): Promise<LeadData | null> {
     if (globalForDbCheck.isDbConnected === null) await checkDbConnection();
@@ -224,8 +309,7 @@ export const dbService = {
       });
       return lead as LeadData | null;
     } catch (e: any) {
-      console.error('getLead failed:', e.message || e);
-      globalForDbCheck.isDbConnected = false;
+      await handleDbError(e);
       return mockDb.getLead(id);
     }
   },
@@ -244,8 +328,7 @@ export const dbService = {
       });
       return lead as LeadData;
     } catch (e: any) {
-      console.error('createLead failed:', e.message || e);
-      globalForDbCheck.isDbConnected = false;
+      await handleDbError(e);
       return mockDb.createLead();
     }
   },
@@ -254,23 +337,23 @@ export const dbService = {
     if (globalForDbCheck.isDbConnected === null) await checkDbConnection();
     // Strip relations and complex properties that Prisma shouldn't update directly
     const { documents, createdAt, updatedAt, ...cleanData } = data;
+    const sanitized = sanitizeLeadData(cleanData);
     
     if (globalForDbCheck.isDbConnected === false) {
-      return mockDb.updateLead(id, cleanData);
+      return mockDb.updateLead(id, sanitized);
     }
     try {
       const lead = await prisma.lead.update({
         where: { id },
         data: {
-          ...cleanData as any,
+          ...sanitized,
           updatedAt: new Date()
         }
       });
       return lead as LeadData;
     } catch (e: any) {
-      console.error('updateLead failed:', e.message || e);
-      globalForDbCheck.isDbConnected = false;
-      return mockDb.updateLead(id, cleanData);
+      await handleDbError(e);
+      return mockDb.updateLead(id, sanitized);
     }
   },
 
@@ -291,7 +374,7 @@ export const dbService = {
       });
       return created as DocumentData;
     } catch (e) {
-      globalForDbCheck.isDbConnected = false;
+      await handleDbError(e);
       return mockDb.addDocument({ ...doc, leadId });
     }
   },
@@ -307,7 +390,7 @@ export const dbService = {
       });
       return true;
     } catch (e) {
-      globalForDbCheck.isDbConnected = false;
+      await handleDbError(e);
       return mockDb.deleteDocument(id);
     }
   },
@@ -323,7 +406,7 @@ export const dbService = {
       });
       return docs as DocumentData[];
     } catch (e) {
-      globalForDbCheck.isDbConnected = false;
+      await handleDbError(e);
       return mockDb.getDocuments(leadId);
     }
   },
@@ -340,7 +423,7 @@ export const dbService = {
       });
       return leads as LeadData[];
     } catch (e) {
-      globalForDbCheck.isDbConnected = false;
+      await handleDbError(e);
       return mockDb.getAllLeads();
     }
   },
@@ -356,7 +439,7 @@ export const dbService = {
       });
       return ref as ReferralCodeData | null;
     } catch (e) {
-      globalForDbCheck.isDbConnected = false;
+      await handleDbError(e);
       return mockDb.getReferralCode(code);
     }
   },
@@ -377,7 +460,7 @@ export const dbService = {
         });
       }
     } catch (e) {
-      globalForDbCheck.isDbConnected = false;
+      await handleDbError(e);
       return mockDb.incrementReferralCode(code);
     }
   }
