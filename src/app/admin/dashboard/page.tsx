@@ -58,6 +58,7 @@ export default function AdminDashboardPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [packageFilter, setPackageFilter] = useState('ALL');
+  const [hideEmptyDrafts, setHideEmptyDrafts] = useState(true);
   
   // Modal detail state
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
@@ -121,6 +122,16 @@ export default function AdminDashboardPage() {
 
   const getFilteredLeads = () => {
     return leads.filter(lead => {
+      // 0. Hide empty drafts if checked
+      if (hideEmptyDrafts) {
+        const isEmptyDraft = lead.status === 'DRAFT' && 
+                             !lead.analysisGoal && 
+                             !lead.contactFirstName && 
+                             !lead.contactLastName && 
+                             !lead.contactEmail;
+        if (isEmptyDraft) return false;
+      }
+
       // 1. Search Query
       const query = searchQuery.toLowerCase();
       const fullName = `${lead.contactFirstName || ''} ${lead.contactLastName || ''}`.toLowerCase();
@@ -236,7 +247,7 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Filters and search */}
-        <div className="bg-surface-white p-6 rounded-2xl border border-surface-dim shadow-sm grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div className="bg-surface-white p-6 rounded-2xl border border-surface-dim shadow-sm grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
           <div className="md:col-span-2 relative">
             <label className="block text-xs font-bold text-primary mb-1">Suche</label>
             <div className="relative">
@@ -279,6 +290,18 @@ export default function AdminDashboardPage() {
               <option value="POTENTIAL_ANALYSIS">Potenzialanalyse</option>
               <option value="FEASIBILITY_STUDY">Machbarkeitsstudie</option>
             </select>
+          </div>
+
+          <div className="flex items-end pb-2">
+            <label className="flex items-center gap-2 cursor-pointer select-none">
+              <input 
+                type="checkbox" 
+                checked={hideEmptyDrafts}
+                onChange={(e) => setHideEmptyDrafts(e.target.checked)}
+                className="w-4 h-4 rounded text-secondary border-surface-dim focus:ring-secondary cursor-pointer"
+              />
+              <span className="text-xs font-bold text-primary">Leere Entwürfe ausblenden</span>
+            </label>
           </div>
         </div>
 
