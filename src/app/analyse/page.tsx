@@ -1762,9 +1762,9 @@ function AnalyseWizardPage() {
         <div className="flex flex-col md:flex-row justify-between items-center py-4 px-margin-desktop max-w-container-max mx-auto min-h-[64px] text-xs">
           <div className="flex items-center gap-3">
             <img src="/logo.png" alt="mein-baupotenzial.de Logo" className="h-6 w-auto object-contain" />
-            <span className="text-label-md font-bold text-primary">van Valkenburg GmbH</span>
+            <span className="text-label-md font-bold text-primary">mein-baupotenzial.de</span>
           </div>
-          <span className="text-body-md font-body-md text-on-surface-variant opacity-80 mt-2 md:mt-0">© {new Date().getFullYear()} van Valkenburg GmbH. Alle Rechte vorbehalten.</span>
+          <span className="text-body-md font-body-md text-on-surface-variant opacity-80 mt-2 md:mt-0">© {new Date().getFullYear()} mein-baupotenzial.de. Alle Rechte vorbehalten.</span>
           <div className="flex gap-4 mt-2 md:mt-0">
             <Link className="text-on-surface-variant text-label-md font-label-md hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="/impressum">Impressum</Link>
             <Link className="text-on-surface-variant text-label-md font-label-md hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="/datenschutz">Datenschutz</Link>
