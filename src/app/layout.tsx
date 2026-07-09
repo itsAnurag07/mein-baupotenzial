@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'mein-baupotenzial.de | van Valkenburg GmbH',
+  title: 'mein-baupotenzial.de',
   description: 'Professionelle planungsrechtliche Analyse und Machbarkeitsprüfung für Grundstücke in Deutschland. Finden Sie heraus, was auf Ihrem Grundstück planungsrechtlich möglich ist.',
 };
 
