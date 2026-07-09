@@ -53,7 +53,7 @@ export async function PATCH(
 
       const code = body.referralCodeUsed || currentLead.referralCodeUsed || '';
       const ref = await dbService.getReferralCode(code);
-      if (!ref || !ref.isValid || (ref.maxUses !== null && ref.currentUses >= ref.maxUses)) {
+      if (!ref || !ref.isValid || (ref.maxUses != null && ref.currentUses >= ref.maxUses)) {
         return NextResponse.json(
           { error: 'Invalid, expired, or fully used referral code.' },
           { status: 400 }
@@ -66,8 +66,11 @@ export async function PATCH(
     
     const updatedLead = await dbService.updateLead(id, body);
 
-    // Notify internal team if the wizard status transitioned to COMPLETED
-    if (body.status === 'COMPLETED' && currentLead?.status !== 'COMPLETED') {
+    // Notify internal team if the wizard status transitioned to COMPLETED or PAID
+    const isCompletedTransition = body.status === 'COMPLETED' && currentLead?.status !== 'COMPLETED';
+    const isPaidTransition = body.status === 'PAID' && currentLead?.status !== 'PAID';
+
+    if (isCompletedTransition || isPaidTransition) {
       try {
         const customerName = updatedLead.contactFirstName || updatedLead.contactLastName 
           ? `${updatedLead.contactFirstName || ''} ${updatedLead.contactLastName || ''}`.trim() 
@@ -86,16 +89,33 @@ export async function PATCH(
             : updatedLead.packageSelected === 'POTENTIAL_ANALYSIS' ? 690 
             : 3490;
           
+          const finalPrice = updatedLead.paymentMethod === 'REFERRAL' ? 0 : price;
+
           await emailService.sendOrderConfirmation(
             updatedLead.contactEmail,
             customerName,
             updatedLead.packageSelected === 'QUICK_CHECK' ? 'Quick Check'
               : updatedLead.packageSelected === 'POTENTIAL_ANALYSIS' ? 'Potenzialanalyse'
               : 'Machbarkeitsstudie',
-            price,
+            finalPrice,
             updatedLead.paymentMethod === 'BANK_TRANSFER',
             id
           );
+
+          // For Referral checkouts, also send next steps immediately
+          if (updatedLead.paymentMethod === 'REFERRAL') {
+            await emailService.sendNextSteps(
+              updatedLead.contactEmail,
+              customerName,
+              updatedLead.packageSelected === 'QUICK_CHECK' ? 'Quick Check'
+                : updatedLead.packageSelected === 'POTENTIAL_ANALYSIS' ? 'Potenzialanalyse'
+                : 'Machbarkeitsstudie',
+              updatedLead.timeline || 'Unbekannt'
+            );
+
+            // Notify admin of "payment" (with 0 price)
+            await emailService.sendInternalPaymentReceived(id, 0, 'REFERRAL');
+          }
 
           // Automatically subscribe customer to newsletter database
           try {
