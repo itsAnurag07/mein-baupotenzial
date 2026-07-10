@@ -6,6 +6,7 @@ import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import Header from '@/components/Header';
+import MaterialIcon from '@/components/MaterialIcon';
 
 const STAGES = [
   'Ziel der Prüfung',
@@ -29,7 +30,7 @@ export default function Page() {
       <div className="min-h-screen flex flex-col bg-[#f7f9fc]">
         <div className="flex-grow flex items-center justify-center py-20">
           <div className="text-center">
-            <span translate="no" className="material-symbols-outlined text-4xl animate-spin text-accent-teal mb-4">sync</span>
+            <MaterialIcon name="sync" className="text-accent-teal mb-4" size={36} />
             <p className="text-sm font-semibold text-primary-navy">Ladeprozess wird gestartet...</p>
           </div>
         </div>
@@ -162,6 +163,12 @@ function AnalyseWizardPage() {
           return res.json();
         })
         .then((data) => {
+          if (data.status && data.status !== 'DRAFT') {
+            // Lead is already submitted/completed. Start a fresh session.
+            localStorage.removeItem('mein_baupotenzial_lead_id');
+            initializeNewLead(initialPackage);
+            return;
+          }
           setLeadId(data.id);
           setCurrentStep(data.currentStep || 1);
           setUploadedDocs(data.documents || []);
@@ -484,8 +491,8 @@ function AnalyseWizardPage() {
   
   const isFree = isQuickCheck && referralIsValid === true;
   const price = isFree ? 0 : rawPrice;
-  const vat = price * 0.19;
-  const totalPrice = price + vat;
+  const vat = 0; // VAT is included in gross price / not added on top
+  const totalPrice = price;
 
   // Validation before step forwarding
   const isStepValid = (step: number) => {
@@ -548,7 +555,7 @@ function AnalyseWizardPage() {
       <div className="min-h-screen flex flex-col bg-[#f7f9fc]">
         <div className="flex-grow flex items-center justify-center py-20">
           <div className="text-center">
-            <span translate="no" className="material-symbols-outlined text-4xl animate-spin text-accent-teal mb-4">sync</span>
+            <MaterialIcon name="sync" className="text-accent-teal mb-4" size={36} />
             <p className="text-sm font-semibold text-primary-navy">Lade Daten...</p>
           </div>
         </div>
@@ -577,9 +584,7 @@ function AnalyseWizardPage() {
             </div>
             <div className="flex items-center sm:flex-col sm:items-end gap-1">
               <div className="flex items-center gap-1.5 text-accent-teal font-medium">
-                <span translate="no" className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: '"FILL" 1' }}>
-                  {isSaving ? 'sync' : 'check_circle'}
-                </span>
+                <MaterialIcon name={isSaving ? 'sync' : 'check_circle'} className="text-accent-teal" size={18} />
                 <span className="text-[11px] sm:text-xs">{isSaving ? 'Speichert...' : '✓ Gespeichert'}</span>
               </div>
             </div>
@@ -641,7 +646,7 @@ function AnalyseWizardPage() {
               if (isCompleted) {
                 itemClass += "text-on-surface-variant hover:bg-surface-container-high " + (isClickable ? "cursor-pointer" : "cursor-not-allowed opacity-80");
                 circleClass += "bg-accent-teal text-white";
-                iconContent = <span translate="no" className="material-symbols-outlined text-sm">check</span>;
+                iconContent = <MaterialIcon name="check" size={14} />;
               } else if (isActive) {
                 itemClass += "text-on-secondary-container bg-secondary-container font-bold";
                 circleClass += "bg-primary-navy text-white";
@@ -679,7 +684,7 @@ function AnalyseWizardPage() {
               target="_blank"
               className="w-full flex items-center justify-center gap-2 border border-outline text-on-surface p-3 rounded-lg hover:bg-surface-container-high transition-all text-xs font-semibold"
             >
-              <span translate="no" className="material-symbols-outlined">help_outline</span>
+              <MaterialIcon name="help_outline" size={20} />
               <span className="text-label-md">Hilfe anfordern</span>
             </a>
           </div>
@@ -690,7 +695,7 @@ function AnalyseWizardPage() {
           <div className="max-w-3xl mx-auto space-y-12">
           {checkoutCompleted ? (
             <div className="text-center py-12">
-              <span translate="no" className="material-symbols-outlined text-5xl text-accent-teal mb-6 font-bold">check_circle</span>
+              <MaterialIcon name="check_circle" className="text-accent-teal mb-6" size={48} />
               <h2 className="text-2xl font-bold text-primary mb-4 font-sans">Vielen Dank für Ihre Bestellung!</h2>
               
               <div className="max-w-md mx-auto bg-surface-white border border-surface-dim p-6 rounded-xl text-left text-sm leading-relaxed mb-8 shadow-sm">
@@ -708,7 +713,7 @@ function AnalyseWizardPage() {
                         <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">IBAN:</td><td className="py-2 text-right">DE62 4306 0967 1324 3634 00</td></tr>
                         <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">BIC:</td><td className="py-2 text-right font-medium">GENODEM1GLS</td></tr>
                         <tr className="border-b border-surface-dim"><td className="py-2 font-semibold">Verwendungszweck:</td><td className="py-2 text-right font-mono font-bold text-primary-navy">Analyse {leadId?.substring(0, 8)}</td></tr>
-                        <tr><td className="py-2 font-bold">Betrag (Brutto):</td><td className="py-2 text-right font-black text-accent-teal">{totalPrice.toFixed(2)} €</td></tr>
+                        <tr><td className="py-2 font-bold">Betrag (Brutto):</td><td className="py-2 text-right font-black text-accent-teal" translate="no">{totalPrice.toFixed(2)} €</td></tr>
                       </tbody>
                     </table>
                     <p className="mt-4 text-[10px] text-on-surface-variant leading-snug">
@@ -753,11 +758,11 @@ function AnalyseWizardPage() {
                     <div className="p-6 flex-1 space-y-4">
                       <ul className="text-label-md space-y-3">
                         <li className="flex gap-2">
-                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <MaterialIcon name="check" className="text-accent-teal" size={14} />
                           <span>Erste Einschätzung</span>
                         </li>
                         <li className="flex gap-2">
-                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <MaterialIcon name="check" className="text-accent-teal" size={14} />
                           <span>Baurecht-Grobcheck</span>
                         </li>
                       </ul>
@@ -791,15 +796,15 @@ function AnalyseWizardPage() {
                     <div className="p-6 flex-1 space-y-4">
                       <ul className="text-label-md space-y-3">
                         <li className="flex gap-2">
-                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <MaterialIcon name="check" className="text-accent-teal" size={14} />
                           <span>Detaillierter Report</span>
                         </li>
                         <li className="flex gap-2">
-                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <MaterialIcon name="check" className="text-accent-teal" size={14} />
                           <span>Flächenberechnung</span>
                         </li>
                         <li className="flex gap-2">
-                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <MaterialIcon name="check" className="text-accent-teal" size={14} />
                           <span>Marktwert-Indikation</span>
                         </li>
                       </ul>
@@ -832,15 +837,15 @@ function AnalyseWizardPage() {
                     <div className="p-6 flex-1 space-y-4">
                       <ul className="text-label-md space-y-3">
                         <li className="flex gap-2">
-                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <MaterialIcon name="check" className="text-accent-teal" size={14} />
                           <span>Architekten-Entwurf</span>
                         </li>
                         <li className="flex gap-2">
-                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <MaterialIcon name="check" className="text-accent-teal" size={14} />
                           <span>Behörden-Abstimmung</span>
                         </li>
                         <li className="flex gap-2">
-                          <span translate="no" className="material-symbols-outlined text-accent-teal text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check</span>
+                          <MaterialIcon name="check" className="text-accent-teal" size={14} />
                           <span>Investitionsplanung</span>
                         </li>
                       </ul>
@@ -906,7 +911,7 @@ function AnalyseWizardPage() {
                     </span>
                   </label>
                   <div className="bg-surface-container-low p-4 rounded-lg flex items-start gap-3 border border-surface-dim">
-                    <span translate="no" className="material-symbols-outlined text-warning-amber">info</span>
+                    <MaterialIcon name="info" className="text-warning-amber" />
                     <p className="text-caption text-on-surface-variant text-[11px] leading-relaxed">Dies ist eine städtebauliche Vorprüfung auf Basis Ihrer Angaben und stellt keine rechtlich verbindliche Baugenehmigung dar.</p>
                   </div>
                 </div>
@@ -915,19 +920,19 @@ function AnalyseWizardPage() {
                 <div className="space-y-6 pt-12 border-t border-surface-dim">
                   <div className="bg-surface-container-low rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                     <div className="flex items-center gap-3">
-                      <span translate="no" className="material-symbols-outlined text-accent-teal">verified</span>
+                      <MaterialIcon name="verified" className="text-accent-teal" />
                       <span className="text-label-md font-medium text-primary">Sichere Zahlungsabwicklung</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span translate="no" className="material-symbols-outlined text-accent-teal">schedule</span>
+                      <MaterialIcon name="schedule" className="text-accent-teal" />
                       <span className="text-label-md font-medium text-primary">Analyse startet nach Zahlungseingang</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span translate="no" className="material-symbols-outlined text-accent-teal">description</span>
+                      <MaterialIcon name="description" className="text-accent-teal" />
                       <span className="text-label-md font-medium text-primary">PDF-Report inklusive</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span translate="no" className="material-symbols-outlined text-accent-teal">support_agent</span>
+                      <MaterialIcon name="support_agent" className="text-accent-teal" />
                       <span className="text-label-md font-medium text-primary">Persönliche Beratung je nach Paket</span>
                     </div>
                   </div>
@@ -962,7 +967,7 @@ function AnalyseWizardPage() {
                         <h3 className="text-headline-sm font-headline-sm font-bold text-primary">Zahlungsmethode wählen</h3>
                         <div className="flex gap-3 items-center">
                           <img alt="PayPal" className="h-5 opacity-70" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1aWjxYL_5qnAPT2_gYFuLuvu_5-IxqXnKoN0GzatSONc-MQ45NYYfKaUdif8MsPdKA-WM1JGgzzT98CE_Z-7ftt-4VE40tb9UF8YB2mng_ulNu0WwMYHbS-RPQGL361eCBNup9gFB9pLkPNcwcrE3QTOoK7OgCHANe4gdUH1Zcbj8mVvKhlZuc3BMRnA4HUaw9ISTtsjcU4uktS4PAguo9NFZNWsIf8muJqwigpqczZbkrGdZU6KF1ECiZ-amkeg0NMSccztuusfi"/>
-                          <span translate="no" className="material-symbols-outlined text-on-surface-variant">account_balance</span>
+                          <MaterialIcon name="account_balance" className="text-on-surface-variant" />
                         </div>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1055,8 +1060,8 @@ function AnalyseWizardPage() {
                       )}
 
                       <div className="flex items-center gap-3 text-caption text-on-surface-variant bg-surface-container-low/50 p-4 rounded-lg text-[10px] leading-relaxed">
-                        <span translate="no" className="material-symbols-outlined text-accent-teal text-sm">verified_user</span>
-                        <span>Verschlüsselte SSL-Übertragung. Alle Preise zzgl. 19% MwSt. (Zwischensumme: {price.toFixed(2)} €, MwSt: {vat.toFixed(2)} €, <strong>Gesamt: {totalPrice.toFixed(2)} €</strong>)</span>
+                        <MaterialIcon name="verified_user" className="text-accent-teal" size={14} />
+                        <span>Verschlüsselte SSL-Übertragung. Alle Preise verstehen sich als Endpreise inklusive Mehrwertsteuer. (<strong>Gesamt: <span translate="no">{totalPrice.toFixed(2)} €</span></strong>)</span>
                       </div>
                     </div>
                   )}
@@ -1068,7 +1073,7 @@ function AnalyseWizardPage() {
                     onClick={() => setShowCheckout(false)}
                     className="flex items-center gap-2 text-primary-navy font-bold hover:translate-x-[-4px] transition-transform text-xs"
                   >
-                    <span translate="no" className="material-symbols-outlined text-sm">arrow_back</span>
+                    <MaterialIcon name="arrow_back" size={14} />
                     <span>Zurück</span>
                   </button>
 
@@ -1079,7 +1084,7 @@ function AnalyseWizardPage() {
                       className="px-12 py-4 bg-primary-navy text-white font-bold rounded-lg hover:shadow-xl hover:scale-[1.02] transition-all flex items-center gap-2 disabled:opacity-50 text-xs"
                     >
                       Jetzt kostenpflichtig beauftragen
-                      <span translate="no" className="material-symbols-outlined text-sm">chevron_right</span>
+                      <MaterialIcon name="chevron_right" size={14} />
                     </button>
                   )}
                 </div>
@@ -1481,7 +1486,7 @@ function AnalyseWizardPage() {
 
                   {uploadError && (
                     <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl flex items-center gap-2 font-medium">
-                      <span className="material-symbols-outlined text-sm text-red-500 shrink-0">error</span>
+                      <MaterialIcon name="error" className="text-red-500 shrink-0" size={14} />
                       <span>{uploadError}</span>
                     </div>
                   )}
@@ -1517,11 +1522,13 @@ function AnalyseWizardPage() {
                           </span>
                           
                           <div className="mt-4 flex flex-col items-center text-center">
-                            <span className={`material-symbols-outlined text-4xl mb-2 transition-colors ${
-                              hasFiles ? 'text-accent-teal' : 'text-ui-steel group-hover:text-primary-navy'
-                            }`}>
-                              {cat.icon}
-                            </span>
+                            <MaterialIcon 
+                              name={cat.icon} 
+                              className={`mb-2 transition-colors ${
+                                hasFiles ? 'text-accent-teal' : 'text-ui-steel group-hover:text-primary-navy'
+                              }`} 
+                              size={36} 
+                            />
                             <p className="font-bold text-label-md text-primary text-xs font-sans">
                               {hasFiles ? `${filesCount} Datei(en) ausgewählt` : cat.desc}
                             </p>
@@ -1552,7 +1559,7 @@ function AnalyseWizardPage() {
                     {/* Images Section */}
                     <div>
                       <div className="flex items-center gap-3 mb-4">
-                        <span translate="no" className="material-symbols-outlined text-primary-navy">photo_camera</span>
+                        <MaterialIcon name="photo_camera" className="text-primary-navy" />
                         <h3 className="font-headline-sm text-headline-sm font-bold text-primary">Hochgeladene Fotos</h3>
                       </div>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -1564,7 +1571,7 @@ function AnalyseWizardPage() {
                               onClick={() => handleDeleteDocument(doc.id)}
                               className="absolute bottom-2 right-2 bg-white/90 p-1 rounded-full text-error shadow-sm hover:bg-white transition-colors"
                             >
-                              <span translate="no" className="material-symbols-outlined text-sm">delete</span>
+                              <MaterialIcon name="delete" size={14} />
                             </button>
                           </div>
                         ))}
@@ -1575,7 +1582,7 @@ function AnalyseWizardPage() {
                     {uploadedDocs.filter(doc => doc.category !== 'PROPERTY_PHOTO' && !doc.fileName.toLowerCase().endsWith('.jpg') && !doc.fileName.toLowerCase().endsWith('.jpeg') && !doc.fileName.toLowerCase().endsWith('.png')).length > 0 && (
                       <div className="border-t border-surface-dim pt-6">
                         <div className="flex items-center gap-3 mb-4">
-                          <span translate="no" className="material-symbols-outlined text-primary-navy">folder_open</span>
+                          <MaterialIcon name="folder_open" className="text-primary-navy" />
                           <h3 className="font-headline-sm text-headline-sm font-bold text-primary">Andere Dokumente</h3>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -1633,7 +1640,7 @@ function AnalyseWizardPage() {
                     <div className="bg-surface-white border border-surface-dim rounded-xl p-6">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="font-bold text-label-md flex items-center gap-2 text-primary font-sans text-sm">
-                          <span translate="no" className="material-symbols-outlined text-ui-steel text-lg">person</span> Kontaktdaten
+                          <MaterialIcon name="person" className="text-ui-steel" size={18} /> Kontaktdaten
                         </h3>
                         <button type="button" onClick={() => handleStepChange(3)} className="text-accent-teal text-caption font-bold hover:underline">Bearbeiten</button>
                       </div>
@@ -1648,7 +1655,7 @@ function AnalyseWizardPage() {
                     <div className="bg-surface-white border border-surface-dim rounded-xl p-6">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="font-bold text-label-md flex items-center gap-2 text-primary font-sans text-sm">
-                          <span translate="no" className="material-symbols-outlined text-ui-steel text-lg">location_on</span> Grundstück &amp; Bestand
+                          <MaterialIcon name="location_on" className="text-ui-steel" size={18} /> Grundstück &amp; Bestand
                         </h3>
                         <button type="button" onClick={() => handleStepChange(2)} className="text-accent-teal text-caption font-bold hover:underline">Bearbeiten</button>
                       </div>
@@ -1663,7 +1670,7 @@ function AnalyseWizardPage() {
                     <div className="bg-surface-white border border-surface-dim rounded-xl p-6">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="font-bold text-label-md flex items-center gap-2 text-primary font-sans text-sm">
-                          <span translate="no" className="material-symbols-outlined text-ui-steel text-lg">architecture</span> Planungswünsche
+                          <MaterialIcon name="architecture" className="text-ui-steel" size={18} /> Planungswünsche
                         </h3>
                         <button type="button" onClick={() => handleStepChange(1)} className="text-accent-teal text-caption font-bold hover:underline">Bearbeiten</button>
                       </div>
@@ -1677,7 +1684,7 @@ function AnalyseWizardPage() {
                     <div className="bg-surface-white border border-surface-dim rounded-xl p-6">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="font-bold text-label-md flex items-center gap-2 text-primary font-sans text-sm">
-                          <span translate="no" className="material-symbols-outlined text-ui-steel text-lg">upload_file</span> Dokumente &amp; Fotos
+                          <MaterialIcon name="upload_file" className="text-ui-steel" size={18} /> Dokumente &amp; Fotos
                         </h3>
                         <button type="button" onClick={() => handleStepChange(4)} className="text-accent-teal text-caption font-bold hover:underline">Bearbeiten</button>
                       </div>
@@ -1687,7 +1694,7 @@ function AnalyseWizardPage() {
                         ) : (
                           uploadedDocs.map(doc => (
                             <span key={doc.id} className="bg-surface-container px-3 py-1 rounded-full text-caption border border-surface-dim flex items-center gap-1 font-semibold text-primary">
-                              {doc.fileName} <span translate="no" className="material-symbols-outlined text-[14px] text-accent-teal">check</span>
+                               {doc.fileName} <MaterialIcon name="check" className="text-accent-teal" size={14} />
                             </span>
                           ))
                         )}
@@ -1709,7 +1716,7 @@ function AnalyseWizardPage() {
                       className="bg-primary-navy text-white px-8 py-3.5 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity flex items-center gap-2 shadow"
                     >
                       Weiter zur Paketauswahl
-                      <span translate="no" className="material-symbols-outlined">chevron_right</span>
+                      <MaterialIcon name="chevron_right" size={20} />
                     </button>
                   </div>
                 </div>
@@ -1724,7 +1731,7 @@ function AnalyseWizardPage() {
                     disabled={currentStep === 1}
                     className="flex items-center gap-2 text-primary-navy font-bold hover:translate-x-[-4px] transition-transform disabled:opacity-30 disabled:hover:translate-x-0 text-xs"
                   >
-                    <span translate="no" className="material-symbols-outlined text-sm">arrow_back</span>
+                    <MaterialIcon name="arrow_back" size={14} />
                     <span>Zurück</span>
                   </button>
                   
@@ -1736,7 +1743,7 @@ function AnalyseWizardPage() {
                       className="px-12 py-4 bg-primary-navy text-white font-bold rounded-lg hover:shadow-xl hover:scale-[1.02] transition-all flex items-center gap-2 disabled:opacity-50 text-xs shadow"
                     >
                       Weiter
-                      <span translate="no" className="material-symbols-outlined text-sm">chevron_right</span>
+                      <MaterialIcon name="chevron_right" size={14} />
                     </button>
                   ) : (
                     <button
@@ -1746,7 +1753,7 @@ function AnalyseWizardPage() {
                       className="px-12 py-4 bg-primary-navy text-white font-bold rounded-lg hover:shadow-xl hover:scale-[1.02] transition-all flex items-center gap-2 disabled:opacity-50 text-xs shadow"
                     >
                       Weiter zur Paketauswahl
-                      <span translate="no" className="material-symbols-outlined text-sm">chevron_right</span>
+                      <MaterialIcon name="chevron_right" size={14} />
                     </button>
                   )}
                 </div>

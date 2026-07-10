@@ -46,14 +46,14 @@ export default function AGBPage() {
           <section>
             <h2 className="text-xl font-bold text-primary mb-3">3. Zahlungsbedingungen &amp; Preise</h2>
             <p className="mb-3">
-              Alle Preise verstehen sich zuzüglich der gesetzlichen Mehrwertsteuer (19&nbsp;% MwSt.). Die Zahlung
+              Alle angegebenen Preise verstehen sich als Endpreise inklusive der gesetzlichen Mehrwertsteuer. Die Zahlung
               erfolgt wahlweise per PayPal oder per Banküberweisung. Die Bearbeitung der Analyse beginnt erst
               nach vollständigem Zahlungseingang auf dem Konto des Anbieters.
             </p>
             <ul className="space-y-1 list-none pl-0">
-              <li><strong>QuickCheck:</strong> 249 € (zzgl. 19&nbsp;% MwSt.)</li>
-              <li><strong>Potenzialanalyse:</strong> 690 € (zzgl. 19&nbsp;% MwSt.)</li>
-              <li><strong>Machbarkeitsstudie:</strong> ab 3.490 € (zzgl. 19&nbsp;% MwSt.)</li>
+              <li><strong>QuickCheck:</strong> 249 € (inkl. MwSt.)</li>
+              <li><strong>Potenzialanalyse:</strong> 690 € (inkl. MwSt.)</li>
+              <li><strong>Machbarkeitsstudie:</strong> ab 3.490 € (inkl. MwSt.)</li>
             </ul>
           </section>
 

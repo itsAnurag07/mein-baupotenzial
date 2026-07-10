@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import MaterialIcon from '@/components/MaterialIcon';
 
 interface Lead {
   id: string;
@@ -287,7 +288,7 @@ export default function AdminDashboardPage() {
         <Header />
         <div className="flex-grow flex items-center justify-center py-20">
           <div className="text-center">
-            <span translate="no" className="material-symbols-outlined text-4xl animate-spin text-secondary mb-4">sync</span>
+            <MaterialIcon name="sync" className="text-secondary mb-4" size={36} />
             <p className="text-sm font-semibold text-primary">Leads werden geladen...</p>
           </div>
         </div>
@@ -320,7 +321,7 @@ export default function AdminDashboardPage() {
               disabled={filteredLeads.length === 0}
               className="bg-primary text-on-primary px-6 py-2.5 rounded-lg text-xs font-bold hover:opacity-90 transition-opacity flex items-center gap-1.5 disabled:opacity-50"
             >
-              <span translate="no" className="material-symbols-outlined text-[16px]">download</span>
+              <MaterialIcon name="download" size={16} />
               CSV Export ({filteredLeads.length})
             </button>
           ) : (
@@ -329,7 +330,7 @@ export default function AdminDashboardPage() {
               disabled={getFilteredSubscribers().length === 0}
               className="bg-primary text-on-primary px-6 py-2.5 rounded-lg text-xs font-bold hover:opacity-90 transition-opacity flex items-center gap-1.5 disabled:opacity-50"
             >
-              <span translate="no" className="material-symbols-outlined text-[16px]">download</span>
+              <MaterialIcon name="download" size={16} />
               CSV Export ({getFilteredSubscribers().length})
             </button>
           )}
@@ -379,7 +380,7 @@ export default function AdminDashboardPage() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full h-10 pl-10 pr-4 rounded-lg border border-surface-dim focus:outline-none focus:border-secondary text-xs text-primary font-medium bg-[#F5F7FA]"
                   />
-                  <span translate="no" className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+                  <MaterialIcon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" size={18} />
                 </div>
               </div>
 
@@ -529,7 +530,7 @@ export default function AdminDashboardPage() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full h-10 pl-10 pr-4 rounded-lg border border-surface-dim focus:outline-none focus:border-secondary text-xs text-primary font-medium bg-[#F5F7FA]"
                   />
-                  <span translate="no" className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+                  <MaterialIcon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" size={18} />
                 </div>
               </div>
             </div>
@@ -539,7 +540,7 @@ export default function AdminDashboardPage() {
               <div className="overflow-x-auto">
                 {loadingSubscribers ? (
                   <div className="text-center py-12">
-                    <span translate="no" className="material-symbols-outlined text-4xl animate-spin text-secondary mb-4">sync</span>
+                    <MaterialIcon name="sync" className="text-secondary mb-4" size={36} />
                     <p className="text-sm font-semibold text-primary font-sans">Abonnenten werden geladen...</p>
                   </div>
                 ) : (
@@ -604,9 +605,9 @@ export default function AdminDashboardPage() {
                   </div>
                   <button 
                     onClick={() => setSelectedLead(null)}
-                    translate="no" className="material-symbols-outlined text-on-surface-variant hover:text-primary"
+                    className="text-on-surface-variant hover:text-primary"
                   >
-                    close
+                    <MaterialIcon name="close" />
                   </button>
                 </div>
 

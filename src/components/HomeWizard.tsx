@@ -92,6 +92,12 @@ export default function HomeWizard() {
       fetch(`/api/leads/${savedId}`)
         .then((r) => (r.ok ? r.json() : Promise.reject()))
         .then((data) => {
+          if (data.status && data.status !== 'DRAFT') {
+            // Lead is already submitted/completed. Start a fresh session.
+            localStorage.removeItem('mein_baupotenzial_lead_id');
+            createLead();
+            return;
+          }
           setLeadId(data.id);
           setForm({
             analysisGoal:      data.analysisGoal      || '',

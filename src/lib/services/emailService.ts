@@ -145,7 +145,7 @@ export const emailService = {
     const title = 'Auftragsbestätigung';
     
     const paymentInfo = isBankTransfer 
-      ? `<p style="margin: 0 0 16px 0;">Bitte überweisen Sie den ausstehenden Bruttobetrag von <strong>${amount.toFixed(2)} € (zzgl. MwSt.)</strong> auf folgendes Bankkonto:</p>
+      ? `<p style="margin: 0 0 16px 0;">Bitte überweisen Sie den ausstehenden Bruttobetrag von <strong>${amount.toFixed(2)} €</strong> auf folgendes Bankkonto:</p>
          <div style="background-color: #F8F7F4; border: 1px solid #E5E4E0; border-radius: 12px; padding: 20px; margin: 24px 0;">
            <h3 style="margin: 0 0 12px 0; color: #1F2328; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #D0CFCB; padding-bottom: 6px;">Zahlungsdetails</h3>
            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-size: 13px; color: #5E646B;">
@@ -158,7 +158,7 @@ export const emailService = {
            </table>
          </div>
          <p style="margin: 0 0 16px 0;">Die planungsrechtliche Analyse beginnt unmittelbar nach Verifizierung Ihres Zahlungseingangs. Eine entsprechende Rechnung wird Ihnen nach Zahlungseingang zugesandt.</p>`
-      : `<p style="margin: 0 0 24px 0;">Vielen Dank für Ihre PayPal-Zahlung. Wir haben Ihre Zahlung von <strong>${amount.toFixed(2)} € (zzgl. MwSt.)</strong> erfolgreich erhalten.</p>`;
+      : `<p style="margin: 0 0 24px 0;">Vielen Dank für Ihre PayPal-Zahlung. Wir haben Ihre Zahlung von <strong>${amount.toFixed(2)} €</strong> erfolgreich erhalten.</p>`;
 
     const bodyContent = `
       <p style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600; color: #1F2328;">Hallo ${name},</p>

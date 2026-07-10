@@ -99,7 +99,7 @@ export default function Footer() {
               <li className="flex items-start gap-2">
                 <Building2 size={14} strokeWidth={2} className="text-accent mt-0.5 flex-shrink-0" />
                 <span>
-                  mein Baupotential<br />
+                  mein Baupotenzial<br />
                   c/o Ulmer Schanze<br />
                   Prittwitzstraße 100, 89075 Ulm
                 </span>
@@ -107,7 +107,7 @@ export default function Footer() {
               <li className="flex items-start gap-2">
                 <Mail size={14} strokeWidth={2} className="text-accent mt-0.5 flex-shrink-0" />
                 <a href="mailto:info@mein-baupotenzial.com" className="hover:text-white transition-colors duration-[120ms] whitespace-nowrap">
-                  info@mein-baupotenzial.com
+                  info@mein-baupotenzial.de
                 </a>
               </li>
 
@@ -129,7 +129,7 @@ export default function Footer() {
         <div className="border-t border-white/10 pt-10">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-6">
             <img
-              src="/footer logo.png"
+              src="/logo_without_bg_1.png"
               alt="mein-baupotenzial.de Logo"
               className="h-12 w-auto object-contain opacity-80"
             />
@@ -144,7 +144,7 @@ export default function Footer() {
           </p>
 
           <div className="flex flex-col sm:flex-row justify-between items-center text-[12px] text-white/25 gap-2">
-            <p>© {year} van Valkenburg GmbH. Alle Rechte vorbehalten.</p>
+            <p>© {year} mein-baupotenzial</p>
             <p>Entwickelt für den deutschen Immobilienmarkt.</p>
           </div>
         </div>

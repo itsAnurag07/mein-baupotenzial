@@ -512,7 +512,7 @@ export default function HomePage() {
               <p className="text-[16px] md:text-[18px] text-on-surface-variant mx-auto leading-[1.6]" style={{ maxWidth: '56ch' }}>
                 Je nach Ziel reicht manchmal ein schneller Überblick — oder Sie benötigen eine
                 tiefergehende Beurteilung. Drei Analyse-Optionen mit klar definiertem Leistungsumfang.
-                Alle Preise zzgl. 19&nbsp;% MwSt.
+                Alle Preise verstehen sich als Brutto-Endpreise inklusive Mehrwertsteuer.
               </p>
             </div>
 
@@ -527,7 +527,7 @@ export default function HomePage() {
                   <h3 className="text-[24px] font-bold text-primary mb-1">QuickCheck</h3>
                   <div className="mb-3 mt-5">
                     <span className="text-[34px] md:text-[38px] font-bold text-primary">249 €</span>
-                    <span className="text-[13px] text-on-surface-variant ml-2">+ 19&nbsp;% MwSt.</span>
+                    <span className="text-[13px] text-on-surface-variant ml-2">inkl. MwSt.</span>
                   </div>
                   <p className="text-[13px] font-medium text-secondary mb-6 flex items-center gap-1.5">
                     <Clock size={13} strokeWidth={2} />
@@ -570,7 +570,7 @@ export default function HomePage() {
                   <h3 className="text-[24px] font-bold text-white mb-1">Potenzialanalyse</h3>
                   <div className="mb-3 mt-5">
                     <span className="text-[40px] md:text-[46px] font-bold text-white">690 €</span>
-                    <span className="text-[13px] text-white/50 ml-2">+ 19&nbsp;% MwSt.</span>
+                    <span className="text-[13px] text-white/50 ml-2">inkl. MwSt.</span>
                   </div>
                   <p className="text-[13px] font-medium text-accent mb-6 flex items-center gap-1.5">
                     <Clock size={13} strokeWidth={2} />
@@ -604,7 +604,7 @@ export default function HomePage() {
                   <h3 className="text-[24px] font-bold text-primary mb-1">Machbarkeitsstudie</h3>
                   <div className="mb-3 mt-5">
                     <span className="text-[34px] md:text-[38px] font-bold text-primary">ab 3.490 €</span>
-                    <span className="text-[13px] text-on-surface-variant ml-2">+ 19&nbsp;% MwSt.</span>
+                    <span className="text-[13px] text-on-surface-variant ml-2">inkl. MwSt.</span>
                   </div>
                   <p className="text-[13px] font-medium text-secondary mb-6 flex items-center gap-1.5">
                     <Clock size={13} strokeWidth={2} />

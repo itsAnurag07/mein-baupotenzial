@@ -19,14 +19,25 @@ export default function ImpressumPage() {
           {/* Angaben gemäß § 5 TMG */}
           <section>
             <h2 className="text-xl font-bold text-primary mb-2">Angaben gemäß § 5 TMG</h2>
-            <p>
-              van Valkenburg GmbH<br />
-              vertreten durch<br />
-              <br />
+            <p className="mb-4">
               van Valkenburg GmbH<br />
               c/o Ulmer Schanze<br />
               Wagnerstraße 25<br />
               89077 Ulm
+            </p>
+            <p className="mb-4">
+              <strong>Vertreten durch:</strong><br />
+              Wolf Probst (Geschäftsführer)
+            </p>
+            <p className="mb-4">
+              <strong>Registereintrag:</strong><br />
+              Registergericht: Amtsgericht Ulm<br />
+              Registernummer: HRB 747631
+            </p>
+            <p>
+              <strong>Umsatzsteuer-ID:</strong><br />
+              Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />
+              DE367081625
             </p>
           </section>
 
@@ -34,7 +45,7 @@ export default function ImpressumPage() {
           <section>
             <h2 className="text-xl font-bold text-primary mb-2">Kontakt</h2>
             <p>
-              Tel. +49 731 14394705<br />
+              Tel. 073114394705 <br />
               E-Mail:{' '}
               <a href="mailto:wolf@van-valkenburg.de" className="text-secondary hover:underline">
                 info@van-valkenburg.de
