@@ -58,7 +58,7 @@ export default function Header() {
         </div>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-8">
           {NAV.map(({ href, label }) => (
             <Link
               key={href}
@@ -71,7 +71,7 @@ export default function Header() {
         </nav>
 
         {/* Desktop CTA */}
-        <div className="hidden md:flex items-center">
+        <div className="hidden lg:flex items-center">
           <Link
             href="/analyse"
             className="inline-flex items-center gap-2 bg-secondary text-on-secondary font-semibold text-[15px] hover:bg-cta-hover transition-colors duration-[120ms]"
@@ -84,7 +84,7 @@ export default function Header() {
 
         {/* Mobile Hamburger */}
         <button
-          className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-surface-bright transition-colors duration-[120ms] text-primary"
+          className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-surface-bright transition-colors duration-[120ms] text-primary"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Menü öffnen"
         >
@@ -94,7 +94,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-[250ms] ease-in-out ${mobileMenuOpen ? 'max-h-[500px] border-t border-surface-dim' : 'max-h-0'
+        className={`lg:hidden overflow-hidden transition-all duration-[250ms] ease-in-out ${mobileMenuOpen ? 'max-h-[500px] border-t border-surface-dim' : 'max-h-0'
           }`}
       >
         <nav className="flex flex-col px-4 py-4 bg-surface-white gap-1">

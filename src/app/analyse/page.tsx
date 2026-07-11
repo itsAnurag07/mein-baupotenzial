@@ -569,11 +569,11 @@ function AnalyseWizardPage() {
       <Header />
       
       {/* Header Progress Area */}
-      <header className="pt-4 pb-4 md:pb-6 bg-surface-white border-b border-surface-dim w-full">
-        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop">
+      <header className="pt-4 pb-4 lg:pb-6 bg-surface-white border-b border-surface-dim w-full">
+        <div className="max-w-container-max mx-auto px-4 lg:px-margin-desktop">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2 mb-4">
             <div>
-              <h1 className="font-headline-lg text-xl md:text-headline-lg text-primary mb-1">Objekt-Analyse</h1>
+              <h1 className="font-headline-lg text-xl lg:text-headline-lg text-primary mb-1">Objekt-Analyse</h1>
               <p className="text-on-surface-variant text-xs sm:text-sm font-medium">
                 {checkoutCompleted 
                   ? 'Bestellung abgeschlossen' 
@@ -600,7 +600,7 @@ function AnalyseWizardPage() {
       </header>
  
       {/* Mobile Step Selector (visible only on mobile) */}
-      <div className="md:hidden bg-surface-container-low border-b border-surface-dim px-4 py-3">
+      <div className="lg:hidden bg-surface-container-low border-b border-surface-dim px-4 py-3">
         <select
           className="w-full bg-surface-white border border-surface-dim rounded-lg px-3 py-2.5 text-sm font-semibold text-primary focus:border-secondary focus:ring-1 focus:ring-secondary"
           value={showCheckout ? 5 : currentStep}
@@ -625,9 +625,9 @@ function AnalyseWizardPage() {
         </select>
       </div>
 
-      <main className="max-w-container-max mx-auto flex flex-col md:flex-row min-h-[calc(100vh-180px)] w-full">
+      <main className="max-w-container-max mx-auto flex flex-col lg:flex-row min-h-[calc(100vh-180px)] w-full">
         {/* Side Navigation Bar */}
-        <aside className="hidden md:flex w-64 bg-surface-container-low border-r border-surface-dim p-4 flex-col gap-2 shrink-0">
+        <aside className="hidden lg:flex w-64 bg-surface-container-low border-r border-surface-dim p-4 flex-col gap-2 shrink-0">
           <div className="mb-4 px-3">
             <h3 className="font-headline-sm text-headline-sm text-primary mb-1">Analyse-Fortschritt</h3>
             <p className="text-caption text-on-surface-variant">Schritt für Schritt zum Baupotenzial</p>
@@ -691,7 +691,7 @@ function AnalyseWizardPage() {
         </aside>
 
         {/* Main Content Area */}
-        <section className="flex-1 p-4 md:p-margin-desktop bg-surface-bright">
+        <section className="flex-1 p-4 lg:p-margin-desktop bg-surface-bright">
           <div className="max-w-3xl mx-auto space-y-12">
           {checkoutCompleted ? (
             <div className="text-center py-12">
@@ -1766,13 +1766,13 @@ function AnalyseWizardPage() {
 
       {/* Footer */}
       <footer className="bg-surface-container-lowest border-t border-surface-dim">
-        <div className="flex flex-col md:flex-row justify-between items-center py-4 px-margin-desktop max-w-container-max mx-auto min-h-[64px] text-xs">
+        <div className="flex flex-col lg:flex-row justify-between items-center py-4 px-margin-desktop max-w-container-max mx-auto min-h-[64px] text-xs">
           <div className="flex items-center gap-3">
             <img src="/logo.png" alt="mein-baupotenzial.de Logo" className="h-6 w-auto object-contain" />
             <span className="text-label-md font-bold text-primary">mein-baupotenzial.de</span>
           </div>
-          <span className="text-body-md font-body-md text-on-surface-variant opacity-80 mt-2 md:mt-0">© {new Date().getFullYear()} mein-baupotenzial.de. Alle Rechte vorbehalten.</span>
-          <div className="flex gap-4 mt-2 md:mt-0">
+          <span className="text-body-md font-body-md text-on-surface-variant opacity-80 mt-2 lg:mt-0">© {new Date().getFullYear()} mein-baupotenzial.de. Alle Rechte vorbehalten.</span>
+          <div className="flex gap-4 mt-2 lg:mt-0">
             <Link className="text-on-surface-variant text-label-md font-label-md hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="/impressum">Impressum</Link>
             <Link className="text-on-surface-variant text-label-md font-label-md hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="/datenschutz">Datenschutz</Link>
             <Link className="text-on-surface-variant text-label-md font-label-md hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="/agb">AGB</Link>

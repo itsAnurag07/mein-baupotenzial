@@ -9,10 +9,10 @@ export default function Footer() {
     <footer className="bg-primary text-white">
       {/* Main 6-column grid */}
       <div className="max-w-[1280px] mx-auto px-4 md:px-10 pt-16 pb-12">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-14">
 
           {/* Col 1: Unternehmen */}
-          <div className="col-span-2 md:col-span-3 lg:col-span-1">
+          <div className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-1">
             <h4 className="text-[11px] font-bold uppercase tracking-widest text-white/40 mb-5">
               Unternehmen
             </h4>
@@ -132,6 +132,7 @@ export default function Footer() {
               src="/logo_without_bg_1.png"
               alt="mein-baupotenzial.de Logo"
               className="h-12 w-auto object-contain opacity-80"
+              style={{ filter: 'brightness(0) invert(1)' }}
             />
             <p className="text-[14px] text-white/40 leading-relaxed">
               Unabhängige Baupotenzialanalysen für Eigentümer, Investoren und Projektentwickler.

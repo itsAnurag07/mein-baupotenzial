@@ -228,7 +228,7 @@ export default function HomePage() {
             SECTION 1 — HERO
         ═══════════════════════════════════════ */}
         <section className="bg-surface-white border-b border-surface-dim py-12 md:py-20">
-          <div className="max-w-[1280px] mx-auto px-4 md:px-10 grid grid-cols-1 md:grid-cols-[48%_52%] gap-10 md:gap-16 items-center">
+          <div className="max-w-[1280px] mx-auto px-4 md:px-10 grid grid-cols-1 lg:grid-cols-[48%_52%] gap-10 lg:gap-16 items-center">
 
             {/* Left col */}
             <div>
@@ -275,7 +275,7 @@ export default function HomePage() {
             </div>
 
             {/* Right col — hero image */}
-            <div className="relative hidden md:block">
+            <div className="relative hidden lg:block">
               <div className="rounded-[18px] overflow-hidden shadow-card-hover">
                 <img
                   alt="Grundstück analysieren – mein-baupotenzial.de"
@@ -351,7 +351,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
               {[
                 {
                   Icon: Map,
@@ -402,7 +402,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {[
                 { Icon: BookOpen, stat: '40+', unit: 'Jahre', label: 'Erfahrung in der Projektentwicklung und Beratung.' },
                 { Icon: Scale, stat: '100 %', unit: '', label: 'Unabhängige Beurteilung —\nneutral und objektiv' },
@@ -434,10 +434,10 @@ export default function HomePage() {
         ═══════════════════════════════════════ */}
         <section className="py-16 md:py-24 bg-surface-white border-b border-surface-dim" id="so-funktionierts">
           <div className="max-w-[1280px] mx-auto px-4 md:px-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
 
               {/* Left — headline + 4 steps */}
-              <div className="md:sticky md:top-24">
+              <div className="lg:sticky lg:top-24">
                 <div className="inline-flex items-center gap-2 border border-accent/40 text-accent px-3 py-1 rounded-full text-[12px] md:text-[13px] font-semibold mb-6 bg-accent-container">
                   <PlayCircle size={13} strokeWidth={2} />
                   Jetzt direkt starten
@@ -516,7 +516,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
 
               {/* QuickCheck */}
               <div className="bg-white p-6 md:p-8 rounded-[18px] shadow-card flex flex-col hover:shadow-card-hover transition-shadow duration-[250ms]">
@@ -559,12 +559,12 @@ export default function HomePage() {
               </div>
 
               {/* Potenzialanalyse — FEATURED */}
-              <div className="bg-primary p-7 md:p-9 rounded-[18px] flex flex-col relative shadow-card-hover my-2 md:my-0">
+              <div className="bg-primary p-7 lg:p-9 rounded-[18px] flex flex-col relative shadow-card-hover my-2 lg:my-0">
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent text-white px-5 py-1.5 rounded-full text-[12px] font-bold uppercase tracking-wider whitespace-nowrap">
                   Unsere Empfehlung
                 </div>
                 <div className="flex-1">
-                  <p className="text-[12px] text-white/50 font-semibold uppercase tracking-wider mb-3 mt-2 md:mt-0">
+                  <p className="text-[12px] text-white/50 font-semibold uppercase tracking-wider mb-3 mt-2 lg:mt-0">
                     Umfassende Prüfung inkl. Fachgespräch
                   </p>
                   <h3 className="text-[24px] font-bold text-white mb-1">Potenzialanalyse</h3>
@@ -718,7 +718,7 @@ export default function HomePage() {
         ═══════════════════════════════════════ */}
         <section className="py-16 md:py-24 bg-surface-bright border-b border-surface-dim" id="baupotenzial-report">
           <div className="max-w-[1280px] mx-auto px-4 md:px-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               {/* Left */}
               <div>
                 <div className="inline-flex items-center gap-2 border border-accent/40 text-accent px-4 py-1.5 rounded-full text-[12px] md:text-[13px] font-semibold mb-6 bg-accent-container">
