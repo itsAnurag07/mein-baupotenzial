@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { FileText, FileCheck, Building2, Mail, Phone } from 'lucide-react';
+import { Building2, Mail, Phone } from 'lucide-react';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -9,20 +9,8 @@ export default function Footer() {
     <footer className="bg-primary text-white">
       {/* Main 6-column grid */}
       <div className="max-w-[1280px] mx-auto px-4 md:px-10 pt-16 pb-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-14">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap md:flex-nowrap sm:justify-between gap-10 mb-14 w-full">
 
-          {/* Col 1: Unternehmen */}
-          <div className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-1">
-            <h4 className="text-[11px] font-bold uppercase tracking-widest text-white/40 mb-5">
-              Unternehmen
-            </h4>
-            <ul className="space-y-3 text-[14px]">
-              <li><Link href="/#so-funktionierts" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Über uns</Link></li>
-              <li><Link href="/#leistungen" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Unser Team</Link></li>
-              <li><Link href="/kontakt" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Karriere</Link></li>
-              <li><Link href="/kontakt" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Presse</Link></li>
-            </ul>
-          </div>
 
           {/* Col 2: Leistungen */}
           <div>
@@ -37,45 +25,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 3: Wissen */}
-          <div>
-            <h4 className="text-[11px] font-bold uppercase tracking-widest text-white/40 mb-5">
-              Wissen
-            </h4>
-            <ul className="space-y-3 text-[14px]">
-              <li><Link href="/#wissen" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Baupotenzial verstehen</Link></li>
-              <li><Link href="/#faq" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Planungsrecht erklärt</Link></li>
-              <li><Link href="/#faq" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Nachverdichtung</Link></li>
-              <li><Link href="/#faq" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Grundstücksteilung</Link></li>
-              <li><Link href="/#baupotenzial-report" className="text-white/60 hover:text-white transition-colors duration-[120ms]">Baupotenzial-Report</Link></li>
-            </ul>
-          </div>
 
-          {/* Col 4: Downloads */}
-          <div>
-            <h4 className="text-[11px] font-bold uppercase tracking-widest text-white/40 mb-5">
-              Downloads
-            </h4>
-            <ul className="space-y-3 text-[14px]">
-              <li>
-                <a
-                  href="/sample-report.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white/60 hover:text-white transition-colors duration-[120ms] flex items-center gap-1.5"
-                >
-                  <FileText size={13} strokeWidth={2} className="text-accent flex-shrink-0" />
-                  Beispielanalyse (PDF)
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-white/60 hover:text-white transition-colors duration-[120ms] flex items-center gap-1.5">
-                  <FileCheck size={13} strokeWidth={2} className="text-accent flex-shrink-0" />
-                  Unterlagen-Checkliste
-                </a>
-              </li>
-            </ul>
-          </div>
 
           {/* Col 5: Rechtliches */}
           <div>
@@ -101,7 +51,7 @@ export default function Footer() {
                 <span>
                   mein Baupotenzial<br />
                   c/o Ulmer Schanze<br />
-                  Prittwitzstraße 100, 89075 Ulm
+                  Prittwitzstraße 100,<br /> 89075 Ulm
                 </span>
               </li>
               <li className="flex items-start gap-2">
@@ -111,7 +61,7 @@ export default function Footer() {
                 </a>
               </li>
 
-              <li className="mt-4">
+              <li className="mt-5">
                 <Link
                   href="/analyse"
                   className="inline-flex items-center gap-1.5 whitespace-nowrap bg-secondary text-on-secondary text-[13px] font-semibold px-4 hover:bg-cta-hover transition-colors duration-[120ms]"

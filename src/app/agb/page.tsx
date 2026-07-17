@@ -47,7 +47,7 @@ export default function AGBPage() {
             <h2 className="text-xl font-bold text-primary mb-3">3. Zahlungsbedingungen &amp; Preise</h2>
             <p className="mb-3">
               Alle angegebenen Preise verstehen sich als Endpreise inklusive der gesetzlichen Mehrwertsteuer. Die Zahlung
-              erfolgt wahlweise per PayPal oder per Banküberweisung. Die Bearbeitung der Analyse beginnt erst
+              erfolgt per Banküberweisung. Die Bearbeitung der Analyse beginnt erst
               nach vollständigem Zahlungseingang auf dem Konto des Anbieters.
             </p>
             <ul className="space-y-1 list-none pl-0">

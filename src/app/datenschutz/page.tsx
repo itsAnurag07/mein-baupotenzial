@@ -51,7 +51,7 @@ export default function DatenschutzPage() {
           <section>
             <h2 className="text-xl font-bold text-primary mb-3">4. Analyse-Tools und Tools von Drittanbietern</h2>
             <p>
-              Beim Besuch unserer Website kann Ihr Surf-Verhalten statistisch ausgewertet werden. Das geschieht vor allem mit Cookies und mit sogenannten Analyseprogrammen. Für die Bezahlung binden wir die Dienste von PayPal ein. Bitte beachten Sie deren separate Datenschutzerklärung bei der Nutzung.
+              Beim Besuch unserer Website kann Ihr Surf-Verhalten statistisch ausgewertet werden. Das geschieht vor allem mit Cookies und mit sogenannten Analyseprogrammen.
             </p>
           </section>
 

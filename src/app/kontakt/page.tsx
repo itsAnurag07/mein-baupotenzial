@@ -75,10 +75,10 @@ export default function KontaktPage() {
             <div className="bg-surface-white p-8 rounded-2xl border border-surface-dim shadow-sm">
               <h2 className="text-xl font-bold text-primary mb-4">Firmensitz</h2>
               <p className="text-on-surface-variant leading-relaxed text-sm">
-                <strong>van Valkenburg GmbH</strong><br />
-                Königsallee 60F<br />
-                40212 Düsseldorf<br />
-                Deutschland
+                <strong>mein Baupotenzial</strong><br />
+                c/o Ulmer Schanze<br />
+                Prittwitzstraße 100, <br />
+                89075 Ulm
               </p>
             </div>
 
@@ -86,7 +86,7 @@ export default function KontaktPage() {
               <h2 className="text-xl font-bold text-primary mb-4">Direkter Kontakt</h2>
               <div className="space-y-2 text-sm text-on-surface-variant">
                 <p><strong>E-Mail:</strong> info@mein-baupotenzial.de</p>
-                <p><strong>Telefon:</strong> +49 (0) 211 1234567</p>
+
                 <p><strong>Bürozeiten:</strong> Mo. - Fr. 09:00 - 17:00 Uhr</p>
               </div>
             </div>

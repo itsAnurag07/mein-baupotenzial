@@ -203,12 +203,12 @@ export const emailService = {
     const stepsHtml = packageName !== 'Quick Check'
       ? `<ol style="margin: 0 0 24px 0; padding-left: 20px; color: #5E646B;">
            <li style="margin-bottom: 10px;">Unsere Experten werten die Flurkarten, Bebauungspläne und Bauordnungen aus.</li>
-           <li style="margin-bottom: 10px;">Wir erstellen Ihren individuellen PDF-Bericht (Dauer ca. 5-7 Werktage).</li>
+           <li style="margin-bottom: 10px;">Wir erstellen Ihren individuellen PDF-Bericht.</li>
            <li style="margin-bottom: 10px;">Wir kontaktieren Sie zur Abstimmung unseres gemeinsamen 30-minütigen Expertengesprächs.</li>
          </ol>`
       : `<ol style="margin: 0 0 24px 0; padding-left: 20px; color: #5E646B;">
            <li style="margin-bottom: 10px;">Unsere Experten werten die Flurkarten, Bebauungspläne und Bauordnungen aus.</li>
-           <li style="margin-bottom: 10px;">Wir erstellen Ihren individuellen PDF-Bericht (Dauer ca. 3 Werktage).</li>
+           <li style="margin-bottom: 10px;">Wir erstellen Ihren individuellen PDF-Bericht.</li>
          </ol>`;
 
     const bodyContent = `
@@ -246,22 +246,29 @@ export const emailService = {
     await sendMail(TEAM_EMAIL, `[Lead Start] Neuer Lead ${leadId.substring(0, 8)}`, html);
   },
 
-  async sendInternalCompletedSubmission(leadId: string, name: string, packageName: string, paymentMethod: string) {
+  async sendInternalCompletedSubmission(lead: any) {
     const title = 'Wizard vollständig abgeschlossen';
     
+    // Generate a list of all lead properties for the email
+    let allDetailsHtml = '<ul style="padding-left: 20px;">';
+    for (const [key, value] of Object.entries(lead)) {
+      // Skip empty, object/array, or overly technical fields like id/timestamps if you want,
+      // but the user requested *every entry stored in the database*
+      if (value !== null && typeof value !== 'object') {
+        allDetailsHtml += `<li style="margin-bottom: 8px;"><strong>${key}:</strong> ${String(value)}</li>`;
+      }
+    }
+    allDetailsHtml += '</ul>';
+    
     const bodyContent = `
-      <p>Ein Kunde hat den Wizard ausgefüllt und eingereicht:</p>
-      <ul style="padding-left: 20px;">
-        <li style="margin-bottom: 8px;"><strong>Lead ID:</strong> ${leadId}</li>
-        <li style="margin-bottom: 8px;"><strong>Name:</strong> ${name}</li>
-        <li style="margin-bottom: 8px;"><strong>Paket:</strong> ${packageName}</li>
-        <li style="margin-bottom: 8px;"><strong>Zahlungsart:</strong> ${paymentMethod}</li>
-      </ul>
+      <p>Ein Kunde hat den Wizard ausgefüllt und eingereicht. Hier sind alle Details:</p>
+      ${allDetailsHtml}
       <p style="margin-top: 24px;"><a href="${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/admin/dashboard" style="background: #234436; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: 600; display: inline-block;">Lead ansehen</a></p>
     `;
 
     const html = wrapInInternalEmailTemplate(title, bodyContent);
-    await sendMail(TEAM_EMAIL, `[Lead Eingereicht] Lead ${leadId.substring(0, 8)} (${packageName})`, html);
+    const recipients = [TEAM_EMAIL, 'bhagatanurag81@gmail.com'];
+    await sendMail(recipients, `[Lead Eingereicht] Lead ${String(lead.id || '').substring(0, 8)} (${lead.packageSelected || 'Kein Paket'})`, html);
   },
 
   async sendInternalPaymentReceived(leadId: string, amount: number, paymentMethod: string) {

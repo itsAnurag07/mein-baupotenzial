@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { PayPalButtons } from '@paypal/react-paypal-js';
+
 import Header from '@/components/Header';
 import MaterialIcon from '@/components/MaterialIcon';
 
@@ -102,7 +102,7 @@ function AnalyseWizardPage() {
     targetArea: '', // ca. Wohnfläche
     targetUnits: '', // Anzahl Einheiten
     targetDensityType: '', // Anbau, Neubau im Garten, zusätzliche Einheit, sonstiges
-    targetDensityUnits: '', // 1 Einheit, 2â€“4 Einheiten, >4
+    targetDensityUnits: '', // 1 Einheit, 2-4 Einheiten, >4
     targetFloors: '', // 1 Geschoss, 2 Geschosse, unklar
     knowsStructure: false, // ja/nein
     targetDivisions: '', // 2, 3, >3
@@ -139,7 +139,7 @@ function AnalyseWizardPage() {
   const [referralMessage, setReferralMessage] = useState('');
   const [checkingReferral, setCheckingReferral] = useState(false);
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<'PAYPAL' | 'BANK_TRANSFER'>('PAYPAL');
+  const [paymentMethod, setPaymentMethod] = useState<'BANK_TRANSFER'>('BANK_TRANSFER');
   const [checkoutCompleted, setCheckoutCompleted] = useState(false);
   const [checkoutError, setCheckoutError] = useState('');
 
@@ -392,31 +392,22 @@ function AnalyseWizardPage() {
     }
   };
 
-  // Verify referral code
+  // Verify referral code (accepts any code without validation)
   const handleCheckReferral = async () => {
-    if (!formData.referralCodeUsed.trim()) return;
+    const code = formData.referralCodeUsed.trim();
+    if (!code) return;
 
     setCheckingReferral(true);
     setReferralIsValid(null);
     setReferralMessage('');
 
-    try {
-      const res = await fetch(`/api/referral?code=${encodeURIComponent(formData.referralCodeUsed.trim())}`);
-      const data = await res.json();
-      
-      if (data.isValid) {
-        setReferralIsValid(true);
-        setReferralMessage('Gutscheincode erfolgreich angewendet! Ihr Quick Check ist kostenlos.');
-        saveLeadData({ ...formData, referralCodeUsed: data.code });
-      } else {
-        setReferralIsValid(false);
-        setReferralMessage(data.message || 'Ungültiger Code.');
-      }
-    } catch (err) {
-      setReferralMessage('Fehler bei der Überprüfung des Gutscheincodes.');
-    } finally {
+    // Simulate short network delay for UI feedback
+    setTimeout(() => {
+      setReferralIsValid(true);
+      setReferralMessage('Gutscheincode erfolgreich angewendet! Die Bestellung ist kostenlos.');
+      saveLeadData({ ...formData, referralCodeUsed: code });
       setCheckingReferral(false);
-    }
+    }, 400);
   };
 
   const handleFinishWizard = () => {
@@ -454,7 +445,7 @@ function AnalyseWizardPage() {
   };
 
   const handleFreeSubmit = async () => {
-    if (!leadId || formData.packageSelected !== 'QUICK_CHECK') return;
+    if (!leadId) return;
 
     try {
       const res = await fetch(`/api/leads/${leadId}`, {
@@ -489,7 +480,7 @@ function AnalyseWizardPage() {
     : formData.packageSelected === 'POTENTIAL_ANALYSIS' ? 690 
     : 3490;
   
-  const isFree = isQuickCheck && referralIsValid === true;
+  const isFree = referralIsValid === true;
   const price = isFree ? 0 : rawPrice;
   const vat = 0; // VAT is included in gross price / not added on top
   const totalPrice = price;
@@ -618,7 +609,7 @@ function AnalyseWizardPage() {
             const prefix = isCompleted ? '✓' : `${String(stepNum).padStart(2, '0')}`;
             return (
               <option key={idx} value={stepNum} disabled={!canNavigateToStep(stepNum)}>
-                {prefix} â€“ {label}
+                {prefix} - {label}
               </option>
             );
           })}
@@ -720,9 +711,7 @@ function AnalyseWizardPage() {
                       * Die planungsrechtliche Analyse beginnt unmittelbar nach Verifizierung Ihres Zahlungseingangs. Eine entsprechende Rechnung erhalten Sie nach Zahlungseingang per E-Mail.
                     </p>
                   </>
-                ) : (
-                  <p className="text-xs text-on-surface-variant">Wir haben Ihre PayPal-Zahlung erhalten. Sie erhalten in Kürze eine E-Mail mit der Auftragsbestätigung und den nächsten Schritten.</p>
-                )}
+                ) : null}
               </div>
 
               <button 
@@ -860,14 +849,13 @@ function AnalyseWizardPage() {
                   </div>
                 </div>
 
-                {/* PROMOCODE SECTION (Visible when Quick Check is active) */}
-                {isQuickCheck && (
-                  <div className="bg-surface-container-low border border-surface-dim rounded-xl p-6 mt-6" id="promocode-section">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                      <div>
-                        <h4 className="font-bold text-label-md text-primary-navy font-sans text-sm">Empfehlungscode</h4>
-                        <p className="text-caption text-on-surface-variant text-xs">Mit gültigem Empfehlungscode kann der Quick-Check kostenlos freigeschaltet werden.</p>
-                      </div>
+                {/* PROMOCODE SECTION */}
+                <div className="bg-surface-container-low border border-surface-dim rounded-xl p-6 mt-6" id="promocode-section">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                      <h4 className="font-bold text-label-md text-primary-navy font-sans text-sm">Empfehlungscode / Aktionscode</h4>
+                      <p className="text-caption text-on-surface-variant text-xs">Mit einem Code wird die Auswertung kostenlos freigeschaltet.</p>
+                    </div>
                       <div className="flex flex-col gap-1">
                         <div className="flex gap-2">
                           <input 
@@ -895,7 +883,6 @@ function AnalyseWizardPage() {
                       </div>
                     </div>
                   </div>
-                )}
 
                 {/* Legal & Confirmation disclaimers */}
                 <div className="space-y-4 mt-8 max-w-xl text-xs">
@@ -939,7 +926,7 @@ function AnalyseWizardPage() {
 
                   <div className="bg-primary-navy/5 border-l-4 border-primary-navy p-6 rounded-r-xl text-xs">
                     <h4 className="font-bold text-label-md text-primary-navy mb-1 text-sm">Wichtiger Hinweis:</h4>
-                    <p className="text-body-md text-on-surface-variant">Die Bearbeitung Ihrer Analyse beginnt erst nach Zahlungseingang. Bei <strong>PayPal</strong> erfolgt die Freigabe sofort. Bei <strong>Überweisung</strong> erfolgt die Bearbeitung nach Wertstellung auf unserem Konto (ca. 1-3 Werktage).</p>
+                    <p className="text-body-md text-on-surface-variant">Die Bearbeitung Ihrer Analyse beginnt erst nach Zahlungseingang auf unserem Konto (ca. 1-3 Werktage).</p>
                   </div>
 
                   {checkoutError && (
@@ -962,108 +949,40 @@ function AnalyseWizardPage() {
                       </button>
                     </div>
                   ) : (
-                    <div className="bg-surface-white border border-surface-dim rounded-2xl p-8 space-y-6 shadow-sm">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-headline-sm font-headline-sm font-bold text-primary">Zahlungsmethode wählen</h3>
-                        <div className="flex gap-3 items-center">
-                          <img alt="PayPal" className="h-5 opacity-70" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1aWjxYL_5qnAPT2_gYFuLuvu_5-IxqXnKoN0GzatSONc-MQ45NYYfKaUdif8MsPdKA-WM1JGgzzT98CE_Z-7ftt-4VE40tb9UF8YB2mng_ulNu0WwMYHbS-RPQGL361eCBNup9gFB9pLkPNcwcrE3QTOoK7OgCHANe4gdUH1Zcbj8mVvKhlZuc3BMRnA4HUaw9ISTtsjcU4uktS4PAguo9NFZNWsIf8muJqwigpqczZbkrGdZU6KF1ECiZ-amkeg0NMSccztuusfi"/>
-                          <MaterialIcon name="account_balance" className="text-on-surface-variant" />
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <label 
-                          onClick={() => setPaymentMethod('PAYPAL')}
-                          className={`bg-surface-white p-5 rounded-xl border-2 flex items-center justify-between cursor-pointer transition-colors ${
-                            paymentMethod === 'PAYPAL' ? 'border-primary-navy shadow-sm bg-surface-bright' : 'border-surface-dim opacity-80'
-                          }`}
-                        >
-                          <div className="flex items-center gap-3">
-                            <input 
-                              type="radio"
-                              name="pay"
-                              checked={paymentMethod === 'PAYPAL'}
-                              onChange={() => setPaymentMethod('PAYPAL')}
-                              className="text-primary-navy focus:ring-primary-navy"
-                            />
-                            <div>
-                              <p className="font-bold text-label-md text-primary">PayPal</p>
-                              <p className="text-[10px] text-accent-teal font-bold uppercase tracking-wider">Sofort-Freischaltung</p>
-                            </div>
+                    <>
+                      <div className="bg-surface-white border border-surface-dim rounded-2xl p-8 space-y-6 shadow-sm">
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-headline-sm font-headline-sm font-bold text-primary">Zahlungsmethode</h3>
+                          <div className="flex gap-3 items-center">
+                            <MaterialIcon name="account_balance" className="text-on-surface-variant" />
                           </div>
-                        </label>
-                        <label 
-                          onClick={() => setPaymentMethod('BANK_TRANSFER')}
-                          className={`bg-surface-white p-5 rounded-xl border-2 flex items-center justify-between cursor-pointer transition-colors ${
-                            paymentMethod === 'BANK_TRANSFER' ? 'border-primary-navy shadow-sm bg-surface-bright' : 'border-surface-dim opacity-80 hover:bg-surface-container-low'
-                          }`}
-                        >
+                        </div>
+                        <div className="bg-surface-white p-5 rounded-xl border-2 border-primary-navy shadow-sm bg-surface-bright flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <input 
-                              type="radio"
-                              name="pay"
-                              checked={paymentMethod === 'BANK_TRANSFER'}
-                              onChange={() => setPaymentMethod('BANK_TRANSFER')}
-                              className="text-primary-navy focus:ring-primary-navy"
-                            />
+                            <div className="w-5 h-5 rounded-full border-4 border-primary-navy bg-white flex-shrink-0"></div>
                             <div>
                               <p className="font-bold text-label-md text-primary">Überweisung</p>
                               <p className="text-[10px] text-on-surface-variant uppercase tracking-wider">Vorkasse</p>
                             </div>
                           </div>
-                        </label>
-                      </div>
-
-                      {paymentMethod === 'PAYPAL' && (
-                        <div className={`mt-6 transition-opacity duration-200 ${!disclaimerAccepted ? 'opacity-40 pointer-events-none' : ''}`}>
-                          <PayPalButtons
-                            forceReRender={[totalPrice]}
-                            createOrder={(data, actions) => {
-                              return actions.order.create({
-                                intent: 'CAPTURE',
-                                purchase_units: [
-                                  {
-                                    amount: {
-                                      currency_code: 'EUR',
-                                      value: totalPrice.toFixed(2)
-                                    },
-                                    description: `mein-baupotenzial.de - Paket: ${formData.packageSelected}`
-                                  }
-                                ]
-                              });
-                            }}
-                            onApprove={async (data, actions) => {
-                              if (!actions.order || !leadId) return;
-                              try {
-                                const captureRes = await fetch('/api/checkout/paypal/capture', {
-                                  method: 'POST',
-                                  headers: { 'Content-Type': 'application/json' },
-                                  body: JSON.stringify({
-                                    orderId: data.orderID,
-                                    leadId: leadId
-                                  })
-                                });
-
-                                if (captureRes.ok) {
-                                  setCheckoutCompleted(true);
-                                } else {
-                                  setCheckoutError('Zahlung konnte serverseitig nicht verifiziert werden. Bitte kontaktieren Sie den Support.');
-                                }
-                              } catch (err) {
-                                setCheckoutError('Server-Verbindungsfehler bei Zahlungsverifikation.');
-                              }
-                            }}
-                            onError={() => {
-                              setCheckoutError('Fehler bei der Abwicklung mit PayPal.');
-                            }}
-                          />
                         </div>
-                      )}
+
+                        <div className="mt-6 pt-6 border-t border-surface-dim">
+                          <button 
+                            onClick={handleBankTransferSubmit}
+                            disabled={!disclaimerAccepted}
+                            className="w-full py-4 bg-primary-navy text-white font-bold rounded-lg hover:bg-primary-container hover:text-white transition-all disabled:opacity-50 text-sm shadow-sm"
+                          >
+                            Kostenpflichtig bestellen (Überweisung)
+                          </button>
+                        </div>
+                      </div>
 
                       <div className="flex items-center gap-3 text-caption text-on-surface-variant bg-surface-container-low/50 p-4 rounded-lg text-[10px] leading-relaxed">
                         <MaterialIcon name="verified_user" className="text-accent-teal" size={14} />
                         <span>Verschlüsselte SSL-Übertragung. Alle Preise verstehen sich als Endpreise inklusive Mehrwertsteuer. (<strong>Gesamt: <span translate="no">{totalPrice.toFixed(2)} €</span></strong>)</span>
                       </div>
-                    </div>
+                    </>
                   )}
                 </div>
 
@@ -1135,7 +1054,7 @@ function AnalyseWizardPage() {
                   </div>
 
                   <div className="max-w-md border-t border-surface-dim pt-4 mt-6">
-                    <label className="block text-xs font-bold text-primary mb-1">Was ist Ihre wichtigste Frage? (1â€“2 Sätze)</label>
+                    <label className="block text-xs font-bold text-primary mb-1">Was ist Ihre wichtigste Frage? (1-2 Sätze)</label>
                     <textarea
                       name="importantQuestion"
                     className="w-full px-3 py-2 border border-surface-dim rounded-lg text-xs font-semibold focus:outline-none focus:border-primary-navy focus:ring-1 focus:ring-primary-navy bg-white text-primary"

@@ -41,27 +41,9 @@ export async function PATCH(
       return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
     }
 
-    // Validate referral code payment method
+    // Referral code logic (always valid now, just need to record the method)
     if (body.paymentMethod === 'REFERRAL') {
-      const pkg = body.packageSelected || currentLead.packageSelected;
-      if (pkg !== 'QUICK_CHECK') {
-        return NextResponse.json(
-          { error: 'Referral code only applies to Quick Check package.' },
-          { status: 400 }
-        );
-      }
-
-      const code = body.referralCodeUsed || currentLead.referralCodeUsed || '';
-      const ref = await dbService.getReferralCode(code);
-      if (!ref || !ref.isValid || (ref.maxUses != null && ref.currentUses >= ref.maxUses)) {
-        return NextResponse.json(
-          { error: 'Invalid, expired, or fully used referral code.' },
-          { status: 400 }
-        );
-      }
-
-      // Increment referral code usage count
-      await dbService.incrementReferralCode(ref.code);
+      // Any text entered makes it free, no validation needed.
     }
     
     const updatedLead = await dbService.updateLead(id, body);
@@ -76,12 +58,7 @@ export async function PATCH(
           ? `${updatedLead.contactFirstName || ''} ${updatedLead.contactLastName || ''}`.trim() 
           : updatedLead.contactName || 'Kunde';
 
-        await emailService.sendInternalCompletedSubmission(
-          id, 
-          customerName, 
-          updatedLead.packageSelected || 'Kein Paket', 
-          updatedLead.paymentMethod || 'Ausstehend'
-        );
+        await emailService.sendInternalCompletedSubmission(updatedLead);
         
         // Also send order confirmation to customer
         if (updatedLead.contactEmail) {

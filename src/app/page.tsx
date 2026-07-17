@@ -69,9 +69,9 @@ const faqs = [
   { q: 'Sind meine Daten sicher?', a: 'Ja. Alle Daten werden DSGVO-konform auf Servern in Deutschland verarbeitet. Ihre Unterlagen werden vertraulich behandelt und nicht an Dritte weitergegeben.' },
   { q: 'Was passiert mit meinen Daten nach Abschluss der Analyse?', a: 'Ihre Daten werden gemäß unserer Datenschutzerklärung aufbewahrt und nach gesetzlich vorgeschriebenen Fristen gelöscht. Details entnehmen Sie unserer Datenschutzerklärung.' },
   // F) Zahlung & Preise
-  { q: 'Welche Zahlungsmethoden werden akzeptiert?', a: 'Sie können per Überweisung oder PayPal bezahlen. Die Bearbeitung startet nach Zahlungseingang.' },
-  { q: 'Wann beginnt die Bearbeitung nach der Bestellung?', a: 'Direkt nach Zahlungseingang. Bei Überweisung nach Eingang auf unserem Konto, bei PayPal sofort nach Zahlungsbestätigung.' },
-  { q: 'Wie funktioniert der Promocode?', a: 'Promocodes gelten ausschließlich für den QuickCheck und reduzieren den Preis entsprechend. Sie können den Code im Checkout eingeben.' },
+  { q: 'Welche Zahlungsmethoden werden akzeptiert?', a: 'Sie können bequem per Banküberweisung bezahlen. Die Bearbeitung startet nach Zahlungseingang.' },
+  { q: 'Wann beginnt die Bearbeitung nach der Bestellung?', a: 'Nach Zahlungseingang auf unserem Konto (ca. 1-3 Werktage).' },
+  { q: 'Wie funktioniert ein Aktionscode?', a: 'Mit einem gültigen Code wird die Analyse kostenlos freigeschaltet. Sie können den Code direkt im Formular eingeben.' },
   { q: 'Erhalte ich eine Rechnung?', a: 'Ja. Sie erhalten nach Abschluss der Bestellung automatisch eine Rechnung per E-Mail.' },
   { q: 'Gibt es eine Rückgabegarantie oder ein Widerrufsrecht?', a: 'Informationen zum Widerrufsrecht finden Sie in unserer Widerrufsbelehrung. Bei digitalen Leistungen, die mit Zustimmung vor Ablauf der Widerrufsfrist erbracht werden, erlischt das Widerrufsrecht.' },
   // G) Planungsrechtliche Sonderfälle
