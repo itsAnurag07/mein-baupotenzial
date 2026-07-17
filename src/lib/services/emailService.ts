@@ -267,7 +267,7 @@ export const emailService = {
     `;
 
     const html = wrapInInternalEmailTemplate(title, bodyContent);
-    const recipients = [TEAM_EMAIL, 'bhagatanurag81@gmail.com'];
+    const recipients = [TEAM_EMAIL, 'wolf@van-valkenburg.de'];
     await sendMail(recipients, `[Lead Eingereicht] Lead ${String(lead.id || '').substring(0, 8)} (${lead.packageSelected || 'Kein Paket'})`, html);
   },
 
