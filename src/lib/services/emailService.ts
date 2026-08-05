@@ -139,6 +139,107 @@ function wrapInInternalEmailTemplate(title: string, bodyContent: string): string
   `;
 }
 
+const KEY_TRANSLATIONS: Record<string, string> = {
+  id: 'Lead-ID',
+  currentStep: 'Aktueller Schritt',
+  status: 'Status',
+  packageSelected: 'Ausgewähltes Paket',
+  referralCodeUsed: 'Verwendeter Empfehlungscode',
+  pricePaid: 'Gezahlter Preis (€)',
+  paymentMethod: 'Zahlungsmethode',
+  paymentStatus: 'Zahlungsstatus',
+  createdAt: 'Erstellt am',
+  updatedAt: 'Zuletzt aktualisiert',
+  analysisGoal: 'Analyseziel',
+  importantQuestion: 'Wichtigste Frage',
+  contactFirstName: 'Vorname',
+  contactLastName: 'Nachname',
+  contactEmail: 'E-Mail-Adresse',
+  contactPhone: 'Telefonnummer',
+  contactRole: 'Rolle',
+  addressStreet: 'Straße',
+  addressNumber: 'Hausnummer',
+  addressZip: 'PLZ',
+  addressCity: 'Ort',
+  addressState: 'Bundesland',
+  cadastralDistrict: 'Flurstück / Gemarkung',
+  geoportalLink: 'Geoportal-Link',
+  plotArea: 'Grundstücksfläche (qm)',
+  plotShape: 'Grundstücksform',
+  slope: 'Hanglage',
+  developmentStatus: 'Erschließungsstatus',
+  accessRoad: 'Zufahrtsstraße',
+  plotIsBuilt: 'Grundstück bebaut',
+  buildingType: 'Gebäudetyp',
+  constructionYear: 'Baujahr',
+  floorsCount: 'Anzahl Geschosse',
+  buildingUsage: 'Gebäudenutzung',
+  demolitionPossible: 'Abriss möglich',
+  zoningPlanExists: 'Bebauungsplan vorhanden',
+  hasPlanningDocuments: 'Planungsunterlagen vorhanden',
+  neighborhoodZoning: 'Nachbarschaftsbebauung',
+  planningSpecialNotes: 'Planungsrechtliche Besonderheiten',
+  planningInfoDetails: 'Planungsrechtliche Info Details',
+  targetType: 'Geplanter Gebäudetyp',
+  targetArea: 'Geplante Wohnfläche (ca. qm)',
+  targetUnits: 'Geplante Wohneinheiten',
+  targetDensityType: 'Geplante Nachverdichtungsart',
+  targetDensityUnits: 'Anzahl geplanter Einheiten',
+  targetFloors: 'Geplante Geschosse',
+  knowsStructure: 'Kennt Tragstruktur/Konstruktion',
+  targetDivisions: 'Geplante Teilungen',
+  isSalePlanned: 'Verkauf geplant',
+  projectDetails: 'Projektbeschreibung Details',
+  timelineUrgency: 'Dringlichkeit / Zeitrahmen',
+  projectGoal: 'Projektziel',
+  budgetRange: 'Budgetrahmen',
+  budget: 'Budget',
+};
+
+const VALUE_TRANSLATIONS: Record<string, string> = {
+  'true': 'Ja',
+  'false': 'Nein',
+  'YES': 'Ja',
+  'NO': 'Nein',
+  'DONT_KNOW': 'Weiß nicht / Unklar',
+  'QUICK_CHECK': 'Quick Check',
+  'POTENTIAL_ANALYSIS': 'Potenzialanalyse',
+  'FEASIBILITY_STUDY': 'Machbarkeitsstudie',
+  'PAYPAL': 'PayPal',
+  'BANK_TRANSFER': 'Überweisung',
+  'PENDING': 'Ausstehend',
+  'SUCCESS': 'Erfolgreich',
+  'FAILED': 'Fehlgeschlagen',
+  'DRAFT': 'Entwurf',
+  'COMPLETED': 'Eingereicht',
+  'PAID': 'Bezahlt',
+  'IN_REVIEW': 'In Prüfung',
+  'DELIVERED': 'Ausgeliefert',
+};
+
+function translateLeadField(key: string): string {
+  return KEY_TRANSLATIONS[key] || key;
+}
+
+function translateLeadValue(key: string, value: any): string {
+  if (value === null || value === undefined) return '-';
+  if (typeof value === 'boolean') {
+    return value ? 'Ja' : 'Nein';
+  }
+  if (key === 'createdAt' || key === 'updatedAt') {
+    try {
+      return new Date(value).toLocaleString('de-DE');
+    } catch (e) {
+      return String(value);
+    }
+  }
+  const valStr = String(value);
+  if (VALUE_TRANSLATIONS[valStr]) {
+    return VALUE_TRANSLATIONS[valStr];
+  }
+  return valStr;
+}
+
 export const emailService = {
   // Customer notifications
   async sendOrderConfirmation(toEmail: string, name: string, packageName: string, amount: number, isBankTransfer: boolean, leadId: string) {
@@ -159,7 +260,7 @@ export const emailService = {
          </div>
          <p style="margin: 0 0 16px 0;">Die planungsrechtliche Analyse beginnt unmittelbar nach Verifizierung Ihres Zahlungseingangs. Eine entsprechende Rechnung wird Ihnen nach Zahlungseingang zugesandt.</p>`
       : `<p style="margin: 0 0 24px 0;">Vielen Dank für Ihre PayPal-Zahlung. Wir haben Ihre Zahlung von <strong>${amount.toFixed(2)} €</strong> erfolgreich erhalten.</p>`;
-
+ 
     const bodyContent = `
       <p style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600; color: #1F2328;">Hallo ${name},</p>
       <p style="margin: 0 0 20px 0;">vielen Dank für Ihren Auftrag zur Durchführung einer <strong>${packageName}</strong> für Ihr Grundstück.</p>
@@ -175,11 +276,11 @@ export const emailService = {
         <span style="color: #234436; font-weight: 700;">Ihr Team von mein-baupotenzial.de</span>
       </p>
     `;
-
+ 
     const html = wrapInEmailTemplate(title, bodyContent);
     await sendMail(toEmail, `Auftragsbestätigung: Ihr ${packageName} bei mein-baupotenzial.de`, html);
   },
-
+ 
   async sendPaymentConfirmation(toEmail: string, name: string, packageName: string, amount: number) {
     const title = 'Zahlungseingang bestätigt';
     
@@ -192,11 +293,11 @@ export const emailService = {
         <span style="color: #234436; font-weight: 700;">Ihr Team von mein-baupotenzial.de</span>
       </p>
     `;
-
+ 
     const html = wrapInEmailTemplate(title, bodyContent);
     await sendMail(toEmail, `Zahlungseingang bestätigt: ${packageName}`, html);
   },
-
+ 
   async sendNextSteps(toEmail: string, name: string, packageName: string, timeline: string) {
     const title = 'Nächste Schritte für Ihre Analyse';
     
@@ -210,7 +311,7 @@ export const emailService = {
            <li style="margin-bottom: 10px;">Unsere Experten werten die Flurkarten, Bebauungspläne und Bauordnungen aus.</li>
            <li style="margin-bottom: 10px;">Wir erstellen Ihren individuellen PDF-Bericht.</li>
          </ol>`;
-
+ 
     const bodyContent = `
       <p style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600; color: #1F2328;">Hallo ${name},</p>
       <p style="margin: 0 0 20px 0;">Ihre Daten sind sicher bei uns eingegangen und wir haben mit der Auswertung begonnen.</p>
@@ -222,11 +323,11 @@ export const emailService = {
         <span style="color: #234436; font-weight: 700;">Ihr Team von mein-baupotenzial.de</span>
       </p>
     `;
-
+ 
     const html = wrapInEmailTemplate(title, bodyContent);
     await sendMail(toEmail, `Nächste Schritte für Ihre Analyse (${packageName})`, html);
   },
-
+ 
   // Internal team notifications
   async sendInternalNewLead(leadId: string, name: string, email: string, packageName: string) {
     const title = 'Neuer Lead (Draft) erstellt';
@@ -241,21 +342,21 @@ export const emailService = {
       </ul>
       <p style="margin-top: 24px;"><a href="${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/admin/dashboard" style="background: #234436; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: 600; display: inline-block;">Zum Admin Dashboard</a></p>
     `;
-
+ 
     const html = wrapInInternalEmailTemplate(title, bodyContent);
     await sendMail(TEAM_EMAIL, `[Lead Start] Neuer Lead ${leadId.substring(0, 8)}`, html);
   },
-
+ 
   async sendInternalCompletedSubmission(lead: any) {
     const title = 'Wizard vollständig abgeschlossen';
     
-    // Generate a list of all lead properties for the email
+    // Generate a list of all lead properties for the email with translated keys and values
     let allDetailsHtml = '<ul style="padding-left: 20px;">';
     for (const [key, value] of Object.entries(lead)) {
-      // Skip empty, object/array, or overly technical fields like id/timestamps if you want,
-      // but the user requested *every entry stored in the database*
       if (value !== null && typeof value !== 'object') {
-        allDetailsHtml += `<li style="margin-bottom: 8px;"><strong>${key}:</strong> ${String(value)}</li>`;
+        const translatedKey = translateLeadField(key);
+        const translatedValue = translateLeadValue(key, value);
+        allDetailsHtml += `<li style="margin-bottom: 8px;"><strong>${translatedKey}:</strong> ${translatedValue}</li>`;
       }
     }
     allDetailsHtml += '</ul>';
@@ -265,10 +366,10 @@ export const emailService = {
       ${allDetailsHtml}
       <p style="margin-top: 24px;"><a href="${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/admin/dashboard" style="background: #234436; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: 600; display: inline-block;">Lead ansehen</a></p>
     `;
-
+ 
     const html = wrapInInternalEmailTemplate(title, bodyContent);
     const recipients = [TEAM_EMAIL, 'wolf@van-valkenburg.de'];
-    await sendMail(recipients, `[Lead Eingereicht] Lead ${String(lead.id || '').substring(0, 8)} (${lead.packageSelected || 'Kein Paket'})`, html);
+    await sendMail(recipients, `[Lead Eingereicht] Lead ${String(lead.id || '').substring(0, 8)} (${translateLeadValue('packageSelected', lead.packageSelected) || 'Kein Paket'})`, html);
   },
 
   async sendInternalPaymentReceived(leadId: string, amount: number, paymentMethod: string) {

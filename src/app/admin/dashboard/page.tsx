@@ -307,7 +307,7 @@ export default function AdminDashboardPage() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
           <div>
             <h1 className="text-2xl font-bold text-primary font-sans">
-              {activeTab === 'LEADS' ? 'Lead-Management Dashboard' : 'Newsletter-Abonnenten'}
+              {activeTab === 'LEADS' ? 'Lead-Verwaltungs-Dashboard' : 'Newsletter-Abonnenten'}
             </h1>
             <p className="text-xs text-on-surface-variant mt-1">
               {activeTab === 'LEADS' 
@@ -322,7 +322,7 @@ export default function AdminDashboardPage() {
               className="bg-primary text-on-primary px-6 py-2.5 rounded-lg text-xs font-bold hover:opacity-90 transition-opacity flex items-center gap-1.5 disabled:opacity-50"
             >
               <MaterialIcon name="download" size={16} />
-              CSV Export ({filteredLeads.length})
+              CSV-Export ({filteredLeads.length})
             </button>
           ) : (
             <button 
@@ -331,7 +331,7 @@ export default function AdminDashboardPage() {
               className="bg-primary text-on-primary px-6 py-2.5 rounded-lg text-xs font-bold hover:opacity-90 transition-opacity flex items-center gap-1.5 disabled:opacity-50"
             >
               <MaterialIcon name="download" size={16} />
-              CSV Export ({getFilteredSubscribers().length})
+              CSV-Export ({getFilteredSubscribers().length})
             </button>
           )}
         </div>
@@ -392,11 +392,11 @@ export default function AdminDashboardPage() {
                   className="w-full h-10 px-3 border border-surface-dim rounded-lg focus:outline-none focus:border-secondary text-xs bg-white text-primary font-medium"
                 >
                   <option value="ALL">Alle Status</option>
-                  <option value="DRAFT">Entwurf (Draft)</option>
-                  <option value="COMPLETED">Eingereicht (Completed)</option>
-                  <option value="PAID">Bezahlt (Paid)</option>
-                  <option value="IN_REVIEW">In Prüfung (In Review)</option>
-                  <option value="DELIVERED">Ausgeliefert (Delivered)</option>
+                  <option value="DRAFT">Entwurf</option>
+                  <option value="COMPLETED">Eingereicht</option>
+                  <option value="PAID">Bezahlt</option>
+                  <option value="IN_REVIEW">In Prüfung</option>
+                  <option value="DELIVERED">Ausgeliefert</option>
                 </select>
               </div>
 
@@ -599,7 +599,7 @@ export default function AdminDashboardPage() {
               <div>
                 <div className="flex justify-between items-start mb-6">
                   <div>
-                    <span className="text-[10px] font-bold text-secondary uppercase">Lead Details</span>
+                    <span className="text-[10px] font-bold text-secondary uppercase">Details zur Anfrage</span>
                     <h2 className="text-xl font-bold text-primary font-mono">{selectedLead.id}</h2>
                     <p className="text-[10px] text-on-surface-variant">Erstellt am: {new Date(selectedLead.createdAt).toLocaleString('de-DE')}</p>
                   </div>
@@ -624,11 +624,11 @@ export default function AdminDashboardPage() {
                       onChange={(e) => handleUpdateStatus(selectedLead.id, e.target.value)}
                       className="px-3 py-1.5 border border-surface-dim rounded text-xs bg-white font-bold"
                     >
-                      <option value="DRAFT">Entwurf (Draft)</option>
-                      <option value="COMPLETED">Eingereicht (Completed)</option>
-                      <option value="PAID">Bezahlt (Paid)</option>
-                      <option value="IN_REVIEW">In Prüfung (In Review)</option>
-                      <option value="DELIVERED">Ausgeliefert (Delivered)</option>
+                      <option value="DRAFT">Entwurf</option>
+                      <option value="COMPLETED">Eingereicht</option>
+                      <option value="PAID">Bezahlt</option>
+                      <option value="IN_REVIEW">In Prüfung</option>
+                      <option value="DELIVERED">Ausgeliefert</option>
                     </select>
                   </div>
 
@@ -690,10 +690,10 @@ export default function AdminDashboardPage() {
                   <div>
                     <h3 className="font-bold text-primary text-sm mb-2 font-sans border-b border-surface-dim pb-1">Zahlungsinformationen</h3>
                     <div className="grid grid-cols-2 gap-4">
-                      <p><strong>Paket:</strong> {selectedLead.packageSelected || '-'}</p>
+                      <p><strong>Paket:</strong> {selectedLead.packageSelected === 'QUICK_CHECK' ? 'Quick Check' : selectedLead.packageSelected === 'POTENTIAL_ANALYSIS' ? 'Potenzialanalyse' : selectedLead.packageSelected === 'FEASIBILITY_STUDY' ? 'Machbarkeitsstudie' : selectedLead.packageSelected || '-'}</p>
                       <p><strong>Referral Code:</strong> {selectedLead.referralCodeUsed || '-'}</p>
                       <p><strong>Bezahlter Betrag:</strong> {selectedLead.pricePaid ? `${selectedLead.pricePaid} €` : '-'}</p>
-                      <p><strong>Zahlungsmethode:</strong> {selectedLead.paymentMethod || '-'}</p>
+                      <p><strong>Zahlungsmethode:</strong> {selectedLead.paymentMethod === 'PAYPAL' ? 'PayPal' : selectedLead.paymentMethod === 'BANK_TRANSFER' ? 'Überweisung' : selectedLead.paymentMethod || '-'}</p>
                     </div>
                   </div>
 
@@ -730,7 +730,7 @@ export default function AdminDashboardPage() {
                   </div>
                 </div>
               </div>
-
+ 
               <div className="border-t border-surface-dim pt-4 mt-8 flex justify-end">
                 <button 
                   onClick={() => setSelectedLead(null)}
