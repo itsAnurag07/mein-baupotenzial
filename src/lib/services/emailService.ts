@@ -427,5 +427,24 @@ export const emailService = {
 
     const html = wrapInInternalEmailTemplate(title, bodyContent);
     await sendMail(TEAM_EMAIL, `[Newsletter] Neuer Abonnent: ${email}`, html);
+  },
+
+  async sendInternalContactInquiry(name: string, email: string, subject: string, message: string) {
+    const title = 'Neue Kontaktanfrage';
+    const bodyContent = `
+      <p>Es wurde eine neue Nachricht über das Kontaktformular gesendet:</p>
+      <ul style="padding-left: 20px;">
+        <li style="margin-bottom: 8px;"><strong>Name:</strong> ${name || 'N/A'}</li>
+        <li style="margin-bottom: 8px;"><strong>E-Mail:</strong> ${email || 'N/A'}</li>
+        <li style="margin-bottom: 8px;"><strong>Betreff:</strong> ${subject || 'Kein Betreff'}</li>
+      </ul>
+      <p><strong>Nachricht:</strong></p>
+      <div style="background-color: #F8F7F4; border: 1px solid #E5E4E0; border-radius: 12px; padding: 16px; font-family: Arial, sans-serif; white-space: pre-wrap; color: #1F2328; font-size: 14px; line-height: 1.5;">
+        ${message || ''}
+      </div>
+    `;
+
+    const html = wrapInInternalEmailTemplate(title, bodyContent);
+    await sendMail(TEAM_EMAIL, `[Kontaktformular] ${subject || 'Neue Anfrage'}`, html);
   }
 };

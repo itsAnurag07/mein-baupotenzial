@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ContactForm from '@/components/ContactForm';
 
 export const metadata: Metadata = {
   title: 'Kontakt & Städtebauliche Beratung | mein-baupotenzial.de',
@@ -18,58 +19,7 @@ export default function KontaktPage() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div className="bg-surface-white p-8 rounded-2xl border border-surface-dim shadow-sm">
-            <h2 className="text-xl font-bold text-primary mb-6">Schreiben Sie uns</h2>
-
-            <form className="space-y-4">
-              <div>
-                <label className="block text-sm font-semibold text-primary mb-1">Name</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-2 border border-surface-dim rounded-lg focus:outline-none focus:border-secondary"
-                  placeholder="Ihr Name"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-primary mb-1">E-Mail-Adresse</label>
-                <input
-                  type="email"
-                  className="w-full px-4 py-2 border border-surface-dim rounded-lg focus:outline-none focus:border-secondary"
-                  placeholder="ihre.email@beispiel.de"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-primary mb-1">Betreff</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-2 border border-surface-dim rounded-lg focus:outline-none focus:border-secondary"
-                  placeholder="Betreff"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-primary mb-1">Ihre Nachricht</label>
-                <textarea
-                  rows={4}
-                  className="w-full px-4 py-2 border border-surface-dim rounded-lg focus:outline-none focus:border-secondary"
-                  placeholder="Wie können wir Ihnen helfen?"
-                  required
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-primary text-on-primary py-3 rounded-lg font-bold hover:opacity-95 transition-opacity"
-              >
-                Nachricht absenden
-              </button>
-            </form>
-          </div>
+          <ContactForm />
 
           <div className="space-y-8">
             <div className="bg-surface-white p-8 rounded-2xl border border-surface-dim shadow-sm">
