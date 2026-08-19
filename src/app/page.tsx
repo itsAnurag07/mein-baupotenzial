@@ -147,7 +147,7 @@ export default function HomePage() {
       },
       'contactPoint': {
         '@type': 'ContactPoint',
-        'email': 'info@mein-baupotenzial.com',
+        'email': 'info@mein-baupotenzial.de',
         'contactType': 'customer support'
       }
     },

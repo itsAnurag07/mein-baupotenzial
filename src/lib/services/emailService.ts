@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const FROM_EMAIL = process.env.EMAIL_FROM || 'info@mein-baupotenzial.de';
-const TEAM_EMAIL = process.env.INTERNAL_NOTIFICATION_EMAIL || 'team@mein-baupotenzial.de';
+const TEAM_EMAIL = process.env.INTERNAL_NOTIFICATION_EMAIL || 'info@mein-baupotenzial.de';
 
 async function sendMail(to: string, subject: string, html: string) {
   const mailOptions = {
@@ -86,7 +86,7 @@ function wrapInEmailTemplate(title: string, bodyContent: string): string {
                   <p style="margin: 12px 0 0 0; color: #A09E9A; font-size: 12px;">
                     <a href="https://mein-baupotenzial.de" style="color: #234436; text-decoration: underline; font-weight: 600;">Website besuchen</a>
                     &nbsp;&nbsp;•&nbsp;&nbsp;
-                    <a href="mailto:info@mein-baupotenzial.com" style="color: #234436; text-decoration: underline; font-weight: 600;">Support kontaktieren</a>
+                    <a href="mailto:info@mein-baupotenzial.de" style="color: #234436; text-decoration: underline; font-weight: 600;">Support kontaktieren</a>
                   </p>
                 </td>
               </tr>
@@ -368,8 +368,7 @@ export const emailService = {
     `;
  
     const html = wrapInInternalEmailTemplate(title, bodyContent);
-    const recipients = [TEAM_EMAIL, 'wolf@van-valkenburg.de'];
-    await sendMail(recipients, `[Lead Eingereicht] Lead ${String(lead.id || '').substring(0, 8)} (${translateLeadValue('packageSelected', lead.packageSelected) || 'Kein Paket'})`, html);
+    await sendMail(TEAM_EMAIL, `[Lead Eingereicht] Lead ${String(lead.id || '').substring(0, 8)} (${translateLeadValue('packageSelected', lead.packageSelected) || 'Kein Paket'})`, html);
   },
 
   async sendInternalPaymentReceived(leadId: string, amount: number, paymentMethod: string) {

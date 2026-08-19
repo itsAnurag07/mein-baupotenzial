@@ -190,29 +190,26 @@ if (globalForDbCheck.isDbConnected === undefined) {
 }
 
 async function checkDbConnection() {
-  if (globalForDbCheck.isDbConnected !== null) return;
+  if (globalForDbCheck.isDbConnected === true) return;
   
-  if (!globalForDbCheck.dbCheckPromise) {
-    globalForDbCheck.dbCheckPromise = (async () => {
-      try {
-        // Simple query to test connection
-        await prisma.$queryRaw`SELECT 1`;
-        globalForDbCheck.isDbConnected = true;
-      } catch (error) {
-        console.warn('⚠️ PostgreSQL database connection failed. Falling back to In-Memory storage.');
-        globalForDbCheck.isDbConnected = false;
-      }
-    })();
+  try {
+    // Simple query to test connection
+    await prisma.$queryRaw`SELECT 1`;
+    globalForDbCheck.isDbConnected = true;
+  } catch (error) {
+    console.error('❌ Database connection check failed:', error);
+    if (process.env.DATABASE_URL) {
+      throw new Error(`Database connection failed: ${error instanceof Error ? error.message : String(error)}`);
+    }
+    globalForDbCheck.isDbConnected = false;
   }
-  
-  await globalForDbCheck.dbCheckPromise;
 }
-
-// Check database connection once at startup
-checkDbConnection();
 
 async function handleDbError(error: any) {
   console.error('Database operation failed:', error.message || error);
+  if (process.env.DATABASE_URL) {
+    throw error;
+  }
   try {
     await prisma.$queryRaw`SELECT 1`;
   } catch (dbError) {
