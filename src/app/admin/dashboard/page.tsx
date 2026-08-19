@@ -55,18 +55,31 @@ interface Subscriber {
   createdAt: string;
 }
 
+interface ContactInquiry {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  isRead: boolean;
+  createdAt: string;
+}
+
 export default function AdminDashboardPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
   const [leads, setLeads] = useState<Lead[]>([]);
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
+  const [inquiries, setInquiries] = useState<ContactInquiry[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingSubscribers, setLoadingSubscribers] = useState(false);
+  const [loadingInquiries, setLoadingInquiries] = useState(false);
   const [error, setError] = useState('');
   
   // Tab control
-  const [activeTab, setActiveTab] = useState<'LEADS' | 'SUBSCRIBERS'>('LEADS');
+  const [activeTab, setActiveTab] = useState<'LEADS' | 'SUBSCRIBERS' | 'INQUIRIES'>('LEADS');
+  const [expandedInquiry, setExpandedInquiry] = useState<string | null>(null);
   
   // Filtering states
   const [searchQuery, setSearchQuery] = useState('');
@@ -129,6 +142,44 @@ export default function AdminDashboardPage() {
       fetchSubscribers();
     }
   }, [status, activeTab]);
+
+  const fetchInquiries = async () => {
+    setLoadingInquiries(true);
+    try {
+      const res = await fetch('/api/admin/inquiries');
+      if (res.ok) {
+        const data = await res.json();
+        setInquiries(data);
+      } else {
+        setError('Kontaktanfragen konnten nicht geladen werden.');
+      }
+    } catch (err) {
+      setError('Verbindung zum Server fehlgeschlagen.');
+    } finally {
+      setLoadingInquiries(false);
+    }
+  };
+
+  useEffect(() => {
+    if (status === 'authenticated' && activeTab === 'INQUIRIES') {
+      fetchInquiries();
+    }
+  }, [status, activeTab]);
+
+  const handleToggleRead = async (id: string, isRead: boolean) => {
+    try {
+      const res = await fetch('/api/admin/inquiries', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, isRead })
+      });
+      if (res.ok) {
+        setInquiries(prev => prev.map(i => i.id === id ? { ...i, isRead } : i));
+      }
+    } catch (err) {
+      console.error('Failed to update inquiry read status:', err);
+    }
+  };
 
   const handleUpdateStatus = async (leadId: string, newStatus: string) => {
     setUpdatingStatus(true);
@@ -307,12 +358,14 @@ export default function AdminDashboardPage() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
           <div>
             <h1 className="text-2xl font-bold text-primary font-sans">
-              {activeTab === 'LEADS' ? 'Lead-Verwaltungs-Dashboard' : 'Newsletter-Abonnenten'}
+              {activeTab === 'LEADS' ? 'Lead-Verwaltungs-Dashboard' : activeTab === 'SUBSCRIBERS' ? 'Newsletter-Abonnenten' : 'Kontaktanfragen'}
             </h1>
             <p className="text-xs text-on-surface-variant mt-1">
               {activeTab === 'LEADS' 
                 ? 'Verwalten und prüfen Sie alle eingegangenen Grundstücksanfragen.' 
-                : 'Verwalten und exportieren Sie Ihre Newsletter-Kontakte.'}
+                : activeTab === 'SUBSCRIBERS'
+                ? 'Verwalten und exportieren Sie Ihre Newsletter-Kontakte.'
+                : 'Alle Nachrichten aus dem Kontaktformular der Website.'}
             </p>
           </div>
           {activeTab === 'LEADS' ? (
@@ -363,6 +416,24 @@ export default function AdminDashboardPage() {
             }`}
           >
             Newsletter-Abonnenten ({subscribers.length})
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab('INQUIRIES');
+              setSearchQuery('');
+            }}
+            className={`px-6 py-3 font-sans font-bold text-xs border-b-2 transition-all relative ${
+              activeTab === 'INQUIRIES'
+                ? 'border-secondary text-secondary bg-surface-white'
+                : 'border-transparent text-on-surface-variant hover:text-primary'
+            }`}
+          >
+            Kontaktanfragen ({inquiries.length})
+            {inquiries.filter(i => !i.isRead).length > 0 && (
+              <span className="ml-2 inline-flex items-center justify-center w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full">
+                {inquiries.filter(i => !i.isRead).length}
+              </span>
+            )}
           </button>
         </div>
 
@@ -740,6 +811,88 @@ export default function AdminDashboardPage() {
                 </button>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* INQUIRIES TAB */}
+        {activeTab === 'INQUIRIES' && (
+          <div className="space-y-4">
+            {loadingInquiries ? (
+              <div className="text-center py-20">
+                <MaterialIcon name="sync" className="text-secondary mb-4" size={36} />
+                <p className="text-sm text-on-surface-variant">Anfragen werden geladen...</p>
+              </div>
+            ) : inquiries.length === 0 ? (
+              <div className="text-center py-20 bg-surface-white rounded-2xl border border-surface-dim">
+                <MaterialIcon name="inbox" className="text-on-surface-variant mb-4" size={36} />
+                <p className="text-sm font-bold text-primary">Keine Kontaktanfragen vorhanden</p>
+                <p className="text-xs text-on-surface-variant mt-1">Anfragen aus dem Kontaktformular erscheinen hier.</p>
+              </div>
+            ) : (
+              inquiries.map(inquiry => (
+                <div
+                  key={inquiry.id}
+                  className={`bg-surface-white rounded-2xl border shadow-sm overflow-hidden transition-all ${
+                    inquiry.isRead ? 'border-surface-dim opacity-80' : 'border-secondary/40 ring-1 ring-secondary/20'
+                  }`}
+                >
+                  <div
+                    className="flex items-start gap-4 p-5 cursor-pointer hover:bg-surface-bright transition-colors"
+                    onClick={() => setExpandedInquiry(expandedInquiry === inquiry.id ? null : inquiry.id)}
+                  >
+                    <div className={`mt-1 w-2.5 h-2.5 rounded-full flex-shrink-0 ${
+                      inquiry.isRead ? 'bg-surface-dim' : 'bg-secondary'
+                    }`} />
+                    <div className="flex-grow min-w-0">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="min-w-0">
+                          <p className="font-bold text-sm text-primary truncate">{inquiry.name}</p>
+                          <p className="text-xs text-on-surface-variant truncate">{inquiry.email}</p>
+                        </div>
+                        <div className="text-right flex-shrink-0">
+                          <p className="text-xs font-bold text-primary">{inquiry.subject}</p>
+                          <p className="text-[10px] text-on-surface-variant mt-0.5">
+                            {new Date(inquiry.createdAt).toLocaleString('de-DE')}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <MaterialIcon
+                      name={expandedInquiry === inquiry.id ? 'expand_less' : 'expand_more'}
+                      className="text-on-surface-variant flex-shrink-0 mt-0.5"
+                      size={20}
+                    />
+                  </div>
+
+                  {expandedInquiry === inquiry.id && (
+                    <div className="border-t border-surface-dim px-5 pb-5 pt-4 space-y-4">
+                      <div className="bg-surface-bright rounded-xl p-4 text-sm text-primary leading-relaxed whitespace-pre-wrap">
+                        {inquiry.message}
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <a
+                          href={`mailto:${inquiry.email}?subject=Re: ${encodeURIComponent(inquiry.subject)}`}
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-secondary hover:underline"
+                        >
+                          <MaterialIcon name="reply" size={14} />
+                          Antworten
+                        </a>
+                        <button
+                          onClick={() => handleToggleRead(inquiry.id, !inquiry.isRead)}
+                          className={`text-xs font-bold px-4 py-1.5 rounded-lg transition-colors ${
+                            inquiry.isRead
+                              ? 'bg-surface-dim text-on-surface-variant hover:bg-surface-container'
+                              : 'bg-secondary/10 text-secondary hover:bg-secondary/20'
+                          }`}
+                        >
+                          {inquiry.isRead ? 'Als ungelesen markieren' : 'Als gelesen markieren'}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))
+            )}
           </div>
         )}
       </main>

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { emailService } from '@/lib/services/emailService';
+import prisma from '@/lib/prisma';
 
 export async function POST(request: Request) {
   try {
@@ -12,6 +13,11 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    // Save inquiry to the database
+    await prisma.contactInquiry.create({
+      data: { name, email, subject, message }
+    });
 
     // Send the contact inquiry email to the admin
     await emailService.sendInternalContactInquiry(name, email, subject, message);
